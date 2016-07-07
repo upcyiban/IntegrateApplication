@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.dormsearch.model;
+package cn.edu.upc.yb.integrate.dormsearch.dto;
 
 /**
  * Created by skyADMIN on 16/6/27.

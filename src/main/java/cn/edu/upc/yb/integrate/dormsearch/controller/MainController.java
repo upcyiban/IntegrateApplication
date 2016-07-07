@@ -1,10 +1,9 @@
 package cn.edu.upc.yb.integrate.dormsearch.controller;
 
 import cn.edu.upc.yb.integrate.dormsearch.model.DormList;
-import cn.edu.upc.yb.integrate.dormsearch.model.DormListDao;
-import cn.edu.upc.yb.integrate.dormsearch.model.ErrorJsonMsg;
+import cn.edu.upc.yb.integrate.dormsearch.dao.DormListDao;
+import cn.edu.upc.yb.integrate.dormsearch.dto.ErrorJsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +14,7 @@ import java.util.Collection;
  */
 
 @RestController
-@CrossOrigin
+@RequestMapping("/dorm")
 public class MainController {
 
     @Autowired
@@ -29,5 +28,10 @@ public class MainController {
         }else {
             return dormList;
         }
+    }
+
+    @RequestMapping("/getroommate")
+    public Iterable<DormList> getRoommates(String dormnumber){
+        return dormListDao.findByDormnumber(dormnumber);
     }
 }
