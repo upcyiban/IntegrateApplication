@@ -2,9 +2,8 @@ package cn.edu.upc.yb.integrate.common.auth;
 
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
-import cn.edu.upc.yb.integrate.util.MCrypt;
+import cn.edu.upc.yb.integrate.common.util.MCrypt;
 import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by skyADMIN on 16/7/7.

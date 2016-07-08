@@ -1,6 +1,3 @@
-/*
- *
- */
 package cn.edu.upc.yb.integrate.common.util;
 
 import javax.crypto.Cipher;
