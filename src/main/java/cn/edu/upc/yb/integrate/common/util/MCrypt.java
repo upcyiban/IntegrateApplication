@@ -1,7 +1,7 @@
 /*
  *
  */
-package cn.edu.upc.yb.integrate.util;
+package cn.edu.upc.yb.integrate.common.util;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;

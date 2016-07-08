@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.component;
+package cn.edu.upc.yb.integrate.common.component;
 
 import org.springframework.stereotype.Component;
 
