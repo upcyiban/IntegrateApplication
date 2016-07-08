@@ -9,7 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = IntegrateApplication.class)
 @WebAppConfiguration
-public class DormsearchApplicationTests {
+public class IntegrateApplicationTests {
 
 	@Test
 	public void contextLoads() {
