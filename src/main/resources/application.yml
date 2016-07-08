@@ -15,3 +15,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
 server:
   port: 8087
+yibanoauth:
+  bulletinboard:
+    APPID: "acaec190548725cf"
+    APPkey: "6b7d82af041da97d586ad8b8d8204225"
