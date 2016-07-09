@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.calendar.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by skyADMIN on 16/7/3.
@@ -14,17 +15,46 @@ public class SchoolCalendar {
     private int id;
 
     private String schoolschedule;
-    private int begindate;
-    private int enddate;
+    private String begindate;
+    private String enddate;
 
-    public SchoolCalendar() {
+    private boolean isdelete = false;
+    private String creattime;
+    private String updatetime;
+
+    public boolean isdelete() {
+        return isdelete;
     }
 
-    public SchoolCalendar(String schoolschedule, int begindate, int enddate) {
+    public void setIsdelete(boolean isdelete) {
+        this.isdelete = isdelete;
+    }
+
+    public String getCreattime() {
+        return creattime;
+    }
+
+    public void setCreattime(String creattime) {
+        this.creattime = creattime;
+    }
+
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public SchoolCalendar(String schoolschedule, String begindate, String enddate) {
         this.schoolschedule = schoolschedule;
         this.begindate = begindate;
         this.enddate = enddate;
+        this.creattime = new Date().toString();
+        this.updatetime = new Date().toString();
+
     }
+    public SchoolCalendar(){}
 
     public int getId() {
         return id;
@@ -42,19 +72,19 @@ public class SchoolCalendar {
         this.schoolschedule = schoolschedule;
     }
 
-    public int getBegindate() {
+    public String getBegindate() {
         return begindate;
     }
 
-    public void setBegindate(int begindate) {
+    public void setBegindate(String begindate) {
         this.begindate = begindate;
     }
 
-    public int getEnddate() {
+    public String getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(int enddate) {
+    public void setEnddate(String enddate) {
         this.enddate = enddate;
     }
 }
