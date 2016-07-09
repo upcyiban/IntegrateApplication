@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.calendar.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Jaxlying on 2016/7/9.
@@ -22,21 +23,28 @@ public class SchoolEvent {
 
     private String creattime;
     private String updatetime;
-    private boolean isdelete;
+    private boolean isdelete = false;
 
 
     public SchoolEvent(){}
 
-    public SchoolEvent(String starttime, String endtime, String startdate, String enddate, String detail, String title, String creattime, String updatetime, boolean isdelete) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public SchoolEvent(String starttime, String endtime, String startdate, String enddate, String detail, String title) {
         this.starttime = starttime;
         this.endtime = endtime;
         this.startdate = startdate;
         this.enddate = enddate;
         this.detail = detail;
         this.title = title;
-        this.creattime = creattime;
-        this.updatetime = updatetime;
-        this.isdelete = isdelete;
+        this.creattime = new Date().toString();
+        this.updatetime = new Date().toString();
     }
 
     public int getId() {
