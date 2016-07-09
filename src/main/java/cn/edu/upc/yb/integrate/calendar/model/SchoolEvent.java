@@ -118,4 +118,18 @@ public class SchoolEvent {
     public void setIsdelete(boolean isdelete) {
         this.isdelete = isdelete;
     }
+
+    public void updata(String starttime, String endtime, String startdate, String enddate, String detail, String title){
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.detail = detail;
+        this.title = title;
+        this.updatetime = new Date().toString();
+    }
+    public void delete(){
+        this.isdelete = true;
+        this.updatetime = new Date().toString();
+    }
 }
