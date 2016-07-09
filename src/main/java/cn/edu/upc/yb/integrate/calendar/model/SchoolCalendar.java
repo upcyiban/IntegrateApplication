@@ -14,7 +14,9 @@ public class SchoolCalendar {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Column(unique = true)
     private String schoolschedule;
+
     private String begindate;
     private String enddate;
 
@@ -86,5 +88,16 @@ public class SchoolCalendar {
 
     public void setEnddate(String enddate) {
         this.enddate = enddate;
+    }
+
+    public void updata(String schoolschedule, String begindate, String enddate){
+        this.schoolschedule = schoolschedule;
+        this.begindate = begindate;
+        this.enddate = enddate;
+        this.updatetime = new Date().toString();
+    }
+    public void delete(){
+        this.isdelete = true;
+        this.updatetime = new Date().toString();
     }
 }

@@ -46,4 +46,11 @@ public class EventController {
     public Object showEvent(String startdate) {
         return schoolEventDao.findByStartdateAndIsdelete(startdate, false);
     }
+    /**
+     * 管理员显示全部
+     */
+    @RequestMapping("/showall")
+    public Object showAll(){
+        return schoolEventDao.findAll();
+    }
 }
