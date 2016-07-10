@@ -9,4 +9,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface SchoolEventDao extends CrudRepository<SchoolEvent,Integer>,PagingAndSortingRepository<SchoolEvent,Integer>{
     public Iterable<SchoolEvent> findByStartdateAndIsdelete(String startdate,boolean isdelete);
+    public Iterable<SchoolEvent> findByIsdeleteOrderByIdDesc(boolean isdelete);
 }

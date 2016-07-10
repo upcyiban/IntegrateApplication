@@ -48,7 +48,7 @@ public class CalendarController {
      */
     @RequestMapping("/showall")
     public Object showAll(){
-        return schoolCalendarDao.findAll();
+        return schoolCalendarDao.findByIsdeleteOrderByIdDesc(false);
     }
 
 }

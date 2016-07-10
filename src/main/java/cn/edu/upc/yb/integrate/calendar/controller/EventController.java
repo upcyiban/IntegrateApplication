@@ -51,6 +51,6 @@ public class EventController {
      */
     @RequestMapping("/showall")
     public Object showAll(){
-        return schoolEventDao.findAll();
+        return schoolEventDao.findByIsdeleteOrderByIdDesc(false);
     }
 }
