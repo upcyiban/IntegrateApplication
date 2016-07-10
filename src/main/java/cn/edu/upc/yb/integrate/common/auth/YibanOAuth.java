@@ -4,10 +4,12 @@ import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.util.MCrypt;
 import com.google.gson.Gson;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by skyADMIN on 16/7/7.
  */
+@Service
 public class YibanOAuth {
 
     public Object dealYibanOauth(String verify_request, String appid, String appkey) throws Exception {
