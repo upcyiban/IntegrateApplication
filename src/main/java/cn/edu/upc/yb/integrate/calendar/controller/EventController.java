@@ -5,8 +5,10 @@ import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.calendar.model.SchoolEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -19,15 +21,20 @@ public class EventController {
     @Autowired
     private SchoolEventDao schoolEventDao;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @RequestMapping("/create")
     public Object creatEven(String starttime, String endtime, String startdate, String enddate, String detail, String title) {
+        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
         SchoolEvent schoolEvent = new SchoolEvent(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
         return new JsonMes(1, "创建成功");
     }
 
     @RequestMapping("/update")
-    public Object updateEven(int id, String starttime, String endtime, String startdate, String enddate, String detail, String title) {
+    public Object updateEven(@RequestParam(value = "id",defaultValue = "0")int id, String starttime, String endtime, String startdate, String enddate, String detail, String title) {
+        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.updata(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
@@ -35,7 +42,8 @@ public class EventController {
     }
 
     @RequestMapping("/delete")
-    public Object deleteEven(int id) {
+    public Object deleteEven(@RequestParam(value = "id",defaultValue = "0")int id) {
+        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.delete();
         schoolEventDao.save(schoolEvent);
@@ -44,6 +52,7 @@ public class EventController {
 
     @RequestMapping("/showevent")
     public Object showEvent(String startdate) {
+        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
         return schoolEventDao.findByStartdateAndIsdelete(startdate, false);
     }
     /**
@@ -51,6 +60,7 @@ public class EventController {
      */
     @RequestMapping("/showall")
     public Object showAll(){
+        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
         return schoolEventDao.findByIsdeleteOrderByIdDesc(false);
     }
 }

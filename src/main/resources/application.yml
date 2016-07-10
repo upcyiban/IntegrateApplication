@@ -19,3 +19,8 @@ yibanoauth:
   bulletinboard:
     APPID: "acaec190548725cf"
     APPkey: "6b7d82af041da97d586ad8b8d8204225"
+  calendar:
+     APPID: "d909b5b12fd5edec"
+     APPkey: "6f5d239396df74e4672932d8ede57beb"
+     admin: "admin"
+     password: "admin"
