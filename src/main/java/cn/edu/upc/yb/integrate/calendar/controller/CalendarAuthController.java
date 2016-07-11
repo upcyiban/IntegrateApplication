@@ -2,6 +2,7 @@ package cn.edu.upc.yb.integrate.calendar.controller;
 
 import cn.edu.upc.yb.integrate.calendar.config.CalendarConfig;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +18,24 @@ public class CalendarAuthController {
     @Autowired
     private CalendarConfig calendarConfig;
 
+    @Autowired
+    private CommonAdminService commonAdminService;
+
     @RequestMapping("/auth")
     public void doAuth(String vq) {
         try {
             yibanOAuth.dealYibanOauth(vq, calendarConfig.appid, calendarConfig.appkey);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("/isadmin")
+    public int isAdmin() {
+        if (commonAdminService.isCommonAdmin()) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 

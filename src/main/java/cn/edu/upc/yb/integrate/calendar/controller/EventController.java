@@ -25,20 +25,15 @@ public class EventController {
     @Autowired
     private SchoolEventDao schoolEventDao;
 
-    @Autowired
-    private CommonAdminService commonAdminService;
-
     @RequestMapping("/create")
     public Object creatEven(String starttime, String endtime, String startdate, String enddate, String detail, String title) {
-        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolEvent schoolEvent = new SchoolEvent(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
         return new JsonMes(1, "创建成功");
     }
 
     @RequestMapping("/update")
-    public Object updateEven(@RequestParam(value = "id",defaultValue = "0")int id, String starttime, String endtime, String startdate, String enddate, String detail, String title) {
-        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
+    public Object updateEven(@RequestParam(value = "id", defaultValue = "0") int id, String starttime, String endtime, String startdate, String enddate, String detail, String title) {
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.updata(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
@@ -46,8 +41,7 @@ public class EventController {
     }
 
     @RequestMapping("/delete")
-    public Object deleteEven(@RequestParam(value = "id",defaultValue = "0")int id) {
-        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
+    public Object deleteEven(@RequestParam(value = "id", defaultValue = "0") int id) {
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.delete();
         schoolEventDao.save(schoolEvent);
@@ -56,18 +50,17 @@ public class EventController {
 
     @RequestMapping("/showevent")
     public Object showEvent(String startdate) {
-        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolEventDao.findByStartdateAndIsdelete(startdate, false);
     }
+
     /**
      * 管理员显示全部
      */
-
     @Autowired
     HttpSession httpSession;
+
     @RequestMapping("/showall")
-    public Object showAll(){
-        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
+    public Object showAll() {
         return schoolEventDao.findByIsdeleteOrderByIdDesc(false);
     }
 }

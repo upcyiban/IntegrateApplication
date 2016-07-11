@@ -26,7 +26,6 @@ public class CalendarController {
 
     @RequestMapping("/create")
     public Object creatCalendar(String schoolschedule, String begindate, String enddate) {
-        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = new SchoolCalendar(schoolschedule, begindate, enddate);
         schoolCalendarDao.save(schoolCalendar);
         return new JsonMes(1, "创建成功");
@@ -34,7 +33,6 @@ public class CalendarController {
 
     @RequestMapping("/update")
     public Object updateCalendar(@RequestParam(value = "id",defaultValue = "0") int id, String schoolschedule, String begindate, String enddate) {
-        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = schoolCalendarDao.findOne(id);
         schoolCalendar.updata(schoolschedule, begindate, enddate);
         schoolCalendarDao.save(schoolCalendar);
@@ -43,7 +41,6 @@ public class CalendarController {
 
     @RequestMapping("/delete")
     public Object deleteCalendar(@RequestParam(value = "id",defaultValue = "0") int id) {
-        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = schoolCalendarDao.findOne(id);
         schoolCalendar.delete();
         schoolCalendarDao.save(schoolCalendar);
@@ -52,7 +49,6 @@ public class CalendarController {
 
     @RequestMapping("/showcalendar")
     public Object showCalendar(String schoolschedule) {
-        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolCalendarDao.findBySchoolscheduleAndIsdelete(schoolschedule, false);
     }
 
