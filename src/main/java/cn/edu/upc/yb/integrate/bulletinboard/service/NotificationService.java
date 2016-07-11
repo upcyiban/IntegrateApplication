@@ -27,7 +27,7 @@ public class NotificationService {
 
     public Object postNew(String title, String message, String tag){
         YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
-        if (!commonAdminService.isCommonAdmin(user.visit_user.userid)){
+        if (!commonAdminService.isCommonAdmin()){
             return new ErrorReporter(-1,"no-access");
         }
         Notification notification = new Notification(user.visit_user.userid, title, message, tag);
