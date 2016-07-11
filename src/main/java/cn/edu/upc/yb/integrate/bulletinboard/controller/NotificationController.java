@@ -2,6 +2,7 @@ package cn.edu.upc.yb.integrate.bulletinboard.controller;
 
 import cn.edu.upc.yb.integrate.bulletinboard.dao.NotificationDao;
 import cn.edu.upc.yb.integrate.bulletinboard.model.Notification;
+import cn.edu.upc.yb.integrate.bulletinboard.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,9 @@ public class NotificationController {
     @Autowired
     private NotificationDao notificationDao;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @RequestMapping("/getnewest")
     public Notification getNewestMessage(){
         return notificationDao.findFirstByOrderByIdDesc();
@@ -26,6 +30,9 @@ public class NotificationController {
         return notificationDao.findAll();
     }
 
-
+    @RequestMapping("/postnew")
+    public Object postNew(String title, String message, String tag){
+        return notificationService.postNew(title, message, tag);
+    }
 
 }

@@ -25,12 +25,28 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(int yibanid, String title, String message, String tag, LocalDateTime publishtime) {
+    public Notification(int yibanid, String title, String message) {
+        this.yibanid = yibanid;
+        this.title = title;
+        this.message = message;
+        this.tag = "default";
+        this.publishtime = LocalDateTime.now();
+    }
+
+    public Notification(int yibanid, String title, String message, String tag) {
         this.yibanid = yibanid;
         this.title = title;
         this.message = message;
         this.tag = tag;
-        this.publishtime = publishtime;
+        this.publishtime = LocalDateTime.now();
+    }
+
+    public int getYibanid() {
+        return yibanid;
+    }
+
+    public void setYibanid(int yibanid) {
+        this.yibanid = yibanid;
     }
 
     public int getId() {
