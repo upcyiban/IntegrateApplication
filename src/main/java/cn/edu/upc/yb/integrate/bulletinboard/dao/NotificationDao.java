@@ -9,5 +9,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface NotificationDao extends CrudRepository<Notification, Integer> {
     public Notification findFirstByOrderByIdDesc();
+    public Iterable<Notification> findAllByOrderByIdDesc();
 
 }

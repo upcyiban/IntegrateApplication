@@ -27,7 +27,7 @@ public class NotificationController {
 
     @RequestMapping("/getall")
     public Iterable<Notification> getAllMessage(){
-        return notificationDao.findAll();
+        return notificationDao.findAllByOrderByIdDesc();
     }
 
     @RequestMapping("/postnew")
