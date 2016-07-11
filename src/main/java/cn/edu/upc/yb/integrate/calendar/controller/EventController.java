@@ -3,6 +3,8 @@ package cn.edu.upc.yb.integrate.calendar.controller;
 import cn.edu.upc.yb.integrate.calendar.dao.SchoolEventDao;
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.calendar.model.SchoolEvent;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +24,11 @@ public class EventController {
     private SchoolEventDao schoolEventDao;
 
     @Autowired
-    private HttpSession httpSession;
+    private CommonAdminService commonAdminService;
 
     @RequestMapping("/create")
     public Object creatEven(String starttime, String endtime, String startdate, String enddate, String detail, String title) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolEvent schoolEvent = new SchoolEvent(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
         return new JsonMes(1, "创建成功");
@@ -34,7 +36,7 @@ public class EventController {
 
     @RequestMapping("/update")
     public Object updateEven(@RequestParam(value = "id",defaultValue = "0")int id, String starttime, String endtime, String startdate, String enddate, String detail, String title) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.updata(starttime, endtime, startdate, enddate, detail, title);
         schoolEventDao.save(schoolEvent);
@@ -43,7 +45,7 @@ public class EventController {
 
     @RequestMapping("/delete")
     public Object deleteEven(@RequestParam(value = "id",defaultValue = "0")int id) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolEvent schoolEvent = schoolEventDao.findOne(id);
         schoolEvent.delete();
         schoolEventDao.save(schoolEvent);
@@ -52,7 +54,7 @@ public class EventController {
 
     @RequestMapping("/showevent")
     public Object showEvent(String startdate) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolEventDao.findByStartdateAndIsdelete(startdate, false);
     }
     /**
@@ -60,7 +62,7 @@ public class EventController {
      */
     @RequestMapping("/showall")
     public Object showAll(){
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolEventDao.findByIsdeleteOrderByIdDesc(false);
     }
 }

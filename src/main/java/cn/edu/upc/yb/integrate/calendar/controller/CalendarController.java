@@ -3,6 +3,8 @@ package cn.edu.upc.yb.integrate.calendar.controller;
 import cn.edu.upc.yb.integrate.calendar.dao.SchoolCalendarDao;
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.calendar.model.SchoolCalendar;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +21,12 @@ public class CalendarController {
     private SchoolCalendarDao schoolCalendarDao;
 
     @Autowired
-    private HttpSession httpSession;
+    private CommonAdminService commonAdminService;
+
 
     @RequestMapping("/create")
     public Object creatCalendar(String schoolschedule, String begindate, String enddate) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = new SchoolCalendar(schoolschedule, begindate, enddate);
         schoolCalendarDao.save(schoolCalendar);
         return new JsonMes(1, "创建成功");
@@ -31,7 +34,7 @@ public class CalendarController {
 
     @RequestMapping("/update")
     public Object updateCalendar(@RequestParam(value = "id",defaultValue = "0") int id, String schoolschedule, String begindate, String enddate) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = schoolCalendarDao.findOne(id);
         schoolCalendar.updata(schoolschedule, begindate, enddate);
         schoolCalendarDao.save(schoolCalendar);
@@ -40,7 +43,7 @@ public class CalendarController {
 
     @RequestMapping("/delete")
     public Object deleteCalendar(@RequestParam(value = "id",defaultValue = "0") int id) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         SchoolCalendar schoolCalendar = schoolCalendarDao.findOne(id);
         schoolCalendar.delete();
         schoolCalendarDao.save(schoolCalendar);
@@ -49,7 +52,7 @@ public class CalendarController {
 
     @RequestMapping("/showcalendar")
     public Object showCalendar(String schoolschedule) {
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() ==  false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolCalendarDao.findBySchoolscheduleAndIsdelete(schoolschedule, false);
     }
 
@@ -58,7 +61,7 @@ public class CalendarController {
      */
     @RequestMapping("/showall")
     public Object showAll(){
-        if(httpSession.getAttribute("admin")==null) { return new JsonMes(0,"您还没用登陆");}
+        if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
         return schoolCalendarDao.findByIsdeleteOrderByIdDesc(false);
     }
 
