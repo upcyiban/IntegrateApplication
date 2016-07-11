@@ -31,7 +31,8 @@ public class NotificationService {
             return new ErrorReporter(-1,"no-access");
         }
         Notification notification = new Notification(user.visit_user.userid, title, message, tag);
-        return notificationDao.save(notification);
+        notificationDao.save(notification);
+        return new ErrorReporter(0, "success");
     }
 
 }

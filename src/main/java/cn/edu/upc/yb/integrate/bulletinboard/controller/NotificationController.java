@@ -5,6 +5,7 @@ import cn.edu.upc.yb.integrate.bulletinboard.model.Notification;
 import cn.edu.upc.yb.integrate.bulletinboard.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,7 +31,7 @@ public class NotificationController {
         return notificationDao.findAllByOrderByIdDesc();
     }
 
-    @RequestMapping("/postnew")
+    @RequestMapping(value = "/postnew", method = RequestMethod.POST)
     public Object postNew(String title, String message, String tag){
         return notificationService.postNew(title, message, tag);
     }
