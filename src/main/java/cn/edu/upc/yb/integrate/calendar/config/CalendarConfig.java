@@ -1,11 +1,13 @@
 package cn.edu.upc.yb.integrate.calendar.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Jaxlying on 2016/7/10.
  */
-public class Config {
+@Component
+public class CalendarConfig {
 
     @Value("${yibanoauth.calendar.APPID}")
     public static String appid;
@@ -13,10 +15,5 @@ public class Config {
     @Value("${yibanoauth.calendar.APPkey}")
     public static String appkey;
 
-    @Value("${yibanoauth.calendar.admin}")
-    public static String admin;
-
-    @Value("${yibanoauth.calendar.password}")
-    public static String password;
 
 }
