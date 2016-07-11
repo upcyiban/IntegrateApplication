@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 public class CalendarConfig {
 
     @Value("${yibanoauth.calendar.APPID}")
-    public static String appid;
+    public String appid;
 
     @Value("${yibanoauth.calendar.APPkey}")
-    public static String appkey;
+    public String appkey;
 
 
 }

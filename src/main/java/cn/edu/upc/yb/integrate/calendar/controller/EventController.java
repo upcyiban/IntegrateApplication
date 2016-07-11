@@ -3,7 +3,9 @@ package cn.edu.upc.yb.integrate.calendar.controller;
 import cn.edu.upc.yb.integrate.calendar.dao.SchoolEventDao;
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.calendar.model.SchoolEvent;
+import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +62,9 @@ public class EventController {
     /**
      * 管理员显示全部
      */
+
+    @Autowired
+    HttpSession httpSession;
     @RequestMapping("/showall")
     public Object showAll(){
         if(commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1,"您没有权限操作");
