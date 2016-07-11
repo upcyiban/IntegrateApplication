@@ -18,9 +18,15 @@ public class YibanOAuth {
     @Autowired
     private HttpSession httpSession;
 
-    public Object dealYibanOauth(String verify_request, String appid, String appkey) throws Exception {
+    public Object dealYibanOauth(String verify_request, String appid, String appkey) {
         MCrypt mCrypt = new MCrypt(appid, appkey);
-        String res = new String(mCrypt.decrypt(verify_request));
+        String res = null;
+        try {
+            res = new String(mCrypt.decrypt(verify_request));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ErrorReporter(0, "error parse");
+        }
         Gson gson = new Gson();
         try {
             YibanBasicUserInfo yibanBasicUserInfo = gson.fromJson(res, YibanBasicUserInfo.class);

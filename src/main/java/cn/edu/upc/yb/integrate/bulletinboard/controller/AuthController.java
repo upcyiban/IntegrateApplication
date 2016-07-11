@@ -28,15 +28,20 @@ public class AuthController {
     public int doAuth(String vq) {
         try {
             yibanOAuth.dealYibanOauth(vq, b.appid, b.appkey);
-            if (commonAdminService.isCommonAdmin()){
-                return 1;
-            }else {
-                return 0;
-            }
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @RequestMapping("/isadmin")
+    public int isAdmin(){
+        if (commonAdminService.isCommonAdmin()){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
 }
