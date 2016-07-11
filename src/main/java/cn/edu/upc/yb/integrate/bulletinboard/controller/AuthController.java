@@ -20,9 +20,9 @@ public class AuthController {
     private BulletinBoardOauthConfig b;
 
     @RequestMapping("/auth")
-    public void doAuth(String vq){
+    public void doAuth(String vq) {
         try {
-            yibanOAuth.dealYibanOauth(vq,b.appid,b.appkey);
+            yibanOAuth.dealYibanOauth(vq, b.appid, b.appkey);
         } catch (Exception e) {
             e.printStackTrace();
         }
