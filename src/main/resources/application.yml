@@ -22,5 +22,3 @@ yibanoauth:
   calendar:
      APPID: "d909b5b12fd5edec"
      APPkey: "6f5d239396df74e4672932d8ede57beb"
-     admin: "admin"
-     password: "admin"
