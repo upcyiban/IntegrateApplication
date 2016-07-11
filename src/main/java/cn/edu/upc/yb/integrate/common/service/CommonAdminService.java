@@ -22,6 +22,9 @@ public class CommonAdminService {
     private HttpSession httpSession;
 
     public boolean isCommonAdmin(){
+        if (httpSession.getAttribute("user") == null){
+            return false;
+        }
         YibanBasicUserInfo user = (YibanBasicUserInfo)httpSession.getAttribute("user");
         int Yibanid = user.visit_user.userid;
         Collection<CommonAdmin> commonAdmins = (Collection<CommonAdmin>) commonAdminDao.findByYibanid(Yibanid);
