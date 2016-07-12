@@ -25,7 +25,8 @@ public class MainController {
         Collection<DormList> dormList = (Collection<DormList>) dormListDao.findByNameAndNumber(name, number);
         if (dormList.isEmpty()){
             return new ErrorJsonMsg(1, "查询结果为空,请确认学号和姓名");
-        }else {
+        }else
+        {
             return dormList;
         }
     }

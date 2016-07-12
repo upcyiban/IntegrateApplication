@@ -13,6 +13,7 @@ public class YibanBasicUserInfo {
         public String usernick;
         public char usersex;
     }
+
     public class VisitOauth{
         public String access_token;
         public int token_expires;
