@@ -30,13 +30,4 @@ public class CalendarAuthController {
         }
     }
 
-    @RequestMapping("/isadmin")
-    public int isAdmin() {
-        if (commonAdminService.isCommonAdmin()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
 }
