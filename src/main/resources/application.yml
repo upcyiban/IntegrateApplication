@@ -25,3 +25,6 @@ yibanoauth:
   lottery:
     APPID: "acaec190548725cf"
     APPkey: "6b7d82af041da97d586ad8b8d8204225"
+  lostandfound:
+     APPID: "2f803dad07f95108"
+     APPkey: "f732a9b113713c3e1f85a85b6b1282b8"
