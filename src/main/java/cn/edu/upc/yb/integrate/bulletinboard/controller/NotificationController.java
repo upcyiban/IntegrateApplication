@@ -36,4 +36,9 @@ public class NotificationController {
         return notificationService.postNew(title, message, tag);
     }
 
+    @RequestMapping("/detele")
+    public Object deleteNotification(int Nid){
+        return notificationService.deleteOne(Nid);
+    }
+
 }

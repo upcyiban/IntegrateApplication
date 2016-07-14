@@ -53,5 +53,6 @@ public class dbtest {
         user.visit_user.userid = 5394432;
         httpSession.setAttribute("user", user);
         notificationService.postNew("测试2", "这是一段测试文字111", "default");
+        notificationService.deleteOne(1);
     }
 }

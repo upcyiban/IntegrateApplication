@@ -35,4 +35,11 @@ public class NotificationService {
         return new ErrorReporter(0, "success");
     }
 
+    public Object deleteOne(int Nid){
+        if (!commonAdminService.isCommonAdmin()){
+            return new ErrorReporter(-1,"no-access");
+        }
+        notificationDao.delete(Nid);
+        return new ErrorReporter(0, "success");
+    }
 }
