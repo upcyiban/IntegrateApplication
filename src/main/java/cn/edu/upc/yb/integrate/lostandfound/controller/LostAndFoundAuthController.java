@@ -23,6 +23,8 @@ public class LostAndFoundAuthController {
     @Autowired
     private CommonAdminService commonAdminService;
 
+    public LostAndFoundAuthController(){}
+
     public LostAndFoundAuthController(YibanOAuth yibanOAuth) {
         this.yibanOAuth = yibanOAuth;
     }
