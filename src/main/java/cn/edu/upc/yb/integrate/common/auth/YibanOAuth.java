@@ -38,4 +38,11 @@ public class YibanOAuth {
         }
     }
 
+    public int isAuth(){
+        if (httpSession.getAttribute("user")!=null){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
 }
