@@ -6,6 +6,7 @@ import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.model.FeedBackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,7 @@ public class FeedBackController {
     @Autowired
     private FeedBackMessageDao feedBackMessageDao;
 
-    @RequestMapping("/feedback")
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public ErrorReporter makeFeedBack(String message, String appname) {
         if (httpSession.getAttribute("user") == null) {
             return new ErrorReporter(1, "no access");

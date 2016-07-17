@@ -19,6 +19,7 @@ public class FeedBackMessage {
     private String message;
     private LocalDateTime sendtime;
     private String appname;         //反馈错误的应用的名字
+    private int ispass;             //是否审核
 
     public FeedBackMessage() {
     }
@@ -28,6 +29,7 @@ public class FeedBackMessage {
         this.message = message;
         this.appname = appname;
         this.sendtime = LocalDateTime.now();
+        this.ispass = 0;
     }
 
     public int getId() {
@@ -68,5 +70,13 @@ public class FeedBackMessage {
 
     public void setAppname(String appname) {
         this.appname = appname;
+    }
+
+    public int getIspass() {
+        return ispass;
+    }
+
+    public void setIspass(int ispass) {
+        this.ispass = ispass;
     }
 }

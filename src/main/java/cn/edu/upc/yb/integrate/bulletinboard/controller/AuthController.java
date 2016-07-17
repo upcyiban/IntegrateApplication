@@ -35,11 +35,16 @@ public class AuthController {
         return 0;
     }
 
+    @RequestMapping("/isauth")
+    public int isAuth() {
+        return yibanOAuth.isAuth();
+    }
+
     @RequestMapping("/isadmin")
-    public int isAdmin(){
-        if (commonAdminService.isCommonAdmin()){
+    public int isAdmin() {
+        if (commonAdminService.isCommonAdmin()) {
             return 1;
-        }else {
+        } else {
             return 0;
         }
     }
