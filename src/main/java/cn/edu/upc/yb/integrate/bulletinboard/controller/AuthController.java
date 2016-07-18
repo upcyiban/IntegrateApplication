@@ -8,12 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by skyADMIN on 16/7/8.
  */
 @RestController
 @RequestMapping("/bbs")
 public class AuthController {
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Autowired
     private YibanOAuth yibanOAuth;
@@ -38,6 +43,12 @@ public class AuthController {
     @RequestMapping("/isauth")
     public int isAuth() {
         return yibanOAuth.isAuth();
+    }
+
+    @RequestMapping("/logout")
+    public int logOut(){
+        httpSession.removeAttribute("user");
+        return 1;
     }
 
     @RequestMapping("/isadmin")
