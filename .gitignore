@@ -24,7 +24,5 @@ buildNumber.properties
 hs_err_pid*
 
 .idea
-deploy.py
-deploy.sh
 IntegrateApplication.iml
 application-production.yml
