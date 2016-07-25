@@ -47,18 +47,18 @@ public class LostAndFoundUserController {
     @RequestMapping("/findloser")
     public Object showFindloser(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "15") Integer size) {
       if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
-        Pageable pageable = new PageRequest(page, size);
-        Page<User> pages = userDao.findByIsdeletNotAndIsloserNotOrderByDateDesc(true, false, pageable);
 
-        return pages;
+        Iterable<User> users = userDao.findByIsdeletNotAndIsloserNotOrderByDateDesc(true, false);
+
+        return users;
     }
 
     @RequestMapping("/findthing")
     public Object showFindthing(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "15") Integer size) {
       if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
-        Pageable pageable = new PageRequest(page, size);
-        Page<User> pages = userDao.findByIsdeletNotAndIsloserNotOrderByDateDesc(true, true, pageable);
-        return pages;
+
+       Iterable<User> users = userDao.findByIsdeletNotAndIsloserNotOrderByDateDesc(true, true);
+        return users;
     }
 
     @RequestMapping("/publish")

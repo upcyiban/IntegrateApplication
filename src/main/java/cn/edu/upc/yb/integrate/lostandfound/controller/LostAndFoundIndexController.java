@@ -45,9 +45,9 @@ public class LostAndFoundIndexController {
     @RequestMapping("/")
     public Object showIndex(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "15") Integer size) {
       if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
-        Pageable pageable = new PageRequest(page,size);
-        Page<Official> pages = officialDao.findByIsdeletNotOrderByDateDesc(true,pageable);
-        return pages;
+
+        Iterable<Official> officials = officialDao.findByIsdeletNotOrderByDateDesc(true);
+        return officials;
     }
 
     @RequestMapping(value = "/official", method = RequestMethod.POST)
