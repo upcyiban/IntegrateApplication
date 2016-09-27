@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "express_user")
-public class User {
+public class ExpessUser {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
@@ -17,12 +17,12 @@ public class User {
     private String address;
 
 
-    public User(String name, String telephone, String address) {
+    public ExpessUser(String name, String telephone, String address) {
         this.name = name;
         this.address = address;
     }
 
-    public User() {
+    public ExpessUser() {
     }
 
     public int getId() {

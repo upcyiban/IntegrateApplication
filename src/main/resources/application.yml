@@ -5,6 +5,8 @@ spring:
     password: yibantest
     test-while-idle: true
     validation-query: SELECT 1
+  thymeleaf:
+    mode: LEGACYHTML5
   jpa:
     show-sql: true
     hibernate:

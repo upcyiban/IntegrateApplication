@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+		<title>报名</title>
+
+		<!-- Bootstrap CSS -->
+		<link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+		<!-- jquery -->
+		<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    	<!--[if lt IE 9]>
+      		<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+	</head>
+	<body style="width: 80% ;margin: auto">
+        <h2 class="text-center" th:text="${back}"></h2>
+        <h3 class="text-center">欢迎报名石大易班技术开发部</h3>
+		<form action="/sighup" method="post">
+			<div class="form-group">
+				<label>姓名</label>
+				<input class="form-control" type="text" name="name"/>
+			</div>
+			<div class="form-group">
+				<label>性别</label>
+                <input class="form-control" type="text" name="sex"/>
+			</div>
+			<div class="form-group">
+				<label>专业班级</label>
+				<input class="form-control" type="text" name="major">
+			</div>
+			<div class="form-group">
+				<label>个人简介</label>
+				<textarea class="form-control" type="text" name="detail"></textarea>
+			</div>
+            <div class="form-group">
+                <label>联系方式</label>
+                <input class="form-control" type="text" name="method">
+            </div>
+            <input class="btn btn-primary form-control" type="submit" value="提交">
+		</form>
+		<!-- Bootstrap JavaScript -->
+		<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	</body>
+</html>

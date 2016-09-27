@@ -13,8 +13,8 @@ public interface OrderDao extends CrudRepository<Order,Integer>{
 
     public Iterable<Order> findByYibanid(String yibanid);
 
-    public Iterable<Order> findByOrdervalue(String ordervalue);
+//    public Iterable<Order> findByOrdervalue(String ordervalue);
 
-    public Iterable<Order> findById(int id);
+
 
 }

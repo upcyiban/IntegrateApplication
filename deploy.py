@@ -17,20 +17,20 @@ def execute_cmds(ip, user, passwd, cmd):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(ip,22,user,passwd,timeout=5)
         for m in cmd:
-            print m
+            print (m)
             stdin, stdout, stderr = ssh.exec_command(m)
             #           stdin.write("Y")
             out = stdout.readlines()
             for o in out:
-                print o,
-        print '%s\tOK\n'%(ip)
+                print (o),
+        print ('%s\tOK\n'%(ip))
         ssh.close()
     except :
-        print '%s\tError\n'%(ip)
+        print ('%s\tError\n'%(ip))
 
 
 if __name__=='__main__':
-    print 'Start deploying %s to server %s'%(jar, ip)
+    print ('Start deploying %s to server %s'%(jar, ip))
 
     now = time.strftime("%Y%m%d%H%M%S")
     cmd = [
