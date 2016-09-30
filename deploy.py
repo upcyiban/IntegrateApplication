@@ -3,7 +3,7 @@ import threading
 import time
 
 ip = '121.251.255.96'
-user = 'root'
+deliverWater = 'root'
 password = ''
 jar = 'IntegrateApplication-0.0.1-SNAPSHOT.jar'
 home='/root/Desktop/integrate'
@@ -11,11 +11,11 @@ current=home+"/current"
 releases=home+"/releases"
 test = home+"/test"
 
-def execute_cmds(ip, user, passwd, cmd):
+def execute_cmds(ip, deliverWater, passwd, cmd):
     try:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(ip,22,user,passwd,timeout=5)
+        ssh.connect(ip,22,deliverWater,passwd,timeout=5)
         for m in cmd:
             print (m)
             stdin, stdout, stderr = ssh.exec_command(m)
@@ -44,5 +44,5 @@ if __name__=='__main__':
         'echo Start spring_integrate service... && service spring_integrate start ' + \
         ' && echo All done.'
     ]
-    a=threading.Thread(target=execute_cmds, args=(ip,user,password,cmd))
+    a=threading.Thread(target=execute_cmds, args=(ip,deliverWater,password,cmd))
     a.start()

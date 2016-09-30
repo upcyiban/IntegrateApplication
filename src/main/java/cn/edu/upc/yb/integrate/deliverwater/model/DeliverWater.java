@@ -1,14 +1,14 @@
 package cn.edu.upc.yb.integrate.deliverwater.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by 陈子枫 on 2016/9/29.
  */
-public class User {
+@Entity
+@Table(name = "deliverwater")
+public class DeliverWater {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -22,7 +22,7 @@ public class User {
    private long upAt;
    private long deleteAt;
 
-    public User(String blockNumber, String dormitory, String name, String phone, int num) {
+    public DeliverWater(String blockNumber, String dormitory, String name, String phone, int num) {
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
         this.name = name;
@@ -31,7 +31,7 @@ public class User {
         this.createAt = System.currentTimeMillis();
     }
 
-    public User(String blockNumber, String dormitory, String name, String phone) {
+    public DeliverWater(String blockNumber, String dormitory, String name, String phone) {
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
         this.name = name;
@@ -39,7 +39,7 @@ public class User {
         this.createAt = System.currentTimeMillis();
     }
 
-    public User(){}
+    public DeliverWater(){}
 
     public int getId() {
         return id;

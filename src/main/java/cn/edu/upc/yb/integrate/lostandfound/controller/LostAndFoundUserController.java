@@ -89,7 +89,7 @@ public class LostAndFoundUserController {
 //    @RequestMapping("/test")
 //    public void contextLoads() {
 //        for (int i = 0; i < 10; i++) {
-//            User user = new User("id" + i, "name" + i, "nickname" + i, "M", "title" + i, "detail" + i, 1, new Date().toString(), null, false, true);
+//            DeliverWater user = new DeliverWater("id" + i, "name" + i, "nickname" + i, "M", "title" + i, "detail" + i, 1, new Date().toString(), null, false, true);
 //            userDao.save(user);
 //            Official official = new Official("123","456","789");
 //
