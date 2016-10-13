@@ -18,17 +18,19 @@ public class DeliverController {
     @Autowired
     DeliverWaterDao userDao;
 
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "0") int num) {
-        if (0 == num) {
-            DeliverWater deliverWater = new DeliverWater(blockNumber, dormitory, name, phone);
-            userDao.save(deliverWater);
-        }else{
-            DeliverWater deliverWater = new DeliverWater(blockNumber,dormitory,name,phone,num);
-            userDao.save(deliverWater);
-        }
-        return new JsonMes(1,"提交成功");
-
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public Object create(String blockNumber, String dormitory, String name, String phone) {
+        DeliverWater deliverWater = new DeliverWater(blockNumber, dormitory, name, phone);
+        System.out.println("name:" + name);
+        userDao.save(deliverWater);
+        return new JsonMes(1, "提交成功");
     }
+
+    @RequestMapping(value = "/store", method = RequestMethod.POST)
+    public Object store(String blockNumber, String dormitory, String name, String phone) {
+        DeliverWater deliverWater = new DeliverWater(blockNumber, dormitory, name, phone);
+        userDao.save(deliverWater);
+        return new JsonMes(1, "提交成功");
+    }
+
 }
