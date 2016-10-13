@@ -6,7 +6,6 @@ import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,5 +31,10 @@ public class DeliverController {
         userDao.save(deliverWater);
         return new JsonMes(1, "提交成功");
     }
+//    @RequestMapping(value = "/judgetime",method = RequestMethod.GET)
+//    public Object judge(){
+//
+//
+//    }
 
 }
