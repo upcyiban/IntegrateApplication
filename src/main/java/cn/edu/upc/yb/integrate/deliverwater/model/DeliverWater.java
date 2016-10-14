@@ -13,14 +13,15 @@ public class DeliverWater {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-   private String blockNumber;
-   private String dormitory;
-   private String name;
-   private String phone;
-   private int num;
-   private long createAt;
-   private long upAt;
-   private long deleteAt;
+    private int yibanid;
+    private String blockNumber;
+    private String dormitory;
+    private String name;
+    private String phone;
+    private int num;
+    private long createAt;
+    private long upAt;
+    private long deleteAt;
 
     public DeliverWater(String blockNumber, String dormitory, String name, String phone, int num) {
         this.blockNumber = blockNumber;
@@ -39,7 +40,17 @@ public class DeliverWater {
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(){}
+    public DeliverWater(int yibanid, String blockNumber, String dormitory, String name, String phone) {
+        this.yibanid = yibanid;
+        this.blockNumber = blockNumber;
+        this.dormitory = dormitory;
+        this.name = name;
+        this.phone = phone;
+        this.createAt = System.currentTimeMillis();
+    }
+
+    public DeliverWater() {
+    }
 
     public int getId() {
         return id;
@@ -87,5 +98,13 @@ public class DeliverWater {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getYibanid() {
+        return yibanid;
+    }
+
+    public void setYibanid(int yibanid) {
+        this.yibanid = yibanid;
     }
 }
