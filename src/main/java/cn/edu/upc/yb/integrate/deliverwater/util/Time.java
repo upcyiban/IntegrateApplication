@@ -28,5 +28,9 @@ public class Time {
         System.out.println(sd);
         return sd;
     }
-
+    public long zeroPoint(){
+        long time = System.currentTimeMillis();
+        long t1 = time/(24*3600*1000);
+        return time - t1;
+    }
 }

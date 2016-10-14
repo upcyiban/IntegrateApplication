@@ -116,4 +116,8 @@ public class DeliverWater {
     public void setIsdeal(boolean isdeal) {
         this.isdeal = isdeal;
     }
+
+  public long getCreateAt(){
+      return this.createAt;
+  }
 }
