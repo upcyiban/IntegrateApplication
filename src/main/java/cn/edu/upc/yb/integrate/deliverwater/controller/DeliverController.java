@@ -4,6 +4,7 @@ import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +19,11 @@ public class DeliverController {
     @Autowired
     DeliverWaterDao userDao;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public Object create(String blockNumber, String dormitory, String name, String phone) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public Object create(String blockNumber,@RequestParam("dormitory") String dormitory, String name, String phone) {
         DeliverWater deliverWater = new DeliverWater(blockNumber, dormitory, name, phone);
         System.out.println("name:" + name);
+        System.out.println("domitory: " + dormitory);
         userDao.save(deliverWater);
         return new JsonMes(1, "提交成功");
     }

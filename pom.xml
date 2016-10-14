@@ -64,7 +64,12 @@
 			<version>${javamail.version}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.1-FINAL</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>

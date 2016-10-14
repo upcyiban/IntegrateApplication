@@ -1,7 +1,6 @@
 package cn.edu.upc.yb.integrate.deliverwater.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by 陈子枫 on 2016/9/29.
