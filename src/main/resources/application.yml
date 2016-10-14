@@ -38,5 +38,7 @@ yibanoauth:
   express:
       APPID: "fbea79f78cbe9fef"
       APPkey: "cd1d99b207c0050317798f8393e20968"
-
+  deliverwater:
+      APPID: "c5295b6cf87a2c99"
+      APPkey: "64de90bef3677e54e22e6ed1766f1067"
 

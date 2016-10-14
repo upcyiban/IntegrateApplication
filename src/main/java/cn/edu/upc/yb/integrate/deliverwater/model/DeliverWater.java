@@ -14,6 +14,7 @@ public class DeliverWater {
     private int id;
 
     private int yibanid;
+    private boolean isdeal;
     private String blockNumber;
     private String dormitory;
     private String name;
@@ -22,6 +23,7 @@ public class DeliverWater {
     private long createAt;
     private long upAt;
     private long deleteAt;
+
 
     public DeliverWater(String blockNumber, String dormitory, String name, String phone, int num) {
         this.blockNumber = blockNumber;
@@ -106,5 +108,13 @@ public class DeliverWater {
 
     public void setYibanid(int yibanid) {
         this.yibanid = yibanid;
+    }
+
+    public boolean isdeal() {
+        return isdeal;
+    }
+
+    public void setIsdeal(boolean isdeal) {
+        this.isdeal = isdeal;
     }
 }

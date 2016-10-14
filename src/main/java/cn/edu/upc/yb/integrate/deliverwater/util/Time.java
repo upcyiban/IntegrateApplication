@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.deliverwater.model;
+package cn.edu.upc.yb.integrate.deliverwater.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

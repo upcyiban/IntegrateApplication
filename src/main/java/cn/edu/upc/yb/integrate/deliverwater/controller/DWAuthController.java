@@ -3,6 +3,7 @@ package cn.edu.upc.yb.integrate.deliverwater.controller;
 import cn.edu.upc.yb.integrate.bulletinboard.config.BulletinBoardOauthConfig;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
+import cn.edu.upc.yb.integrate.deliverwater.config.DeliverWaterConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpSession;
  * Created by 陈子枫 on 2016/10/13.
  */
 @RestController
-@RequestMapping("/dw")
-public class AuthController {
+@RequestMapping("/deliverwater")
+public class DWAuthController {
     @Autowired
     private HttpSession httpSession;
 
@@ -22,7 +23,7 @@ public class AuthController {
     private YibanOAuth yibanOAuth;
 
     @Autowired
-    private BulletinBoardOauthConfig b;
+    private DeliverWaterConfig b;
 
     @Autowired
     private CommonAdminService commonAdminService;
