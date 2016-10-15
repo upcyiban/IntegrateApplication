@@ -62,6 +62,7 @@ public class ExcelTest {
         // 创建Excel的sheet的一行
         HSSFRow row = sheet.createRow(0);
         row.setHeight((short) 500);// 设定行的高度
+
         // 创建一个Excel的单元格
         HSSFCell cell = row.createCell((short)0);
 
@@ -70,6 +71,7 @@ public class ExcelTest {
 
         // 给Excel的单元格设置样式和赋值
         cell.setCellStyle(style);
+
         cell.setCellValue("hello world");
 
         // 设置单元格内容格式

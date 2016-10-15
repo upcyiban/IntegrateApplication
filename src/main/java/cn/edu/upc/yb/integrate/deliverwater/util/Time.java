@@ -15,10 +15,10 @@ public class Time {
         this.start = start+8*3600*1000;
         excessTime = this.start%(24*3600*1000);
         if(excessTime>(20*3600*1000)){
-            System.out.println("现在是晚上8点以后");
+           //s System.out.println("现在是晚上8点以后");
             return true;
         } else{
-            System.out.println("现在是晚上8点之前");
+          //  System.out.println("现在是晚上8点之前");
             return false;
         }
     }
