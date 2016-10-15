@@ -63,7 +63,7 @@ public class DeliverController {
         time.zeroPoint();
         while (iterator.hasNext()){
            DeliverWater deliverWater = iterator.next();
-            if (!time.judgeTime(deliverWater+.getCreateAt())){   //判断订单创建时间是否是今日20点前且是昨日20点后
+            if (!time.judgeTime(deliverWater.getCreateAt())){   //判断订单创建时间是否是今日20点前且是昨日20点后
                 deliverWater.setIsdeal(true);
                 excle.excelTest(deliverWater);
             }
