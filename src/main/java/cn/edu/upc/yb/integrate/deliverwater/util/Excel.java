@@ -94,7 +94,7 @@ public class Excel {
 
         Date date = new Date();
         String dt =  date.toString();
-        File file = new File("../../../../../deliverwater/"+dt+".xls");
+        File file = new File("deliverwater/"+dt+".xls");
         if(!file.exists()){
             file.createNewFile();
         }
