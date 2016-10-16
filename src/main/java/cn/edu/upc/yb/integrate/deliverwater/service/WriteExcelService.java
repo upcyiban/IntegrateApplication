@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -48,7 +49,7 @@ public class WriteExcelService {
         HSSFCell cell = null;
 
         short rowNum = 0;
-        while(deliverWaterIterator.hasNext()){
+        while (deliverWaterIterator.hasNext()) {
             short cellNum = -1;
             DeliverWater de = deliverWaterIterator.next();
             row = sheet.createRow(rowNum);
@@ -74,20 +75,21 @@ public class WriteExcelService {
             cell.setCellStyle(style);
             cell.setCellValue(de.getPhone()); //电话
 
-            de.setIsdeal(true);
+            //  de.setIsdeal(true);
             deliverDao.save(de);
 
             ++rowNum;
 
         }
-        Date date = new Date();
-        int mo = date.getDate();
-        int day = date.getDay();
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);//获取年份
+        int month = cal.get(Calendar.MONTH)+1;//获取月份
+        int day = cal.get(Calendar.DATE);//获取日
         File dir = new File("deliverwater");
         if (!dir.exists()) {
             dir.mkdir();
         }
-        File file = new File("deliverwater/" +  mo + "月" + day + "日" + ".xls");
+        File file = new File("deliverwater/" + year + "年" + month + "月" + day + "日" + ".xls");
         FileOutputStream os = new FileOutputStream(file);
         wb.write(os);
         os.close();

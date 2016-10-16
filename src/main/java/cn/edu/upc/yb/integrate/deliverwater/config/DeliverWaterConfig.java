@@ -15,5 +15,6 @@ public class DeliverWaterConfig {
     @Value("${yibanoauth.deliverwater.APPkey}")
     public String appkey;
 
+
 }
 

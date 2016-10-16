@@ -1,6 +1,8 @@
 package cn.edu.upc.yb.integrate.deliverwater.util;
 
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,24 +62,24 @@ public class Excel {
         cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getId());
         //创建单元格并写进名字
-        cell = row.createCell((short) 0);
-        cell.setCellStyle(style1);
+        cell = row.createCell((short) 1);
+        cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getName());
         //楼号
-        cell = row.createCell((short) 0);
-        cell.setCellStyle(style1);
+        cell = row.createCell((short) 2);
+        cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getBlockNumber());
         //宿舍号
-        cell = row.createCell((short) 0);
-        cell.setCellStyle(style1);
+        cell = row.createCell((short) 3);
+        cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getDormitory());
         //电话
-        cell = row.createCell((short) 0);
-        cell.setCellStyle(style1);
+        cell = row.createCell((short) 4);
+        cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getPhone());
         //数量
-        cell = row.createCell((short) 0);
-        cell.setCellStyle(style1);
+        cell = row.createCell((short) 5);
+        cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getNum());
         // 设置单元格内容格式
         HSSFCellStyle style1 = wb.createCellStyle();
