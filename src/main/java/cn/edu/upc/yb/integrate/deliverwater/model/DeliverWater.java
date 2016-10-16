@@ -13,6 +13,7 @@ public class DeliverWater {
     private int id;
 
     private int yibanid;
+    private String yibanName;
     private boolean isdeal;
     private String blockNumber;
     private String dormitory;
@@ -47,6 +48,17 @@ public class DeliverWater {
         this.dormitory = dormitory;
         this.name = name;
         this.phone = phone;
+        this.createAt = System.currentTimeMillis();
+    }
+
+    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory, String name, String phone, int num) {
+        this.yibanid = yibanid;
+        this.yibanName = yibanName;
+        this.blockNumber = blockNumber;
+        this.dormitory = dormitory;
+        this.name = name;
+        this.phone = phone;
+        this.num = num;
         this.createAt = System.currentTimeMillis();
     }
 
