@@ -1,7 +1,9 @@
 package cn.edu.upc.yb.integrate.deliverwater.controller;
 
 
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
+import cn.edu.upc.yb.integrate.common.util.FileDownload;
 import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -39,18 +44,19 @@ public class DeliverController {
     @Autowired
     WriteExcelService writeExcelService;
 
+    @Autowired
+    private HttpServletResponse response;
+
     /*
     *给用户的接口，让用户填信息
     */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num) {
-//        YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
-//      //  int yibanid = yibanBasicUserInfo.visit_user.userid;
-//        //String yibanName = yibanBasicUserInfo.visit_user.username;
+        YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
+        int yibanid = yibanBasicUserInfo.visit_user.userid;
+        String yibanName = yibanBasicUserInfo.visit_user.username;
 
-        int yibanid = 1;
-        String yibanName = "哈哈";
-        if (!Telephone.isCellPhone(phone)) {
+       if (!Telephone.isCellPhone(phone)) {
             return new JsonMes(-1, "你的电话号码有误");
         }
         DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num);
@@ -62,17 +68,23 @@ public class DeliverController {
     }
 
 
-    @RequestMapping("/show")
-    public Object dataShow() throws IOException {
+    @RequestMapping("/print")
+    public Object print() throws IOException {
         Iterable<DeliverWater> iterable = deliverWaterDao.findByIsdeal(false);
         Iterator<DeliverWater> iterator = iterable.iterator();
         Time time = new Time();
 
-        if (!time.judgeTime(iterator.next().getCreateAt())) {   //判断订单创建时间是否是今日20点前
             writeExcelService.writeExcel(iterator);
-        }
+
         return new JsonMes(1, "打印成功");
     }
 
+    @RequestMapping("/download")
+    public Object download() throws FileNotFoundException {
+       File file = new File("deliverwater");
+       FileDownload fileDownload = new FileDownload();
+        fileDownload.fileDownload(response,file.getName(),file.getPath());
+        return new JsonMes(1,"文件打印成功");
+    }
 
 }

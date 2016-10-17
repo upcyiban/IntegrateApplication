@@ -2,6 +2,7 @@ package cn.edu.upc.yb.integrate.deliverwater.service;
 
 import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
+import cn.edu.upc.yb.integrate.deliverwater.util.Time;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,16 @@ public class WriteExcelService {
         HSSFRow row = null;
         HSSFCell cell = null;
 
+        Time time = new Time();
+
         short rowNum = 0;
         while (deliverWaterIterator.hasNext()) {
+
             short cellNum = -1;
             DeliverWater de = deliverWaterIterator.next();
+            System.out.println(de.getCreateAt());
+            System.out.println(time.judgeTime(de.getCreateAt()));
+            if (time.judgeTime(de.getCreateAt())){
             row = sheet.createRow(rowNum);
             row.setHeight((short) 500);
 
@@ -79,6 +86,7 @@ public class WriteExcelService {
             deliverDao.save(de);
 
             ++rowNum;
+            }
 
         }
         Calendar cal = Calendar.getInstance();

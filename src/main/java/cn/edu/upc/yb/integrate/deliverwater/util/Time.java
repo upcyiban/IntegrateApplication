@@ -11,53 +11,54 @@ public class Time {
     private long now;
     private long excessTime;
 
-    public boolean judgeTime(long start){
-        this.start = start+8*3600*1000;
-        excessTime = this.start%(24*3600*1000);
-        System.out.println();
-        System.out.println(excessTime);
-        System.out.println(start);
-        System.out.println(System.currentTimeMillis());
-        if(excessTime>(20*3600*1000)){
+    public boolean judgeTime(long start) {
+        this.start = start + 8 * 3600 * 1000;
+        long now = System.currentTimeMillis() + 8 * 3600 * 1000;
+        long nowt = now % (24 * 3600 * 1000);//得到此刻多出的时间
+        now = now - nowt + 20 * 3600 * 1000;//得到今日8点的时间
+
+        if (this.start < now) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
 
     /**
      * 判断是否在给定的时刻之后
-     * @param start   输入时间
-     * @param hour     所求时间的小时（24）
-     * @param day       所求时间与此刻所差天数
      *
-     *@return
+     * @param start 输入时间
+     * @param hour  所求时间的小时（24）
+     * @param day   所求时间与此刻所差天数
+     * @return
      */
-    public boolean judgeTime(long start,int hour,int day){
-        this.start = start+8*3600*1000;
+    public boolean judgeTime(long start, int hour, int day) {
+        this.start = start + 8 * 3600 * 1000;
 
-        long  getTime = System.currentTimeMillis()+ 8*3600*1000+day*24*3600*1000+(24-hour)*3600*1000;
+        long getTime = System.currentTimeMillis() + 8 * 3600 * 1000 + day * 24 * 3600 * 1000 + (24 - hour) * 3600 * 1000;
 
 
-        excessTime = this.start%(24*3600*1000);
-        if(excessTime>getTime){
+        excessTime = this.start % (24 * 3600 * 1000);
+        if (excessTime > getTime) {
 
             return true;
-        } else{
+        } else {
 
             return false;
         }
 
     }
-    public String judgeDate(long start){
+
+    public String judgeDate(long start) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-mm-dd");
         String sd = simpleDateFormat.format(new Date(start));
         System.out.println(sd);
         return sd;
     }
-    public long zeroPoint(){
+
+    public long zeroPoint() {
         long time = System.currentTimeMillis();
-        long t1 = time/(24*3600*1000);
+        long t1 = time / (24 * 3600 * 1000);
         return time - t1;
     }
 }
