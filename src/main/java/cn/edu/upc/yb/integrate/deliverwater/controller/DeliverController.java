@@ -1,14 +1,12 @@
 package cn.edu.upc.yb.integrate.deliverwater.controller;
 
 
-import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
 import cn.edu.upc.yb.integrate.deliverwater.service.WriteExcelService;
-import cn.edu.upc.yb.integrate.deliverwater.util.Excel;
-import cn.edu.upc.yb.integrate.deliverwater.util.Phone;
+import cn.edu.upc.yb.integrate.deliverwater.util.Telephone;
 import cn.edu.upc.yb.integrate.deliverwater.util.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +50,7 @@ public class DeliverController {
 
         int yibanid = 1;
         String yibanName = "哈哈";
-        if (!Phone.isCellPhone(phone)) {
+        if (!Telephone.isCellPhone(phone)) {
             return new JsonMes(-1, "你的电话号码有误");
         }
         DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num);
