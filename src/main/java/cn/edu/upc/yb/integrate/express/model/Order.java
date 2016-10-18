@@ -12,13 +12,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String yibanid;
+    private int yibanid;
     private String number;
     private String company;
 
     private String details;
-    private String mobilenumber;
-    private String username;
+
+
 
     private String creattime;
     private String uservalue = "未确认";//用户确认订单
@@ -29,11 +29,10 @@ public class Order {
     }
 
 
-    public Order(String creattime, String username, String mobilenumber, String details, String company, String number, String yibanid,String address) {
+    public Order(String creattime, String username, String mobilenumber, String details, String company, String number, int yibanid,String address) {
 
         this.creattime = creattime;
-        this.username = username;
-        this.mobilenumber = mobilenumber;
+
         this.details = details;
         this.company = company;
         this.number = number;
@@ -51,7 +50,7 @@ public class Order {
         return id;
     }
 
-    public String getYibanid() {
+    public int getYibanid() {
         return yibanid;
     }
 
@@ -67,13 +66,7 @@ public class Order {
         return details;
     }
 
-    public String getMobilenumber() {
-        return mobilenumber;
-    }
 
-    public String getUsername() {
-        return username;
-    }
 
     public String getCreattime() {
         return creattime;
@@ -95,7 +88,7 @@ public class Order {
         this.id = id;
     }
 
-    public void setYibanid(String yibanid) {
+    public void setYibanid(int yibanid) {
         this.yibanid = yibanid;
     }
 
@@ -109,14 +102,6 @@ public class Order {
 
     public void setDetails(String details) {
         this.details = details;
-    }
-
-    public void setMobilenumber(String mobilenumber) {
-        this.mobilenumber = mobilenumber;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void setCreattime(String creattime) {
