@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by wh980 on 2016/10/14.
  */
 @Entity
-@Table(name = "express_user")
-public class User {
+@Table(name = "express_user_1018")
+public class ExpressUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class User {
     private String moblienumber;
     private String name;
 
-    public User(int yibanid, String address, boolean uservalue, String moblienumber, String name) {
+    public ExpressUser(int yibanid, String address, boolean uservalue, String moblienumber, String name) {
         this.yibanid = yibanid;
         this.address = address;
         this.uservalue = uservalue;
