@@ -1,7 +1,10 @@
 package cn.edu.upc.yb.integrate.deliverwater.controller;
 
 
+import cn.edu.upc.yb.integrate.common.dao.CommonAdminDao;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
+import cn.edu.upc.yb.integrate.common.model.CommonAdmin;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.common.util.FileDownload;
 import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
@@ -12,10 +15,8 @@ import cn.edu.upc.yb.integrate.deliverwater.service.WriteExcelService;
 import cn.edu.upc.yb.integrate.deliverwater.util.TelePhone;
 import cn.edu.upc.yb.integrate.deliverwater.util.Time;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,17 +58,17 @@ public class DeliverController {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanid = yibanBasicUserInfo.visit_user.userid;
         String yibanName = yibanBasicUserInfo.visit_user.username;
+
         if (!TelePhone.isCellPhone(phone)) {
-            if (!TelePhone.isCellPhone(phone)) {
-                return new JsonMes(-1, "你的电话号码有误");
-            }
-            DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num);
-            System.out.println("yibanId:" + yibanid);
-            System.out.println("name:" + yibanName);
-            System.out.println("domitory: " + dormitory);
-            userDao.save(deliverWater);
-            return new JsonMes(1, "提交成功");
-        }return 12;
+            return new JsonMes(-1, "你的电话号码有误");
+        }
+        DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num);
+        System.out.println("yibanId:" + yibanid);
+        System.out.println("name:" + yibanName);
+        System.out.println("domitory: " + dormitory);
+        userDao.save(deliverWater);
+        return new JsonMes(1, "提交成功");
+
     }
 
 
@@ -81,15 +82,21 @@ public class DeliverController {
     }
 
     @RequestMapping("/showfilelist")
-    public Object showFileList(){
+    public Object showFileList() {
         return excelDownLoadService.getAllFile();
     }
 
-    @RequestMapping("/download")
-    public Object download(HttpServletResponse response) throws FileNotFoundException {
-       File file = new File("deliverwater");
-       FileDownload fileDownload = new FileDownload();
-        fileDownload.fileDownload(response,file.getName(),file.getPath());
-        return new JsonMes(1,"文件打印成功");
+    @RequestMapping(value = "/download/{filename}", method = RequestMethod.GET)
+    public Object download(HttpServletResponse response, @PathVariable String filename) throws FileNotFoundException {
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
+        File file = new File(filename);
+        FileDownload fileDownload = new FileDownload();
+        try {
+            fileDownload.fileDownload(response, file.getName(), file.getPath());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return new JsonMes(-1, "出现异常");
+        }
+        return new JsonMes(1, "文件打印成功");
     }
 }
