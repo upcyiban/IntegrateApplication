@@ -1,7 +1,6 @@
 package cn.edu.upc.yb.integrate.deliverwater.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by 陈子枫 on 2016/9/29.
@@ -13,14 +12,18 @@ public class DeliverWater {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-   private String blockNumber;
-   private String dormitory;
-   private String name;
-   private String phone;
-   private int num;
-   private long createAt;
-   private long upAt;
-   private long deleteAt;
+    private int yibanid;
+    private String yibanName;
+    private boolean isdeal;
+    private String blockNumber;
+    private String dormitory;
+    private String name;
+    private String phone;
+    private int num;
+    private long createAt;
+    private long upAt;
+    private long deleteAt;
+
 
     public DeliverWater(String blockNumber, String dormitory, String name, String phone, int num) {
         this.blockNumber = blockNumber;
@@ -39,7 +42,28 @@ public class DeliverWater {
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(){}
+    public DeliverWater(int yibanid, String blockNumber, String dormitory, String name, String phone) {
+        this.yibanid = yibanid;
+        this.blockNumber = blockNumber;
+        this.dormitory = dormitory;
+        this.name = name;
+        this.phone = phone;
+        this.createAt = System.currentTimeMillis();
+    }
+
+    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory, String name, String phone, int num) {
+        this.yibanid = yibanid;
+        this.yibanName = yibanName;
+        this.blockNumber = blockNumber;
+        this.dormitory = dormitory;
+        this.name = name;
+        this.phone = phone;
+        this.num = num;
+        this.createAt = System.currentTimeMillis();
+    }
+
+    public DeliverWater() {
+    }
 
     public int getId() {
         return id;
@@ -88,4 +112,24 @@ public class DeliverWater {
     public void setNum(int num) {
         this.num = num;
     }
+
+    public int getYibanid() {
+        return yibanid;
+    }
+
+    public void setYibanid(int yibanid) {
+        this.yibanid = yibanid;
+    }
+
+    public boolean isdeal() {
+        return isdeal;
+    }
+
+    public void setIsdeal(boolean isdeal) {
+        this.isdeal = isdeal;
+    }
+
+  public long getCreateAt(){
+      return this.createAt;
+  }
 }

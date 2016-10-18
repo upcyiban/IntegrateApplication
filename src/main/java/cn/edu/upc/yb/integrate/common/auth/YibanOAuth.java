@@ -20,6 +20,7 @@ public class YibanOAuth {
 
     public Object dealYibanOauth(String verify_request, String appid, String appkey) {
         MCrypt mCrypt = new MCrypt(appid, appkey);
+        System.out.println("Auth");
         String res = null;
         try {
             res = new String(mCrypt.decrypt(verify_request));

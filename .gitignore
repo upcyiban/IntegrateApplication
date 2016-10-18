@@ -26,3 +26,5 @@ hs_err_pid*
 .idea
 IntegrateApplication.iml
 application-production.yml
+
+deliverwater/
