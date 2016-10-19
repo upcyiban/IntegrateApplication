@@ -72,7 +72,6 @@ public class DeliverController {
     }
 
 
-    @RequestMapping("/print")
     public Object print() throws IOException {
         Iterable<DeliverWater> iterable = deliverWaterDao.findByIsdeal(false);
         Iterator<DeliverWater> iterator = iterable.iterator();
@@ -82,12 +81,13 @@ public class DeliverController {
     }
 
     @RequestMapping("/showfilelist")
-    public Object showFileList() {
+    public Object showFileList() throws IOException {
+        this.print();
         return excelDownLoadService.getAllFile();
     }
 
-    @RequestMapping(value = "/download/{filename}", method = RequestMethod.GET)
-    public Object download(HttpServletResponse response, @PathVariable String filename) throws FileNotFoundException {
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public Object download(HttpServletResponse response,String filename) throws FileNotFoundException {
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         File file = new File(filename);
         FileDownload fileDownload = new FileDownload();

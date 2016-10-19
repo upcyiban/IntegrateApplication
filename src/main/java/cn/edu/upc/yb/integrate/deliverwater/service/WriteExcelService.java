@@ -58,48 +58,52 @@ public class WriteExcelService {
             DeliverWater de = deliverWaterIterator.next();
             System.out.println(de.getCreateAt());
             System.out.println(time.judgeTime(de.getCreateAt()));
-            if (time.judgeTime(de.getCreateAt())){
-            row = sheet.createRow(rowNum);
-            row.setHeight((short) 500);
+            if (time.judgeTime(de.getCreateAt())) {
+                row = sheet.createRow(rowNum);
+                row.setHeight((short) 500);
 
-            cell = row.createCell(++cellNum);
-            cell.setCellStyle(style);
-            cell.setCellValue(de.getName());//名字
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getName());//名字
 
-            cell = row.createCell(++cellNum);
-            cell.setCellStyle(style);
-            cell.setCellValue(de.getNum()); //数量
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getNum()); //数量
 
-            cell = row.createCell(++cellNum);
-            cell.setCellStyle(style);
-            cell.setCellValue(de.getBlockNumber());//楼号
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getBlockNumber());//楼号
 
-            cell = row.createCell(++cellNum);
-            cell.setCellStyle(style);
-            cell.setCellValue(de.getDormitory());//宿舍
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getDormitory());//宿舍
 
-            cell = row.createCell(++cellNum);
-            cell.setCellStyle(style);
-            cell.setCellValue(de.getPhone()); //电话
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getPhone()); //电话
 
-            //  de.setIsdeal(true);
-            deliverDao.save(de);
+                  de.setIsdeal(true);
+                deliverDao.save(de);
 
-            ++rowNum;
+                ++rowNum;
             }
 
         }
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);//获取年份
-        int month = cal.get(Calendar.MONTH)+1;//获取月份
+        int month = cal.get(Calendar.MONTH) + 1;//获取月份
         int day = cal.get(Calendar.DATE);//获取日
         File dir = new File("deliverwater");
         if (!dir.exists()) {
             dir.mkdir();
         }
+
         File file = new File("deliverwater/" + year + "年" + month + "月" + day + "日" + ".xls");
-        FileOutputStream os = new FileOutputStream(file);
-        wb.write(os);
-        os.close();
+        if (!file.exists()) {
+            FileOutputStream os = new FileOutputStream(file);
+            wb.write(os);
+            os.close();
+        }
+
     }
 }
