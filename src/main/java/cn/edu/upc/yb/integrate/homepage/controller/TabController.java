@@ -1,5 +1,6 @@
 package cn.edu.upc.yb.integrate.homepage.controller;
 
+import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.homepage.model.Tab;
 import cn.edu.upc.yb.integrate.homepage.repository.TabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class TabController {
     public Object create(String name, String href){
         Tab tab = new Tab(name,href);
         tabRepository.save(tab);
-        return "保存成功";
+        return new JsonMes(0,"保存成功");
     }
 
     @GetMapping("/update")
@@ -33,13 +34,13 @@ public class TabController {
         Tab tab = tabRepository.findOne(id);
         tab.update(name,href);
         tabRepository.save(tab);
-        return "更新成功";
+        return new JsonMes(0,"更新成功");
     }
 
     @GetMapping("/delete")
     public Object delete(Integer id){
         tabRepository.delete(id);
-        return "删除成功";
+        return new JsonMes(0,"删除成功");
     }
 
 

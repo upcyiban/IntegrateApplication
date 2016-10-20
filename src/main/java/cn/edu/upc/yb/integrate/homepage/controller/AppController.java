@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.homepage.controller;
 
 
+import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.homepage.model.App;
 import cn.edu.upc.yb.integrate.homepage.repository.AppRepository;
 import cn.edu.upc.yb.integrate.homepage.storage.StorageFileNotFoundException;
@@ -45,11 +46,11 @@ public class AppController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam("icon") MultipartFile icon, String name) {
+    public Object create(@RequestParam("icon") MultipartFile icon, String name) {
         storageService.store(icon,name);
         App app = new App(name);
         appRepository.save(app);
-        return "添加成功";
+        return new JsonMes(0,"添加成功");
     }
     @PostMapping("/update")
     public Object update(Integer id, @RequestParam("file") MultipartFile icon, String name){
@@ -57,12 +58,12 @@ public class AppController {
         App app = appRepository.findOne(id);
         app.update(name);
         appRepository.save(app);
-        return "更新成功";
+        return new JsonMes(0,"更新成功");
     }
     @GetMapping("/update")
     public Object delete(Integer id){
         appRepository.delete(id);
-        return "删除成功";
+        return new JsonMes(0,"删除成功");
     }
     @GetMapping("/findone")
     public Object find(Integer id){
