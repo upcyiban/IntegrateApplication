@@ -20,6 +20,7 @@ public class DeliverWater {
     private String name;
     private String phone;
     private int num;
+    private int ticket;
     private long createAt;
     private long upAt;
     private long deleteAt;
@@ -51,7 +52,7 @@ public class DeliverWater {
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory, String name, String phone, int num) {
+    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory, String name, String phone, int num,int ticket) {
         this.yibanid = yibanid;
         this.yibanName = yibanName;
         this.blockNumber = blockNumber;
@@ -59,6 +60,7 @@ public class DeliverWater {
         this.name = name;
         this.phone = phone;
         this.num = num;
+        this.ticket = ticket;
         this.createAt = System.currentTimeMillis();
     }
 

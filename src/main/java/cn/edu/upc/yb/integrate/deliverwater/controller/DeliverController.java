@@ -14,6 +14,7 @@ import cn.edu.upc.yb.integrate.deliverwater.service.ExcelDownLoadService;
 import cn.edu.upc.yb.integrate.deliverwater.service.WriteExcelService;
 import cn.edu.upc.yb.integrate.deliverwater.util.TelePhone;
 import cn.edu.upc.yb.integrate.deliverwater.util.Time;
+import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class DeliverController {
     *给用户的接口，让用户填信息
     */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num) {
+    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num, @RequestParam(value = "ticket", defaultValue = "1") int ticket) {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanid = yibanBasicUserInfo.visit_user.userid;
         String yibanName = yibanBasicUserInfo.visit_user.username;
@@ -62,7 +63,7 @@ public class DeliverController {
         if (!TelePhone.isCellPhone(phone)) {
             return new JsonMes(-1, "你的电话号码有误");
         }
-        DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num);
+        DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num, ticket);
         System.out.println("yibanId:" + yibanid);
         System.out.println("name:" + yibanName);
         System.out.println("domitory: " + dormitory);
@@ -72,22 +73,32 @@ public class DeliverController {
     }
 
 
-    public Object print() throws IOException {
+    public boolean print() throws IOException {
         Iterable<DeliverWater> iterable = deliverWaterDao.findByIsdeal(false);
         Iterator<DeliverWater> iterator = iterable.iterator();
         Time time = new Time();
-        writeExcelService.writeExcel(iterator);
-        return new JsonMes(1, "打印成功");
+        long now = System.currentTimeMillis();
+        System.out.println(now);
+        if (!time.judgeTime(now)) {
+            writeExcelService.writeExcel(iterator);
+            return true;
+        } else {
+
+            return false;
+        }
+
     }
 
     @RequestMapping("/showfilelist")
     public Object showFileList() throws IOException {
+
         this.print();
+        System.out.println(this.print());
         return excelDownLoadService.getAllFile();
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
-    public Object download(HttpServletResponse response,String filename) throws FileNotFoundException {
+    public Object download(HttpServletResponse response, String filename) throws FileNotFoundException {
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         File file = new File(filename);
         FileDownload fileDownload = new FileDownload();
