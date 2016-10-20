@@ -7,39 +7,36 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "express_order_0118")
-public class Order {
+public class ExpressOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private int yibanid;
+    private String username;
     private String number;
     private String company;
-
     private String details;
-
-
-
     private String creattime;
-    private String uservalue = "未确认";//用户确认订单
-    private String couriervalue = "未接单";//接单员最终确认
-    private String ordervalue = "未完成";//确认接单
+    private boolean uservalue = false;
+    private boolean couriervalue = false;//接单员确认完成
+    private boolean ordervalue = true;//订单是否显示
     private String address;
-    public Order() {
+    private String mobilenumber;
+    public ExpressOrder() {
     }
 
-
-    public Order(String creattime, String username, String mobilenumber, String details, String company, String number, int yibanid,String address) {
-
-        this.creattime = creattime;
-
-        this.details = details;
-        this.company = company;
+    public ExpressOrder(String username,String number, String company, String details, String creattime, boolean uservalue, boolean couriervalue, boolean ordervalue, String address, String mobilenumber) {
+        this.username=username;
         this.number = number;
-        this.yibanid = yibanid;
-
-        this.address= address;
-
+        this.company = company;
+        this.details = details;
+        this.creattime = creattime;
+        this.uservalue = uservalue;
+        this.couriervalue = couriervalue;
+        this.ordervalue = ordervalue;
+        this.address = address;
+        this.mobilenumber = mobilenumber;
     }
 
     public String getAddress() {
@@ -72,15 +69,15 @@ public class Order {
         return creattime;
     }
 
-    public String getUservalue() {
+    public boolean getUservalue() {
         return uservalue;
     }
 
-    public String getCouriervalue() {
+    public boolean getCouriervalue() {
         return couriervalue;
     }
 
-    public String getOrdervalue() {
+    public boolean getOrdervalue() {
         return ordervalue;
     }
 
@@ -108,15 +105,15 @@ public class Order {
         this.creattime = creattime;
     }
 
-    public void setUservalue(String uservalue) {
+    public void setUservalue(boolean uservalue) {
         this.uservalue = uservalue;
     }
 
-    public void setCouriervalue(String couriervalue) {
+    public void setCouriervalue(boolean couriervalue) {
         this.couriervalue = couriervalue;
     }
 
-    public void setOrdervalue(String ordervalue) {
+    public void setOrdervalue(boolean ordervalue) {
         this.ordervalue = ordervalue;
     }
 
