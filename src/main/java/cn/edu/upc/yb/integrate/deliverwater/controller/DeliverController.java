@@ -55,11 +55,13 @@ public class DeliverController {
     *给用户的接口，让用户填信息
     */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num, @RequestParam(value = "ticket", defaultValue = "1") int ticket) {
+    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num, @RequestParam(value = "ticket", defaultValue = "0") int ticket) {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanid = yibanBasicUserInfo.visit_user.userid;
         String yibanName = yibanBasicUserInfo.visit_user.username;
-
+        if (num<0||ticket<0){
+            return new JsonMes(-1,"订购数量有误");
+        }
         if (!TelePhone.isCellPhone(phone)) {
             return new JsonMes(-1, "你的电话号码有误");
         }
@@ -74,16 +76,16 @@ public class DeliverController {
 
 
     public boolean print() throws IOException {
-        Iterable<DeliverWater> iterable = deliverWaterDao.findByIsdeal(false);
+        Iterable<DeliverWater> iterable = deliverWaterDao.findByIsdealOrderByBlockNumber(false);
         Iterator<DeliverWater> iterator = iterable.iterator();
         Time time = new Time();
+
         long now = System.currentTimeMillis();
         System.out.println(now);
         if (!time.judgeTime(now)) {
             writeExcelService.writeExcel(iterator);
             return true;
         } else {
-
             return false;
         }
 
@@ -91,9 +93,7 @@ public class DeliverController {
 
     @RequestMapping("/showfilelist")
     public Object showFileList() throws IOException {
-
         this.print();
-        System.out.println(this.print());
         return excelDownLoadService.getAllFile();
     }
 

@@ -50,8 +50,35 @@ public class WriteExcelService {
         HSSFCell cell = null;
 
         Time time = new Time();
+        short i = -1;
 
-        short rowNum = 0;
+        row = sheet.createRow(0);
+        row.setHeight((short) 500);
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("姓名");//名字
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("水桶数"); //数量
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("水票数"); //数量
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("楼号");//楼号
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("宿舍");//宿舍
+
+        cell = row.createCell(++i);
+        cell.setCellStyle(style);
+        cell.setCellValue("电话"); //电话
+        short rowNum = 1;
         while (deliverWaterIterator.hasNext()) {
 
             short cellNum = -1;
@@ -68,7 +95,11 @@ public class WriteExcelService {
 
                 cell = row.createCell(++cellNum);
                 cell.setCellStyle(style);
-                cell.setCellValue(de.getNum()); //数量
+                cell.setCellValue(de.getNum()); //水桶数量
+
+                cell = row.createCell(++cellNum);
+                cell.setCellStyle(style);
+                cell.setCellValue(de.getTicket()); //水票数量
 
                 cell = row.createCell(++cellNum);
                 cell.setCellStyle(style);
@@ -82,7 +113,7 @@ public class WriteExcelService {
                 cell.setCellStyle(style);
                 cell.setCellValue(de.getPhone()); //电话
 
-                  de.setIsdeal(true);
+                de.setIsdeal(true);
                 deliverDao.save(de);
 
                 ++rowNum;

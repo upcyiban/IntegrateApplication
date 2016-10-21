@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface DeliverWaterDao extends CrudRepository<DeliverWater,Integer> {
     Iterable<DeliverWater> findByIsdeal(boolean isdeal);
-
+    Iterable<DeliverWater> findByIsdealOrderByBlockNumber(boolean isdeal);
 }

@@ -134,4 +134,12 @@ public class DeliverWater {
   public long getCreateAt(){
       return this.createAt;
   }
+
+    public int getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(int ticket) {
+        this.ticket = ticket;
+    }
 }
