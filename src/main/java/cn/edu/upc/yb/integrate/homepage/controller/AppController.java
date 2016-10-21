@@ -2,6 +2,8 @@ package cn.edu.upc.yb.integrate.homepage.controller;
 
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
+import cn.edu.upc.yb.integrate.common.model.CommonAdmin;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.homepage.model.App;
 import cn.edu.upc.yb.integrate.homepage.repository.AppRepository;
 import cn.edu.upc.yb.integrate.homepage.storage.StorageFileNotFoundException;
@@ -20,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/homepage/app")
 public class AppController {
     private final StorageService storageService;
+
+    @Autowired
+    public CommonAdminService commonAdminService;
 
     @Autowired
     public AppController(StorageService storageService) {
@@ -41,36 +46,48 @@ public class AppController {
     }
 
     @GetMapping("/showall")
-    public Iterable<App> showAll(){
-        return appRepository.findAll();
+    public Object showAll(){
+        if(commonAdminService.isCommonAdmin()){
+            return appRepository.findAll();
+        }else{
+            return new JsonMes(1,"你还没有登陆或者你不是管理员");
+        }
     }
 
     @PostMapping("/create")
     public Object create(@RequestParam("icon") MultipartFile icon, String name) {
-        storageService.store(icon,name);
-        App app = new App(name);
-        appRepository.save(app);
-        return new JsonMes(0,"添加成功");
+        if(commonAdminService.isCommonAdmin()){
+            storageService.store(icon,name);
+            App app = new App(name);
+            appRepository.save(app);
+            return new JsonMes(0,"添加成功");
+        }else{
+            return new JsonMes(1,"你还没有登陆或者你不是管理员");
+        }
     }
     @PostMapping("/update")
     public Object update(Integer id, @RequestParam("file") MultipartFile icon, String name){
-        storageService.store(icon,name);
-        App app = appRepository.findOne(id);
-        app.update(name);
-        appRepository.save(app);
-        return new JsonMes(0,"更新成功");
+        if(commonAdminService.isCommonAdmin()) {
+            storageService.store(icon,name);
+            App app = appRepository.findOne(id);
+            app.update(name);
+            appRepository.save(app);
+            return new JsonMes(0,"更新成功");
+        }else{
+            return new JsonMes(1,"你还没有登陆或者你不是管理员");
+        }
+
     }
-    @GetMapping("/update")
+    @GetMapping("/delete")
     public Object delete(Integer id){
-        appRepository.delete(id);
-        return new JsonMes(0,"删除成功");
-    }
-    @GetMapping("/findone")
-    public Object find(Integer id){
-        return  appRepository.findOne(id);
-    }
+        if(commonAdminService.isCommonAdmin()) {
+            appRepository.delete(id);
+            return new JsonMes(0,"删除成功");
+        }else{
+            return new JsonMes(1,"你还没有登陆或者你不是管理员");
+        }
 
-
+    }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
