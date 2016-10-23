@@ -8,6 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by ybdevelop on 2016/10/18.
  */
 public interface AppRepository extends CrudRepository<App,Integer> {
-    public Iterable<App> findByName(String name);
-    public Iterable<App> findAll(Sort sort);
+    public Iterable<App> findByTabid(Integer tabid);
 }

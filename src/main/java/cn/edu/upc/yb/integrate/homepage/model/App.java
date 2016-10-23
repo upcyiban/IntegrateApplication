@@ -27,13 +27,17 @@ public class App{
 
     @Column(nullable = false,unique = true)
     private String name;
+    @Column(nullable = false,unique = true)
+    private Integer tabid;
 
-    public App(String name) {
+    public App(String name,Integer tabid) {
         this.name = name;
+        this.tabid = tabid;
     }
     public App(){}
 
-    public void update(String name){
+    public void update(String name,Integer tabid){
         this.name = name;
+        this.tabid = tabid;
     }
 }

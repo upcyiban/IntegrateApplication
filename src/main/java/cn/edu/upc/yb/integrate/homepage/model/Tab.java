@@ -14,12 +14,10 @@ public class Tab{
 
     @Column(nullable = false,unique = true)
     private String name;
-    @Column(nullable = false)
-    private String href;
 
-    public Tab(String name, String href) {
+
+    public Tab(String name) {
         this.name = name;
-        this.href = href;
     }
     public Tab(){}
 
@@ -35,15 +33,11 @@ public class Tab{
 
 
 
-    public String getHref() {
-        return href;
-    }
 
 
 
-    public void update(String name, String href){
+    public void update(String name){
         this.name = name;
-        this.href = href;
     }
 
 
