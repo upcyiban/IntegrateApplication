@@ -10,5 +10,4 @@ import java.util.Iterator;
  */
 public interface ExpressOrderRepository extends CrudRepository<ExpressOrder,Integer>{
     Iterable<ExpressOrder> findByYibanid(int yibanid);
-    Iterator<ExpressOrder> findById(int id);
 }

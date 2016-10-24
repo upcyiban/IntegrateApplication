@@ -8,7 +8,7 @@ import javax.xml.crypto.Data;
  * Created by wanghaojun on 2016/10/21.
  */
 @Entity
-@Table(name = "express_address")
+@Table(name = "express_address1024")
 public class ExpressAddress {
 
     @Id
@@ -19,9 +19,9 @@ public class ExpressAddress {
     private int yibanid;
     private String mobilenumber;
     private String address;
-    private Data creatdate;
+    private String creatdate;
 
-    public ExpressAddress(String name, int yibanid, String mobilenumber, String address,Data creatdate) {
+    public ExpressAddress(String name, int yibanid, String mobilenumber, String address,String creatdate) {
         this.name = name;
         this.yibanid = yibanid;
         this.mobilenumber = mobilenumber;
@@ -69,4 +69,11 @@ public class ExpressAddress {
         this.address = address;
     }
 
+    public String getCreatdate() {
+        return creatdate;
+    }
+
+    public void setCreatdate(String creatdate) {
+        this.creatdate = creatdate;
+    }
 }
