@@ -27,7 +27,7 @@ public class App{
 
     @Column(nullable = false,unique = true)
     private String name;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private Integer tabid;
 
     public App(String name,Integer tabid) {
