@@ -13,7 +13,7 @@ public class ExpressOrder {
     private int id;
 
     private int yibanid;
-    private String username;
+
     private String number;
     private String company;
     private String details;
@@ -21,13 +21,13 @@ public class ExpressOrder {
     private boolean uservalue = false;
     private boolean couriervalue = false;//接单员确认完成
     private boolean ordervalue = true;//订单是否显示
-    private String address;
-    private String mobilenumber;
+
+
     public ExpressOrder() {
     }
 
-    public ExpressOrder(String username,String number, String company, String details, String creattime, boolean uservalue, boolean couriervalue, boolean ordervalue, String address, String mobilenumber) {
-        this.username=username;
+    public ExpressOrder(String number, String company, String details, String creattime, boolean uservalue, boolean couriervalue, boolean ordervalue, String address, String mobilenumber) {
+
         this.number = number;
         this.company = company;
         this.details = details;
@@ -35,13 +35,10 @@ public class ExpressOrder {
         this.uservalue = uservalue;
         this.couriervalue = couriervalue;
         this.ordervalue = ordervalue;
-        this.address = address;
-        this.mobilenumber = mobilenumber;
+
     }
 
-    public String getAddress() {
-        return address;
-    }
+
 
     public int getId() {
         return id;
