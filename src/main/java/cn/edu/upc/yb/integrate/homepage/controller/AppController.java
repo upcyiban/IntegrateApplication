@@ -51,17 +51,17 @@ public class AppController {
     }
 
     @PostMapping("/create")
-    public Object create(@RequestParam("icon") MultipartFile icon, String name ,Integer tabid) {
+    public Object create(@RequestParam("icon") MultipartFile icon, String name ,Integer tabid, String href) {
         storageService.store(icon,name);
-        App app = new App(name,tabid);
+        App app = new App(name,tabid,href);
         appRepository.save(app);
         return new JsonMes(0,"添加成功");
     }
     @PostMapping("/update")
-    public Object update(Integer id, @RequestParam("file") MultipartFile icon, String name,Integer tabid){
+    public Object update(Integer id, @RequestParam("file") MultipartFile icon, String name,Integer tabid, String href){
         storageService.store(icon,name);
         App app = appRepository.findOne(id);
-        app.update(name,tabid);
+        app.update(name,tabid,href);
         appRepository.save(app);
         return new JsonMes(0,"更新成功");
     }

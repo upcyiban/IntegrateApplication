@@ -23,21 +23,27 @@ public class App{
         return name;
     }
 
-
+    public String getHref(){
+        return href;
+    }
 
     @Column(nullable = false,unique = true)
     private String name;
     @Column(nullable = false)
     private Integer tabid;
+    @Column(nullable = false)
+    private String href;
 
-    public App(String name,Integer tabid) {
+    public App(String name,Integer tabid, String href) {
         this.name = name;
         this.tabid = tabid;
+        this.href = href;
     }
     public App(){}
 
-    public void update(String name,Integer tabid){
+    public void update(String name,Integer tabid,String href){
         this.name = name;
         this.tabid = tabid;
+        this.href = href;
     }
 }
