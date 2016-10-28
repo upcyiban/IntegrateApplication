@@ -61,10 +61,6 @@ public class Excel {
         // 给Excel的单元格设置样式和赋值id
         cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getId());
-        //创建单元格并写进名字
-        cell = row.createCell((short) 1);
-        cell.setCellStyle(style);
-        cell.setCellValue(deliverWater.getName());
         //楼号
         cell = row.createCell((short) 2);
         cell.setCellStyle(style);
@@ -73,10 +69,7 @@ public class Excel {
         cell = row.createCell((short) 3);
         cell.setCellStyle(style);
         cell.setCellValue(deliverWater.getDormitory());
-        //电话
-        cell = row.createCell((short) 4);
-        cell.setCellStyle(style);
-        cell.setCellValue(deliverWater.getPhone());
+
         //数量
         cell = row.createCell((short) 5);
         cell.setCellStyle(style);

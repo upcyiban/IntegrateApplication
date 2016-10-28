@@ -57,10 +57,6 @@ public class WriteExcelService {
 
         cell = row.createCell(++i);
         cell.setCellStyle(style);
-        cell.setCellValue("姓名");//名字
-
-        cell = row.createCell(++i);
-        cell.setCellStyle(style);
         cell.setCellValue("水桶数"); //数量
 
         cell = row.createCell(++i);
@@ -75,9 +71,6 @@ public class WriteExcelService {
         cell.setCellStyle(style);
         cell.setCellValue("宿舍");//宿舍
 
-        cell = row.createCell(++i);
-        cell.setCellStyle(style);
-        cell.setCellValue("电话"); //电话
         short rowNum = 1;
         while (deliverWaterIterator.hasNext()) {
 
@@ -88,10 +81,6 @@ public class WriteExcelService {
             if (time.judgeTime(de.getCreateAt())) {
                 row = sheet.createRow(rowNum);
                 row.setHeight((short) 500);
-
-                cell = row.createCell(++cellNum);
-                cell.setCellStyle(style);
-                cell.setCellValue(de.getName());//名字
 
                 cell = row.createCell(++cellNum);
                 cell.setCellStyle(style);
@@ -108,10 +97,6 @@ public class WriteExcelService {
                 cell = row.createCell(++cellNum);
                 cell.setCellStyle(style);
                 cell.setCellValue(de.getDormitory());//宿舍
-
-                cell = row.createCell(++cellNum);
-                cell.setCellStyle(style);
-                cell.setCellValue(de.getPhone()); //电话
 
                 de.setIsdeal(true);
                 deliverDao.save(de);
