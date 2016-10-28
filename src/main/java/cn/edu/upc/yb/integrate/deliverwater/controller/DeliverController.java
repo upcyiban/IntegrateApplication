@@ -65,7 +65,7 @@ public class DeliverController {
         if (!TelePhone.isCellPhone(phone)) {
             return new JsonMes(-1, "你的电话号码有误");
         }
-        DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, name, phone, num, ticket);
+        DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, num, ticket);
         System.out.println("yibanId:" + yibanid);
         System.out.println("name:" + yibanName);
         System.out.println("domitory: " + dormitory);

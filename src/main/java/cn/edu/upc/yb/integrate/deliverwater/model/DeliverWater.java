@@ -17,8 +17,6 @@ public class DeliverWater {
     private boolean isdeal;
     private String blockNumber;
     private String dormitory;
-    private String name;
-    private String phone;
     private int num;
     private int ticket;
     private long createAt;
@@ -26,39 +24,33 @@ public class DeliverWater {
     private long deleteAt;
 
 
-    public DeliverWater(String blockNumber, String dormitory, String name, String phone, int num) {
+    public DeliverWater(String blockNumber, String dormitory,  int num) {
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
-        this.name = name;
-        this.phone = phone;
         this.num = num;
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(String blockNumber, String dormitory, String name, String phone) {
+    public DeliverWater(String blockNumber, String dormitory) {
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
-        this.name = name;
-        this.phone = phone;
+
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(int yibanid, String blockNumber, String dormitory, String name, String phone) {
+    public DeliverWater(int yibanid, String blockNumber, String dormitory) {
         this.yibanid = yibanid;
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
-        this.name = name;
-        this.phone = phone;
+
         this.createAt = System.currentTimeMillis();
     }
 
-    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory, String name, String phone, int num,int ticket) {
+    public DeliverWater(int yibanid, String yibanName, String blockNumber, String dormitory,int num,int ticket) {
         this.yibanid = yibanid;
         this.yibanName = yibanName;
         this.blockNumber = blockNumber;
         this.dormitory = dormitory;
-        this.name = name;
-        this.phone = phone;
         this.num = num;
         this.ticket = ticket;
         this.createAt = System.currentTimeMillis();
@@ -89,22 +81,6 @@ public class DeliverWater {
 
     public void setDormitory(String dormitory) {
         this.dormitory = dormitory;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public int getNum() {
