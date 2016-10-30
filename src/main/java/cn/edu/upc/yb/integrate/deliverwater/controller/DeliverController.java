@@ -1,10 +1,8 @@
 package cn.edu.upc.yb.integrate.deliverwater.controller;
 
 
-import cn.edu.upc.yb.integrate.common.dao.CommonAdminDao;
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
-import cn.edu.upc.yb.integrate.common.model.CommonAdmin;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.common.util.FileDownload;
 import cn.edu.upc.yb.integrate.deliverwater.dao.DeliverWaterDao;
@@ -12,11 +10,8 @@ import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import cn.edu.upc.yb.integrate.deliverwater.model.DeliverWater;
 import cn.edu.upc.yb.integrate.deliverwater.service.ExcelDownLoadService;
 import cn.edu.upc.yb.integrate.deliverwater.service.WriteExcelService;
-import cn.edu.upc.yb.integrate.deliverwater.util.TelePhone;
 import cn.edu.upc.yb.integrate.deliverwater.util.Time;
-import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -61,9 +56,6 @@ public class DeliverController {
         String yibanName = yibanBasicUserInfo.visit_user.username;
         if (num<0||ticket<0){
             return new JsonMes(-1,"订购数量有误");
-        }
-        if (!TelePhone.isCellPhone(phone)) {
-            return new JsonMes(-1, "你的电话号码有误");
         }
         DeliverWater deliverWater = new DeliverWater(yibanid, yibanName, blockNumber, dormitory, num, ticket);
         System.out.println("yibanId:" + yibanid);
