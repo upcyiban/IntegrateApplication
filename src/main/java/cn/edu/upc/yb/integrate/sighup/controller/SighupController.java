@@ -24,7 +24,7 @@ public class SighupController {
         SighUp sighUp = new SighUp(name, sex, method,  detail,  major);
         sighUpRepository.save(sighUp);
         MailUtils mailUtils = new MailUtils();
-        mailUtils.send("549180928@qq.com","name: " + name + "</br>" +
+        mailUtils.send("upcybdevelopment@outlook.com","name: " + name + "</br>" +
                 "性别:" + sex + "</br>" +
                  "专业班级: " + major +"</br>" +
                 "个人简介:" + detail + "</br>" +
