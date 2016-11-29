@@ -1,9 +1,8 @@
-package cn.edu.upc.yb.integrate.deliverwater.controller;
+package cn.edu.upc.yb.integrate.ballot.controller;
 
 import cn.edu.upc.yb.integrate.bulletinboard.config.BulletinBoardOauthConfig;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
-import cn.edu.upc.yb.integrate.deliverwater.config.DeliverWaterConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by 陈子枫 on 2016/10/13.
+ * Created by Jaxlying on 2016/11/29.
  */
 @RestController
-@RequestMapping("/deliverwater")
-public class DWAuthController {
+@RequestMapping("/ballot")
+public class BallotAuthController {
+
     @Autowired
     private HttpSession httpSession;
 
@@ -23,7 +23,7 @@ public class DWAuthController {
     private YibanOAuth yibanOAuth;
 
     @Autowired
-    private DeliverWaterConfig b;
+    private BulletinBoardOauthConfig b;
 
     @Autowired
     private CommonAdminService commonAdminService;
@@ -41,7 +41,6 @@ public class DWAuthController {
 
     @RequestMapping("/isauth")
     public int isAuth() {
-        System.out.println(yibanOAuth.isAuth());
         return yibanOAuth.isAuth();
     }
 

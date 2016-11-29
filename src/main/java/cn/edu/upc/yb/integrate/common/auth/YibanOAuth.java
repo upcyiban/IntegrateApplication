@@ -32,6 +32,7 @@ public class YibanOAuth {
         try {
             YibanBasicUserInfo yibanBasicUserInfo = gson.fromJson(res, YibanBasicUserInfo.class);
             httpSession.setAttribute("user", yibanBasicUserInfo);
+            System.out.println("授权成功");
             return yibanBasicUserInfo;
         } catch (Exception ex) {
             ex.printStackTrace();
