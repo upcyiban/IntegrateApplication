@@ -15,4 +15,8 @@ public class BallotConfig {
     @Value("${yibanoauth.ballot.APPkey}")
     public String appkey;
 
+    public String appurl = "";
+
+    public String frontedurl = "";
+
 }

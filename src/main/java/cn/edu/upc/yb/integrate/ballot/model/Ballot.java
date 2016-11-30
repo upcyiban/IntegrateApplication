@@ -17,9 +17,13 @@ public class Ballot {
 
     private long deadline;
 
-    private int num;
+    private int num;//总数量
 
     private String picsrc;
+
+    private int yibanid;
+
+    private String yibanName;
 
     public Ballot(){}
 
@@ -28,6 +32,22 @@ public class Ballot {
         this.detail = detail;
         this.deadline = deadline;
         this.num = num;
+    }
+
+    public int getYibanid() {
+        return yibanid;
+    }
+
+    public void setYibanid(int yibanid) {
+        this.yibanid = yibanid;
+    }
+
+    public String getYibanName() {
+        return yibanName;
+    }
+
+    public void setYibanName(String yibanName) {
+        this.yibanName = yibanName;
     }
 
     public int getId() {

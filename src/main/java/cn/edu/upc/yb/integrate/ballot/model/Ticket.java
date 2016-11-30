@@ -22,10 +22,20 @@ public class Ticket {
 
     private String ybname;
 
+    private int number;
+
     public Ticket(Ballot ballot, int ybid, String ybname) {
         this.ballot = ballot;
         this.ybid = ybid;
         this.ybname = ybname;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public int getId() {
