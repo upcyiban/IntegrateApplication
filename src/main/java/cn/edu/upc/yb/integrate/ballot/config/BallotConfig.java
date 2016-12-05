@@ -17,6 +17,6 @@ public class BallotConfig {
 
     public String appurl = "";
 
-    public String frontedurl = "";
+    public String frontedurl = "front";
 
 }

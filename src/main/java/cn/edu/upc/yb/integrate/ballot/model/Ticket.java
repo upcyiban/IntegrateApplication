@@ -24,14 +24,30 @@ public class Ticket {
 
     private int number;
 
+    private int isGet = 0;
+
+    public Ticket(){}
+
     public Ticket(Ballot ballot, int ybid, String ybname) {
         this.ballot = ballot;
         this.ybid = ybid;
         this.ybname = ybname;
     }
 
+    public Ticket(Ballot ballot) {
+        this.ballot = ballot;
+    }
+
     public int getNumber() {
         return number;
+    }
+
+    public int getIsGet() {
+        return isGet;
+    }
+
+    public void setIsGet(int isGet) {
+        this.isGet = isGet;
     }
 
     public void setNumber(int number) {

@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by Jaxlying on 2016/11/29.
  */
 public interface BallotRepository extends CrudRepository<Ballot,Integer>{
+    Iterable<Ballot> findByYibanid(int id);
 }
