@@ -91,7 +91,7 @@ public class BallotController {
         if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(-1,"没有登陆");
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo)httpSession.getAttribute("user");
-        return ballotRepository.findByYibanid(0);
+        return ballotRepository.findByYibanid(yibanBasicUserInfo.visit_user.userid);
 
     }
 
@@ -102,8 +102,14 @@ public class BallotController {
 
     @RequestMapping(value = "",method = RequestMethod.DELETE)
     public Object delete(int id){
-        ballotRepository.delete(id);
-        return new JsonMes(1,"删除成功");
+        if (httpSession.getAttribute("user")==null)
+            return new ErrorReporter(-1,"没有登陆");
+        Ballot ballot = ballotRepository.findOne(id);
+        YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo)httpSession.getAttribute("user");
+        if(ballot.getYibanid() == yibanBasicUserInfo.visit_user.userid) {
+            ballotRepository.delete(id);
+            return new JsonMes(1, "删除成功");
+        }else return new JsonMes(0,"没有权限");
     }
 
 

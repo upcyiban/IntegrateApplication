@@ -1,5 +1,6 @@
 package cn.edu.upc.yb.integrate.ballot.controller;
 
+import cn.edu.upc.yb.integrate.ballot.config.BallotConfig;
 import cn.edu.upc.yb.integrate.bulletinboard.config.BulletinBoardOauthConfig;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
@@ -23,7 +24,7 @@ public class BallotAuthController {
     private YibanOAuth yibanOAuth;
 
     @Autowired
-    private BulletinBoardOauthConfig b;
+    private BallotConfig b;
 
     @Autowired
     private CommonAdminService commonAdminService;
