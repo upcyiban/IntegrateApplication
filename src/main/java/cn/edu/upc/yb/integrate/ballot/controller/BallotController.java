@@ -5,6 +5,7 @@ import cn.edu.upc.yb.integrate.ballot.model.Ballot;
 import cn.edu.upc.yb.integrate.ballot.model.Ticket;
 import cn.edu.upc.yb.integrate.ballot.repository.BallotRepository;
 import cn.edu.upc.yb.integrate.ballot.repository.TicketRepository;
+import cn.edu.upc.yb.integrate.ballot.service.BallotService;
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
@@ -37,6 +38,9 @@ public class BallotController {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private BallotService ballotService;
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public Object creatBallot(int num,String detail,long deadline){
@@ -100,19 +104,17 @@ public class BallotController {
         return ticketRepository.findByBallot(ballotRepository.findOne(id));
     }
 
-    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public Object delete(int id){
         if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(-1,"没有登陆");
         Ballot ballot = ballotRepository.findOne(id);
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo)httpSession.getAttribute("user");
         if(ballot.getYibanid() == yibanBasicUserInfo.visit_user.userid) {
-            ballotRepository.delete(id);
+            ballotService.deleteBallot(id);
             return new JsonMes(1, "删除成功");
         }else return new JsonMes(0,"没有权限");
     }
-
-
 
 
 }
