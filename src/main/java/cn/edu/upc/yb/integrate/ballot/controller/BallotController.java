@@ -82,6 +82,8 @@ public class BallotController {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo)httpSession.getAttribute("user");
 
         Ballot ballot = ballotRepository.findOne(id);
+        if(System.currentTimeMillis() > ballot.getDeadline())
+            return new JsonMes(-1,"截止时间已到");
         Ticket ticket =  ticketRepository.findFirstByBallotAndIsGet(ballot,0);
         ticket.setIsGet(1);
         ticket.setYbid(yibanBasicUserInfo.visit_user.userid);
