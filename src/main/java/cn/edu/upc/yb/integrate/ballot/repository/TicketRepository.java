@@ -10,4 +10,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface TicketRepository extends CrudRepository<Ticket,Integer>{
     Ticket findFirstByBallotAndIsGet(Ballot ballot,int isget);
     Iterable<Ticket> findByBallot(Ballot ballot);
+    Iterable<Ticket> findByBallotAndYbid(Ballot ballot, int ybid);
 }
