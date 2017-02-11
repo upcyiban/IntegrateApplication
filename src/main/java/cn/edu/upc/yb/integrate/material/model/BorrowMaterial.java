@@ -23,7 +23,7 @@ public class BorrowMaterial {
 
     private long creatTime;//创建时间
     private int materialId;//物资id
-    private String borrowerYibanId;//借用人易班id
+    private int borrowerYibanId;//借用人易班id
 
     private boolean isAgree;//是否同意
     private boolean isReturn;//是否归还
@@ -32,7 +32,7 @@ public class BorrowMaterial {
     public BorrowMaterial() {
     }
 
-    public BorrowMaterial(String borrowerName, String borrowerNumber, String borrowerYibanId, String reason, long startTime, long endTime, long creatTime, int materialId, int borrowNumber) {
+    public BorrowMaterial(String borrowerName, String borrowerNumber, int borrowerYibanId, String reason, long startTime, long endTime, long creatTime, int materialId, int borrowNumber) {
         this.borrowerName = borrowerName;
         this.borrowerNumber = borrowerNumber;
         this.borrowerYibanId = borrowerYibanId;
@@ -68,11 +68,11 @@ public class BorrowMaterial {
         this.borrowerNumber = borrowerNumber;
     }
 
-    public String getBorrowerYibanId() {
+    public int getBorrowerYibanId() {
         return borrowerYibanId;
     }
 
-    public void setBorrowerYibanId(String borrowerYibanId) {
+    public void setBorrowerYibanId(int borrowerYibanId) {
         this.borrowerYibanId = borrowerYibanId;
     }
 

@@ -76,12 +76,12 @@ public class Material {
         this.number = number;
     }
 
-    public int getTotalnumber() {
+    public int getTotalNumber() {
         return totalNumber;
     }
 
-    public void setTotalnumber(int totalnumber) {
-        this.totalNumber = totalnumber;
+    public void setTotalNumber(int totalNumber) {
+        this.totalNumber = totalNumber;
     }
 
     public boolean isStatus() {
@@ -91,4 +91,14 @@ public class Material {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 }

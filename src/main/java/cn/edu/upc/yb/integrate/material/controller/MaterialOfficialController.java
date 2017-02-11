@@ -25,15 +25,23 @@ public class MaterialOfficialController {
     @Autowired
     BorrowMaterialRepository borrowMaterialRepository;
 
-    @RequestMapping(value = "/material")
-    public Object listMaterial(){
-        return materialRepository.findAll();
-    }
+//    @RequestMapping(value = "/material")
+//    public Object listMaterial(){
+//
+//        Iterable<Material> materials = materialRepository.findAll();
+//        Iterator iterator=materials.iterator();
+//        Material material=new Material();
+//        while (iterator.hasNext()) {
+//            material=(Material)iterator.next();
+//            System.out.println(material.getId());
+//        }
+//        return materialRepository.findAll();
+//
+//    }
     @RequestMapping(value = "")
     public Object listBorrowMaterial(){
 
         Iterable<BorrowMaterial> borrowMaterials = borrowMaterialRepository.findAll();
-
         return borrowMaterials;
     }
 

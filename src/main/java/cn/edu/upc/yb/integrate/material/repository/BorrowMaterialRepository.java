@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface BorrowMaterialRepository extends CrudRepository<BorrowMaterial,Integer> {
 
+    public Iterable<BorrowMaterial> findByMaterialId(int id);
+    public Iterable<BorrowMaterial> findByBorrowerYibanId(int id);
 }
