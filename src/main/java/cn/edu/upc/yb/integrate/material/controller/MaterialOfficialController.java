@@ -38,7 +38,7 @@ public class MaterialOfficialController {
         return borrowMaterials;
     }
 
-    @RequestMapping(value = "/creat",method = RequestMethod.GET)
+    @RequestMapping(value = "/creat",method = RequestMethod.POST)
     public Object creatMaterial(String name,String organization,String description,int totalnumber){
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         Material material=new Material(name,organization,description,totalnumber,totalnumber);
@@ -47,14 +47,14 @@ public class MaterialOfficialController {
         return new JsonMes(1,"物资创建成功");
     }
 
-    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public Object deleteMaterial(int materialId){
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         materialRepository.delete(materialId);
         return new JsonMes(1,"删除成功");
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Object updateMaterial(int id,String name,String organization,String decription,int totalnumber) {
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         Material material = materialRepository.findOne(id);
@@ -67,7 +67,7 @@ public class MaterialOfficialController {
         return new JsonMes(1, "更改成功");
     }
 
-    @RequestMapping(value = "/agree",method = RequestMethod.GET)
+    @RequestMapping(value = "/agree",method = RequestMethod.POST)
     public Object agreeBorrowMaterial(int borrowMaterialId){
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         BorrowMaterial borrowMaterial=borrowMaterialRepository.findOne(borrowMaterialId);
@@ -76,7 +76,7 @@ public class MaterialOfficialController {
 
         return new JsonMes(1,"已同意");
     }
-    @RequestMapping(value = "/evaluate",method = RequestMethod.GET)
+    @RequestMapping(value = "/evaluate",method = RequestMethod.POST)
     public Object evaluateBorrowMaterial(int borrowMaterialId,String returnStatus){
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         BorrowMaterial borrowMaterial = borrowMaterialRepository.findOne(borrowMaterialId);

@@ -31,7 +31,7 @@ public class MaterialController {
     @Autowired
     HttpSession httpSession;
 
-    @RequestMapping(value = "",method = RequestMethod.GET)
+    @RequestMapping(value = "")
     public Object listMaterial(){
 
         if (httpSession.getAttribute("user")==null)
@@ -72,10 +72,10 @@ public class MaterialController {
 
     }
 
-    @RequestMapping(value = "/creat",method = RequestMethod.GET)
+    @RequestMapping(value = "/creat",method = RequestMethod.POST)
     public Object creatBorrowMaterial(String borrowerName, String borrowerNumber,String reason,int materialId, int borrowNumber,long startTime,long endTime ){
         if (httpSession.getAttribute("user")==null)
-            return new ErrorReporter(-1,"没有登陆");
+            return new ErrorReporter(0,"没有登陆");
         YibanBasicUserInfo yibanBasicUserInfo=(YibanBasicUserInfo) httpSession.getAttribute("user");
         int borrowerYibanId = yibanBasicUserInfo.visit_user.userid;
 
@@ -89,16 +89,16 @@ public class MaterialController {
         return new JsonMes(1,"创建成功");
     }
 
-    @RequestMapping(value = "/user",method = RequestMethod.GET)
+    @RequestMapping(value = "/user",method = RequestMethod.POST)
     public Object listUserBorrowMaterial(){
         if (httpSession.getAttribute("user")==null)
-            return new ErrorReporter(-1,"没有登陆");
+            return new ErrorReporter(0,"没有登陆");
         YibanBasicUserInfo yibanBasicUserInfo=(YibanBasicUserInfo) httpSession.getAttribute("user");
         int ybid = yibanBasicUserInfo.visit_user.userid;
         return borrowMaterialRepository.findByBorrowerYibanId(ybid);
     }
 
-    @RequestMapping(value = "/getOneMaterial",method = RequestMethod.GET)
+    @RequestMapping(value = "/getOneMaterial",method = RequestMethod.POST)
     public Object getOneMaterial(int materialId){
         int number = 0;
         Material material=materialRepository.findOne(materialId);
