@@ -47,3 +47,6 @@ yibanoauth:
   ballot:
       APPID: "c5295b6cf87a2c99"
       APPkey: "64de90bef3677e54e22e6ed1766f1067"
+  material:
+      APPID: "f87c99a7211f2a44"
+      APPkey: "ce7a947563254450913c4b768dc76b9e"

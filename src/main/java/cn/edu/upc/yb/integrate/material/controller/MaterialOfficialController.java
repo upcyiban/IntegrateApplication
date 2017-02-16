@@ -1,6 +1,8 @@
 package cn.edu.upc.yb.integrate.material.controller;
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.material.model.BorrowMaterial;
 import cn.edu.upc.yb.integrate.material.model.Material;
 import cn.edu.upc.yb.integrate.material.repository.BorrowMaterialRepository;
@@ -20,34 +22,25 @@ import java.util.Iterator;
 public class MaterialOfficialController {
 
     @Autowired
-    MaterialRepository materialRepository;
+    private MaterialRepository materialRepository;
 
     @Autowired
-    BorrowMaterialRepository borrowMaterialRepository;
+    private BorrowMaterialRepository borrowMaterialRepository;
 
-//    @RequestMapping(value = "/material")
-//    public Object listMaterial(){
-//
-//        Iterable<Material> materials = materialRepository.findAll();
-//        Iterator iterator=materials.iterator();
-//        Material material=new Material();
-//        while (iterator.hasNext()) {
-//            material=(Material)iterator.next();
-//            System.out.println(material.getId());
-//        }
-//        return materialRepository.findAll();
-//
-//    }
+    @Autowired
+    private CommonAdminService commonAdminService;
+
+
     @RequestMapping(value = "")
     public Object listBorrowMaterial(){
-
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         Iterable<BorrowMaterial> borrowMaterials = borrowMaterialRepository.findAll();
         return borrowMaterials;
     }
 
     @RequestMapping(value = "/creat",method = RequestMethod.GET)
     public Object creatMaterial(String name,String organization,String description,int totalnumber){
-
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         Material material=new Material(name,organization,description,totalnumber,totalnumber);
         materialRepository.save(material);
 
@@ -56,13 +49,14 @@ public class MaterialOfficialController {
 
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public Object deleteMaterial(int materialId){
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         materialRepository.delete(materialId);
         return new JsonMes(1,"删除成功");
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.GET)
     public Object updateMaterial(int id,String name,String organization,String decription,int totalnumber) {
-
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         Material material = materialRepository.findOne(id);
         material.setName(name);
         material.setNumber(totalnumber);
@@ -75,7 +69,7 @@ public class MaterialOfficialController {
 
     @RequestMapping(value = "/agree",method = RequestMethod.GET)
     public Object agreeBorrowMaterial(int borrowMaterialId){
-
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         BorrowMaterial borrowMaterial=borrowMaterialRepository.findOne(borrowMaterialId);
         borrowMaterial.setAgree(true);
         borrowMaterialRepository.save(borrowMaterial);
@@ -84,7 +78,7 @@ public class MaterialOfficialController {
     }
     @RequestMapping(value = "/evaluate",method = RequestMethod.GET)
     public Object evaluateBorrowMaterial(int borrowMaterialId,String returnStatus){
-
+        if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         BorrowMaterial borrowMaterial = borrowMaterialRepository.findOne(borrowMaterialId);
         borrowMaterial.setReturn(true);
         borrowMaterial.setReturnStatus(returnStatus);
