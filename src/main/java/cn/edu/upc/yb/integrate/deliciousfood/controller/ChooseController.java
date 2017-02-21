@@ -1,5 +1,9 @@
 package cn.edu.upc.yb.integrate.deliciousfood.controller;
 
+import cn.edu.upc.yb.integrate.common.dao.CommonAdminDao;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.model.CommonAdmin;
+import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
@@ -7,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 
 /**
@@ -19,6 +24,14 @@ public class ChooseController {
     @Autowired
    private VarietyOfDishesDao varietyOfDishesDao;
 
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private CommonAdminDao commonAdminDao;
+
+    @Autowired
+    private CommonAdminService commonAdminService;
 //
 //    @RequestMapping("/byname")
 //    public Object byName(String name) {
@@ -47,6 +60,7 @@ public class ChooseController {
 
     @RequestMapping("/find")
     public Object findThing(String name, String region, String kind, String cook, String restaurant, String price) {
+    if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
         if (null == name) {
             if (null == region) {
                 if (null == kind) {

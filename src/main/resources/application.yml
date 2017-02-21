@@ -50,3 +50,6 @@ yibanoauth:
   material:
       APPID: "f87c99a7211f2a44"
       APPkey: "ce7a947563254450913c4b768dc76b9e"
+  deliciousfood:
+      APPID: "b57c09f2baa748bd"
+      APPkey: "949e8d0dbb8c89736663f64df666b90f"
