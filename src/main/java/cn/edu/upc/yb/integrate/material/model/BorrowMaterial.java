@@ -23,6 +23,8 @@ public class BorrowMaterial {
 
     private long creatTime;//创建时间
     private int materialId;//物资id
+    private String materialName;
+    private String materialOrganization;
     private int borrowerYibanId;//借用人易班id
 
     private boolean isAgree;//是否同意
@@ -142,6 +144,22 @@ public class BorrowMaterial {
 
     public void setReturn(boolean aReturn) {
         isReturn = aReturn;
+    }
+
+    public String getMaterialName() {
+        return materialName;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
+    public String getMaterialOrganization() {
+        return materialOrganization;
+    }
+
+    public void setMaterialOrganization(String materialOrganization) {
+        this.materialOrganization = materialOrganization;
     }
 
     public void setReturnStatus(String returnStatus) {
