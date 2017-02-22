@@ -91,7 +91,7 @@ public class MaterialController {
         return new JsonMes(1,"创建成功");
     }
 
-    @RequestMapping(value = "/user",method = RequestMethod.GET)
+    @RequestMapping(value = "/borrower",method = RequestMethod.GET)
     public Object listUserBorrowMaterial(){
         if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(0,"没有登陆");
