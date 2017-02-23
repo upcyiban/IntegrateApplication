@@ -27,8 +27,9 @@ public class EvaluateController {
 
     @RequestMapping("/create")
     public Object create(String name, String region, String kind, String cook, String restaurant, String price, String imsl){
-        if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+       // if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,cook,restaurant,price,imsl);
+        System.out.println(name+region+kind+cook+restaurant+price+imsl);
         varietyOfDishesDao.save(varietyOfDishes);
         return new JsonMes(1,"创建成功");
     }
