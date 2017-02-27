@@ -17,6 +17,6 @@ public class BallotConfig {
 
     public String appurl = "";
 
-    public String frontedurl = "http://yb.upc.edu.cn/project/ballot/#/";
+    public String fronturl = "http://yb.upc.edu.cn/project/ballot/#/";
 
 }
