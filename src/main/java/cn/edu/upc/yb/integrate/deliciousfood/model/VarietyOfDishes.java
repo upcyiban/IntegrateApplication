@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "varietyofdishes")
-public class VarietyOfDishes  {
+public class VarietyOfDishes {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,21 +17,41 @@ public class VarietyOfDishes  {
     private String name;//菜名
     private String region;//地域(地方菜)
     private String kind;//种类（酸，甜口味）
-    private String cook;//做法（蒸，煮，炸。。）
     private String restaurant;//餐厅
     private String price;
-    private String imsl;//图片地址
-    private double num;//评分
+    private String path;//图片地址
+    private  double num = 0;//评分
+    private  double sum = 0;
+    private int time = 0;//评价次数
 
+    private String introduce;
+    private boolean isDelete;
+    private long creatAt;
+    private long updataAt;
 
-    public VarietyOfDishes(String name, String region, String kind, String cook, String restaurant, String price, String imsl) {
+    public VarietyOfDishes(String name, String region, String kind, String restaurant, String price, String path) {
         this.name = name;
         this.region = region;
         this.kind = kind;
-        this.cook = cook;
         this.restaurant = restaurant;
         this.price = price;
-        this.imsl = imsl;
+        this.path = path;
+        this.isDelete = false;
+        this.creatAt = System.currentTimeMillis();
+        this.updataAt = creatAt;
+    }
+
+    public VarietyOfDishes(String name, String region, String kind, String restaurant, String price, String path, String introduce) {
+        this.name = name;
+        this.region = region;
+        this.kind = kind;
+        this.restaurant = restaurant;
+        this.price = price;
+        this.path = path;
+        this.introduce = introduce;
+        this.isDelete = false;
+        this.creatAt = System.currentTimeMillis();
+        this.updataAt = creatAt;
     }
 
     public VarietyOfDishes() {
@@ -41,16 +62,13 @@ public class VarietyOfDishes  {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        this.updataAt = System.currentTimeMillis();
     }
 
     public String getRegion() {
@@ -59,6 +77,7 @@ public class VarietyOfDishes  {
 
     public void setRegion(String region) {
         this.region = region;
+        this.updataAt = System.currentTimeMillis();
     }
 
     public String getKind() {
@@ -67,14 +86,7 @@ public class VarietyOfDishes  {
 
     public void setKind(String kind) {
         this.kind = kind;
-    }
-
-    public String getCook() {
-        return cook;
-    }
-
-    public void setCook(String cook) {
-        this.cook = cook;
+        this.updataAt = System.currentTimeMillis();
     }
 
     public String getRestaurant() {
@@ -83,6 +95,7 @@ public class VarietyOfDishes  {
 
     public void setRestaurant(String restaurant) {
         this.restaurant = restaurant;
+        this.updataAt = System.currentTimeMillis();
     }
 
     public String getPrice() {
@@ -91,14 +104,15 @@ public class VarietyOfDishes  {
 
     public void setPrice(String price) {
         this.price = price;
+        this.updataAt = System.currentTimeMillis();
     }
 
-    public String getImsl() {
-        return imsl;
+    public String getPath() {
+        return path;
     }
 
-    public void setImsl(String imsl) {
-        this.imsl = imsl;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public double getNum() {
@@ -106,6 +120,37 @@ public class VarietyOfDishes  {
     }
 
     public void setNum(double num) {
-        this.num = num;
+        sum  += num;
+        time++;
+        this.num = sum/time;
+        this.updataAt = System.currentTimeMillis();
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public boolean isdelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.isDelete = delete;
+    }
+
+    public long getCreatAt() {
+        return creatAt;
+    }
+
+    public long getUpdataAt() {
+        return updataAt;
+    }
+
+    public void setUpdataAt() {
+        this.updataAt = System.currentTimeMillis();
     }
 }
