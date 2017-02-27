@@ -48,7 +48,7 @@ public class MaterialController {
                 Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
                 while (borrowMaterialIterator.hasNext()){
                     BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()){
+                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()==1){
                         number = borrowMaterial.getBorrowNumber()+number;
                         System.out.println(number);
                     }
@@ -85,7 +85,7 @@ public class MaterialController {
         BorrowMaterial borrowMaterial=new BorrowMaterial(borrowerName,borrowerNumber,borrowerYibanId,reason,startTime,endTime,creatTime,materialId,borrowNumber);
         borrowMaterial.setMaterialName(materialRepository.findOne(materialId).getName());
         borrowMaterial.setMaterialOrganization(materialRepository.findOne(materialId).getOrganization());
-        borrowMaterial.setAgree(false);
+        borrowMaterial.setAgree(0);
         borrowMaterial.setReturn(false);
         borrowMaterialRepository.save(borrowMaterial);
         return new JsonMes(1,"创建成功");
@@ -110,7 +110,7 @@ public class MaterialController {
             Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
             while (borrowMaterialIterator.hasNext()){
                 BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()){
+                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()==1){
                     number = borrowMaterial.getBorrowNumber()+number;
                     System.out.println(number);
                 }

@@ -68,13 +68,13 @@ public class MaterialOfficialController {
     }
 
     @RequestMapping(value = "/agree",method = RequestMethod.GET)
-    public Object agreeBorrowMaterial(int borrowMaterialId){
+    public Object agreeBorrowMaterial(int borrowMaterialId,int isAgree){
         if (commonAdminService.isCommonAdmin() == false) return new ErrorReporter(-1, "您没有权限操作");
         BorrowMaterial borrowMaterial=borrowMaterialRepository.findOne(borrowMaterialId);
-        borrowMaterial.setAgree(true);
+        borrowMaterial.setAgree(isAgree);
         borrowMaterialRepository.save(borrowMaterial);
 
-        return new JsonMes(1,"已同意");
+        return new JsonMes(1,"操作完成");
     }
     @RequestMapping(value = "/evaluate",method = RequestMethod.GET)
     public Object evaluateBorrowMaterial(int borrowMaterialId,String returnStatus){

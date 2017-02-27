@@ -27,9 +27,11 @@ public class BorrowMaterial {
     private String materialOrganization;
     private int borrowerYibanId;//借用人易班id
 
-    private boolean isAgree;//是否同意
+    private int isAgree;//同意情况
     private boolean isReturn;//是否归还
     private String returnStatus;//归还情况
+
+
 
     public BorrowMaterial() {
     }
@@ -130,11 +132,11 @@ public class BorrowMaterial {
         return returnStatus;
     }
 
-    public boolean isAgree() {
+    public int isAgree() {
         return isAgree;
     }
 
-    public void setAgree(boolean agree) {
+    public void setAgree(int agree) {
         isAgree = agree;
     }
 
