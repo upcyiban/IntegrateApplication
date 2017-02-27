@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by lylllcc on 2016/12/12.
@@ -32,14 +33,12 @@ public class BallotTest {
     private BallotService ballotService;
 
     @Test
+    @Transactional
     public void testBallot() {
         Ballot ballot = ballotRepository.save(new Ballot());
         Ticket ticket = new Ticket();
         ticket.setBallot(ballot);
         ticketRepository.save(ticket);
-
-        ballotService.deleteBallot(4);
-
 
 
     }
