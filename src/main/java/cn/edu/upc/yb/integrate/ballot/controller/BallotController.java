@@ -42,11 +42,11 @@ public class BallotController {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public Object creatBallot(int num,String detail,long deadline){
 
-        if (httpSession.getAttribute("user")==null)
+       if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(-1,"没有登陆");
         Ballot ballot = new Ballot(detail,deadline,num);
         ballot = ballotRepository.save(ballot);
-        String picsrc = "http://qr.topscan.com/api.php?text=" + ballotConfig.frontedurl + "?id=" + ballot.getId();
+        String picsrc = "http://qr.topscan.com/api.php?text=" + ballotConfig.fronturl + "?id=" + ballot.getId();
         System.out.println(picsrc);
         ballot.setPicsrc(picsrc);
         YibanBasicUserInfo user = ((YibanBasicUserInfo)httpSession.getAttribute("user"));
