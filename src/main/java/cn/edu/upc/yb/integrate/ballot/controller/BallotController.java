@@ -84,7 +84,8 @@ public class BallotController {
             return new JsonMes(-1,"截止时间已到");
         int ybid = yibanBasicUserInfo.visit_user.userid;
         Iterable<Ticket> tickets = ticketRepository.findByBallotAndYbid(ballot,ybid);
-        if(tickets != null){
+
+        if(tickets.iterator().hasNext()){
             return new ErrorReporter(-1, "你已经抽过票了");
         }
 
