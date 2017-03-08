@@ -38,7 +38,7 @@ public class BallotTest {
         ticket.setBallot(ballot);
         ticketRepository.save(ticket);
 
-    
+        ballotService.deleteBallot(4);
 
 
 
