@@ -132,7 +132,7 @@ public class BorrowMaterial {
         return returnStatus;
     }
 
-    public int isAgree() {
+    public int getIsAgree() {
         return isAgree;
     }
 
