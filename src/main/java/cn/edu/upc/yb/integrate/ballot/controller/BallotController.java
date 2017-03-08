@@ -90,6 +90,9 @@ public class BallotController {
         }
 
         Ticket ticket =  ticketRepository.findFirstByBallotAndIsGet(ballot,0);
+        if(ticket == null){
+            return new ErrorReporter(-1,"全部签已经被抽完");
+        }
         ticket.setIsGet(1);
         ticket.setYbid(yibanBasicUserInfo.visit_user.userid);
         ticket.setYbname(yibanBasicUserInfo.visit_user.username);
