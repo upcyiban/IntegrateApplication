@@ -48,7 +48,7 @@ public class MaterialController {
                 Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
                 while (borrowMaterialIterator.hasNext()){
                     BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()==1){
+                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.getIsAgree()==1){
                         number = borrowMaterial.getBorrowNumber()+number;
                         System.out.println(number);
                     }
@@ -110,7 +110,7 @@ public class MaterialController {
             Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
             while (borrowMaterialIterator.hasNext()){
                 BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()==1){
+                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.getIsAgree()==1){
                     number = borrowMaterial.getBorrowNumber()+number;
                     System.out.println(number);
                 }
