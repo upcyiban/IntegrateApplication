@@ -6,20 +6,23 @@ import javax.persistence.*;
  * Created by lenovo on 2017/3/25.
  */
 @Entity
-@Table(name = "ContactJob")
-public class ContactJob {
+@Table(name = "ContactsJob")
+public class ContactsJob {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String name;
     private String number;
-    private int unitid;
+    private int contactsUnitId;
 
-    public ContactJob(String name, String number, int unitid) {
+    public ContactsJob() {
+    }
+
+    public ContactsJob(String name, String number, int contactsUnitId) {
         this.name = name;
         this.number = number;
-        this.unitid = unitid;
+        this.contactsUnitId = contactsUnitId;
     }
 
     public int getId() {
@@ -46,11 +49,11 @@ public class ContactJob {
         this.number = number;
     }
 
-    public int getUnitid() {
-        return unitid;
+    public int getContactsUnitId() {
+        return contactsUnitId;
     }
 
-    public void setUnitid(int unitid) {
-        this.unitid = unitid;
+    public void setContactsUnitId(int contactsUnitId) {
+        this.contactsUnitId = contactsUnitId;
     }
 }

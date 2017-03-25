@@ -4,7 +4,7 @@ import javax.persistence.*;
  * Created by lenovo on 2017/3/25.
  */
 @Entity
-@Table(name = "ContactUnit")
+@Table(name = "ContactsUnit")
 public class ContactsUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,9 @@ public class ContactsUnit {
 
     public int getId() {
         return id;
+    }
+
+    public ContactsUnit() {
     }
 
     public void setId(int id) {
