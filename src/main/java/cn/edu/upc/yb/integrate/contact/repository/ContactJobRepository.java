@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by lenovo on 2017/3/25.
  */
-public interface CnactJobRepository extends CrudRepository<ContactJob,Integer>{
+public interface ContactJobRepository extends CrudRepository<ContactJob,Integer>{
 
 }
