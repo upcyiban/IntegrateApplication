@@ -4,7 +4,7 @@ import cn.edu.upc.yb.integrate.deliciousfood.dto.JsonMes;
 import cn.edu.upc.yb.integrate.contact.model.ContactsUnit;
 import cn.edu.upc.yb.integrate.contact.repository.ContactJobRepository;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsUnitRepository;
-import org.omg.CORBA.Object;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/contacts")
-public class ContactsOfficecontroller {
+public class ContactsOfficeController {
 
     @Autowired
     private ContactsUnitRepository contactsUnitRepository;
@@ -30,7 +30,11 @@ public class ContactsOfficecontroller {
         contactsUnitRepository.save(contactsUnit);
         return new JsonMes(1,"创建部门成功");
     }
+
     @RequestMapping(value = "/createjob",method = RequestMethod.GET)
-    public Object cteateJob(name,)
+    public Object cteateJob(String name,String number,int unitid)
+    {
+        ContactJobRepository contactJobRepository=new 
+    }
 }
 
