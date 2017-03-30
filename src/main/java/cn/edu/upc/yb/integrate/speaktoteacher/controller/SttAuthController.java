@@ -1,16 +1,22 @@
 package cn.edu.upc.yb.integrate.speaktoteacher.controller;
 
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.speaktoteacher.config.SttConfig;
+import cn.edu.upc.yb.integrate.speaktoteacher.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * Created by wanghaojun on 2017/3/29.
  */
+@RestController
+@RequestMapping("/speaktoteacher")
 public class SttAuthController {
     @Autowired
     private HttpSession httpSession;
@@ -22,7 +28,7 @@ public class SttAuthController {
     private YibanOAuth yibanOAuth;
 
     @Autowired
-    private CommonAdminService commonAdminService;
+    private TeacherService teacherService;
 
     @RequestMapping(value = "/auth")
     public int doAuth(String vq){
@@ -47,12 +53,9 @@ public class SttAuthController {
         return 1;
     }
 
-    @RequestMapping("/isadmin")
-    public int isAdmin() {
-        if (commonAdminService.isCommonAdmin()) {
-            return 1;
-        } else {
-            return 0;
-        }
+    @RequestMapping(value = "",method = RequestMethod.GET)
+    public Object isTeacher(int id) {
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        return teacherService.isTeacher(id);
     }
 }

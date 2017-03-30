@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.speaktoteacher.controller;
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
 import cn.edu.upc.yb.integrate.speaktoteacher.config.SttConfig;
 import cn.edu.upc.yb.integrate.speaktoteacher.model.Message;
 import cn.edu.upc.yb.integrate.speaktoteacher.model.Teacher;
@@ -37,12 +38,13 @@ public class TeacherController {
     @RequestMapping(value = "/listmessage",method = RequestMethod.GET)
     public Object listmessage(int teacherId)
     {
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         return messageRepository.findByTeacherId(teacherId);
     }
 
     @RequestMapping(value = "/reply",method = RequestMethod.GET)
     public Object reply(int id,String reply){
-
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Message message = new Message();
         message=messageRepository.findOne(id);
         message.setReply(reply);
@@ -52,7 +54,7 @@ public class TeacherController {
     }
     @RequestMapping(value = "/createqrcode",method = RequestMethod.GET)
     public Object createqrcode(int id){
-
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Teacher teacher = new Teacher();
         teacher=teacherRepository.findOne(id);
         String qrcode;
@@ -69,6 +71,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/updateprofie",method = RequestMethod.GET)
     public Object updateProfile(int id,String profile){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Teacher teacher = new Teacher();
         teacher=teacherRepository.findOne(id);
         teacher.setProfile(profile);
@@ -79,6 +82,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/updatemotto",method = RequestMethod.GET)
     public Object updateMotto(int id, String motto){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Teacher teacher = new Teacher();
         teacher=teacherRepository.findOne(id);
         teacher.setMotto(motto);
@@ -88,6 +92,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/updatephonenumber",method = RequestMethod.GET)
     public Object updatePhoneNumber(int id,String phonenumber){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Teacher teacher = new Teacher();
         teacher=teacherRepository.findOne(id);
         teacher.setPhonenumber(phonenumber);
@@ -98,6 +103,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/updateemail",method = RequestMethod.GET)
     public Object updateEmail(int id,String email){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         Teacher teacher = new Teacher();
         teacher=teacherRepository.findOne(id);
         teacher.setEmail(email);

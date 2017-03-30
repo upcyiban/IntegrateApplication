@@ -1,6 +1,8 @@
 package cn.edu.upc.yb.integrate.speaktoteacher.controller;
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
+import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.speaktoteacher.model.Message;
 import cn.edu.upc.yb.integrate.speaktoteacher.repository.MessageRepository;
 import cn.edu.upc.yb.integrate.speaktoteacher.repository.TeacherRepository;
@@ -28,18 +30,21 @@ public class MessageController {
     @Autowired
     private HttpSession httpSession;
 
-    @RequestMapping(value = "",method = RequestMethod.GET)
+    @RequestMapping(value = "/getteacher",method = RequestMethod.GET)
     public Object showTeacher(int id){
-
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         return teacherRepository.findOne(id);
     }
 
     @RequestMapping(value ="/createmessage" ,method = RequestMethod.GET)
     public Object createMessage(String content, int teacherId){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanId = user.visit_user.userid;
         Message message =new Message();
         message.setContent(content);
         message.setTeacherId(teacherId);
-        message.setYibanId(1);//getybid
+        message.setYibanId(yibanId);//getybid
         Date date=new Date();
         message.setCreateTime(date);
         message.setReply("未回复");
@@ -49,8 +54,10 @@ public class MessageController {
 
     @RequestMapping(value = "/showmessage",method = RequestMethod.GET)
     public Object showMessage(){
-      int yibanId=1;
-      return messageRepository.findByYibanId(yibanId);
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanId = user.visit_user.userid;
+        return messageRepository.findByYibanId(yibanId);
     }
 
 }
