@@ -53,3 +53,6 @@ yibanoauth:
   speaktoteacher:
       APPID: "8dd080b62a2ed0b7"
       APPkey: "5c82ba03f613155d6fc0df206d65ba6c"
+  deliciousfood:
+      APPID: "14a69e60117cbef1"
+      APPkey: "459e5e748ad9871893b2a9e016e9483a"
