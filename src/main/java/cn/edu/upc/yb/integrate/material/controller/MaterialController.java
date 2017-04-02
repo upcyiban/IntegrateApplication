@@ -48,7 +48,7 @@ public class MaterialController {
                 Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
                 while (borrowMaterialIterator.hasNext()){
                     BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()){
+                    if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.getIsAgree()==1){
                         number = borrowMaterial.getBorrowNumber()+number;
                         System.out.println(number);
                     }
@@ -72,7 +72,7 @@ public class MaterialController {
 
     }
 
-    @RequestMapping(value = "/creat",method = RequestMethod.POST)
+    @RequestMapping(value = "/creat",method = RequestMethod.GET)
     public Object creatBorrowMaterial(String borrowerName, String borrowerNumber,String reason,int materialId, int borrowNumber,long startTime,long endTime ){
         if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(0,"没有登陆");
@@ -83,13 +83,15 @@ public class MaterialController {
         System.out.println(creatTime);
         System.out.println(borrowerName+borrowerNumber+borrowerYibanId+materialId+borrowNumber+reason);
         BorrowMaterial borrowMaterial=new BorrowMaterial(borrowerName,borrowerNumber,borrowerYibanId,reason,startTime,endTime,creatTime,materialId,borrowNumber);
-        borrowMaterial.setAgree(false);
+        borrowMaterial.setMaterialName(materialRepository.findOne(materialId).getName());
+        borrowMaterial.setMaterialOrganization(materialRepository.findOne(materialId).getOrganization());
+        borrowMaterial.setAgree(0);
         borrowMaterial.setReturn(false);
         borrowMaterialRepository.save(borrowMaterial);
         return new JsonMes(1,"创建成功");
     }
 
-    @RequestMapping(value = "/user",method = RequestMethod.POST)
+    @RequestMapping(value = "/borrower",method = RequestMethod.GET)
     public Object listUserBorrowMaterial(){
         if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(0,"没有登陆");
@@ -98,7 +100,7 @@ public class MaterialController {
         return borrowMaterialRepository.findByBorrowerYibanId(ybid);
     }
 
-    @RequestMapping(value = "/getOneMaterial",method = RequestMethod.POST)
+    @RequestMapping(value = "/getOneMaterial",method = RequestMethod.GET)
     public Object getOneMaterial(int materialId){
         int number = 0;
         Material material=materialRepository.findOne(materialId);
@@ -108,7 +110,7 @@ public class MaterialController {
             Iterator<BorrowMaterial> borrowMaterialIterator = borrowMaterials.iterator();
             while (borrowMaterialIterator.hasNext()){
                 BorrowMaterial borrowMaterial=borrowMaterialIterator.next();
-                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.isAgree()){
+                if(borrowMaterial.getStartTime()<=time && !borrowMaterial.isReturn() && borrowMaterial.getIsAgree()==1){
                     number = borrowMaterial.getBorrowNumber()+number;
                     System.out.println(number);
                 }

@@ -11,5 +11,4 @@ public class DeliciousFoodConfig {
 
     @Value("${yibanoauth.deliciousfood.APPkey}")
     public String appkey;
-
 }

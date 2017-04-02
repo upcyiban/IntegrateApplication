@@ -42,11 +42,11 @@ public class BallotController {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public Object creatBallot(int num,String detail,long deadline){
 
-        if (httpSession.getAttribute("user")==null)
+       if (httpSession.getAttribute("user")==null)
             return new ErrorReporter(-1,"没有登陆");
         Ballot ballot = new Ballot(detail,deadline,num);
         ballot = ballotRepository.save(ballot);
-        String picsrc = "http://qr.topscan.com/api.php?text=" + ballotConfig.frontedurl + "?id=" + ballot.getId();
+        String picsrc = "http://qr.liantu.com/api.php?text=" + ballotConfig.fronturl + "?id=" + ballot.getId();
         System.out.println(picsrc);
         ballot.setPicsrc(picsrc);
         YibanBasicUserInfo user = ((YibanBasicUserInfo)httpSession.getAttribute("user"));
@@ -84,11 +84,15 @@ public class BallotController {
             return new JsonMes(-1,"截止时间已到");
         int ybid = yibanBasicUserInfo.visit_user.userid;
         Iterable<Ticket> tickets = ticketRepository.findByBallotAndYbid(ballot,ybid);
-        if(tickets != null){
+
+        if(tickets.iterator().hasNext()){
             return new ErrorReporter(-1, "你已经抽过票了");
         }
 
         Ticket ticket =  ticketRepository.findFirstByBallotAndIsGet(ballot,0);
+        if(ticket == null){
+            return new ErrorReporter(-1,"全部签已经被抽完");
+        }
         ticket.setIsGet(1);
         ticket.setYbid(yibanBasicUserInfo.visit_user.userid);
         ticket.setYbname(yibanBasicUserInfo.visit_user.username);
