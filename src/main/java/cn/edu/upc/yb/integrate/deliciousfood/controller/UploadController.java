@@ -1,10 +1,12 @@
 package cn.edu.upc.yb.integrate.deliciousfood.controller;
 
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
 import cn.edu.upc.yb.integrate.deliciousfood.dto.JsonMes;
 import cn.edu.upc.yb.integrate.deliciousfood.dto.ResultData;
+import cn.edu.upc.yb.integrate.deliciousfood.model.User;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,21 @@ public class UploadController {
     @Autowired
     VarietyOfDishesDao varietyOfDishesDao;
 
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    AppAdminService appAdminService;
+
     @RequestMapping(value = "/picture", method = RequestMethod.POST)
     @ResponseBody
     public Object photoUpload(MultipartFile file, HttpServletRequest request, HttpServletResponse response, HttpSession session,int id) throws IllegalStateException, IOException {
         ResultData<Object> resultData = new ResultData<>();
 
-        if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+        User user = (User)httpSession.getAttribute("user");
+        //管理员验证
+        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+            return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(id);
         if (file != null) {// 判断上传的文件是否为空
             varietyOfDishes.setPath(null);// 文件路径

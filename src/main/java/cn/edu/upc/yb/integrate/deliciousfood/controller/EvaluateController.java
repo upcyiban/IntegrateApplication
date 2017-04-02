@@ -1,13 +1,18 @@
 package cn.edu.upc.yb.integrate.deliciousfood.controller;
 
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
+import cn.edu.upc.yb.integrate.deliciousfood.model.User;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by 陈子枫 on 2017/2/6.
@@ -25,9 +30,18 @@ public class EvaluateController {
     @Autowired
     private CommonAdminService commonAdminService;
 
+    @Autowired
+    AppAdminService appAdminService;
+
+    @Autowired
+    HttpSession httpSession;
+
     @RequestMapping("/create")
     public Object create(String name, String region, String kind, String cook, String restaurant, String price, String imsl,String introduce){
-       // if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+        User user = (User)httpSession.getAttribute("user");
+        //管理员验证
+        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+            return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,imsl,introduce);
         System.out.println(name+region+kind+cook+restaurant+price+imsl+introduce);
         varietyOfDishesDao.save(varietyOfDishes);
@@ -36,7 +50,10 @@ public class EvaluateController {
 
     @RequestMapping("/recreate")
     public Object recreate(int id,double num){
-        if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+        User user = (User)httpSession.getAttribute("user");
+        //管理员验证
+        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+            return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
         if (num<0||num>10)
             return new JsonMes(-1,"无效评价");
@@ -48,7 +65,10 @@ public class EvaluateController {
 
     @RequestMapping("/update")
     public Object update(int id,String price){
-        if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+        User user = (User)httpSession.getAttribute("user");
+        //管理员验证
+        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+            return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes =  varietyOfDishesDao.findOne(id);
         varietyOfDishes.setPrice(price);
         varietyOfDishesDao.save(varietyOfDishes);
@@ -56,7 +76,10 @@ public class EvaluateController {
     }
     @RequestMapping("/delete")
     public Object delete(int id){
-        if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");
+        User user = (User)httpSession.getAttribute("user");
+        //管理员验证
+        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+            return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(id);
         varietyOfDishesDao.delete(varietyOfDishes);
         return new JsonMes(1,"删除成功");
