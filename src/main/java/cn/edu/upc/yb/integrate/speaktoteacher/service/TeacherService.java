@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
+import java.util.Iterator;
 
 /**
  * Created by wanghaojun on 2017/3/30.
@@ -22,19 +23,18 @@ public class TeacherService {
 
 
 
-    public boolean isTeacher(int id){
-        if (httpSession.getAttribute("user")== null){
+    public boolean isTeacher(int ybid) {
+        if (httpSession.getAttribute("user") == null) {
             return false;
         }
-        YibanBasicUserInfo user = (YibanBasicUserInfo)httpSession.getAttribute("user");
-        int yibanid=user.visit_user.userid;
-        Teacher teacher=teacherRepository.findOne(id);
-        if(yibanid==teacher.getYibanId()){
+        YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
+        int yibanid = user.visit_user.userid;
+        if (yibanid == ybid) {
             return true;
-        }
-        else return false;
-
-
+        } else return false;
     }
+
+
+
 
 }
