@@ -44,7 +44,7 @@ public class ReviewFoodController {
         if (user==null)
             return new ErrorReporter(-1,"没有登陆");
         System.out.println("useid is:" + user.getId());
-        ReviewFood review = new ReviewFood(dishesid,user.getId(),detials);
+        ReviewFood review = new ReviewFood( dishesid, user.getId(),user.getUsername(),detials,user.getYbhead());
         reviewDao.save(review);
         return new JsonMes(1,"评论成功");
     }
