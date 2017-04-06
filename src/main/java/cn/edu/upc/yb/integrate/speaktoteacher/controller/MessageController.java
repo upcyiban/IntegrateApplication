@@ -33,7 +33,7 @@ public class MessageController {
     @RequestMapping(value = "/getteacher",method = RequestMethod.GET)
     public Object showTeacher(int yibanId){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        return teacherRepository.findByYibanId(yibanId);
+        return teacherRepository.findFirstByYibanId(yibanId);
     }
 
     @RequestMapping(value ="/createmessage" ,method = RequestMethod.GET)

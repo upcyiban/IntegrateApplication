@@ -59,9 +59,9 @@ public class TeacherController {
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int yibanid=user.visit_user.userid;
         Teacher teacher = new Teacher();
-        Iterable<Teacher> teachers=teacherRepository.findByYibanId(yibanid);
+        teacher=teacherRepository.findFirstByYibanId(yibanid);
         String qrcode;
-        if (teachers == null){
+        if (teacher.getQRcode()==null){
             qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + yibanid;
             teacher.setQRcode(qrcode);
             teacherRepository.save(teacher);
