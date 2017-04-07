@@ -54,8 +54,8 @@ public class SttAuthController {
     }
 
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public Object isTeacher(int id) {
+    public Object isTeacher(int ybid) {
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        return teacherService.isTeacher(id);
+        return teacherService.isTeacher(ybid);
     }
 }

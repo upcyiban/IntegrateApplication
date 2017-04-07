@@ -2,6 +2,7 @@ package cn.edu.upc.yb.integrate.speaktoteacher.controller;
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.speaktoteacher.config.SttConfig;
 import cn.edu.upc.yb.integrate.speaktoteacher.model.Message;
 import cn.edu.upc.yb.integrate.speaktoteacher.model.Teacher;
@@ -36,10 +37,10 @@ public class TeacherController {
     private SttConfig sttConfig;
 
     @RequestMapping(value = "/listmessage",method = RequestMethod.GET)
-    public Object listmessage(int teacherId)
+    public Object listmessage(int teacherYBId)
     {
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        return messageRepository.findByTeacherId(teacherId);
+        return messageRepository.findByTeacherId(teacherYBId);
     }
 
     @RequestMapping(value = "/reply",method = RequestMethod.GET)
@@ -53,13 +54,15 @@ public class TeacherController {
         return new JsonMes(1,"回复成功");
     }
     @RequestMapping(value = "/createqrcode",method = RequestMethod.GET)
-    public Object createqrcode(int id){
+    public Object createqrcode(){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
         Teacher teacher = new Teacher();
-        teacher=teacherRepository.findOne(id);
+        teacher=teacherRepository.findFirstByYibanId(yibanid);
         String qrcode;
-        if (teacher.getQRcode().isEmpty()){
-            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + id;
+        if (teacher.getQRcode()==null){
+            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + yibanid;
             teacher.setQRcode(qrcode);
             teacherRepository.save(teacher);
         }

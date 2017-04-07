@@ -31,19 +31,19 @@ public class MessageController {
     private HttpSession httpSession;
 
     @RequestMapping(value = "/getteacher",method = RequestMethod.GET)
-    public Object showTeacher(int id){
+    public Object showTeacher(int yibanId){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        return teacherRepository.findOne(id);
+        return teacherRepository.findFirstByYibanId(yibanId);
     }
 
     @RequestMapping(value ="/createmessage" ,method = RequestMethod.GET)
-    public Object createMessage(String content, int teacherId){
+    public Object createMessage(String content, int teacherYBId){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
         Message message =new Message();
         message.setContent(content);
-        message.setTeacherId(teacherId);
+        message.setTeacherId(teacherYBId);//存老师的易班id
         message.setYibanId(yibanId);//getybid
         Date date=new Date();
         message.setCreateTime(date);
