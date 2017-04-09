@@ -23,7 +23,7 @@ public class ReviewFood {
     private String detail;
     private String ybphoto;
     private long updateTime;
-    private String date;
+    private String time;
 
     public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto) {
         this.dishesId = dishesid;
@@ -34,7 +34,7 @@ public class ReviewFood {
         this.updateTime = System.currentTimeMillis();
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.date = formatter.format(currentTime);
+        this.time = formatter.format(currentTime);
     }
 
     public ReviewFood() {
@@ -78,5 +78,13 @@ public class ReviewFood {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

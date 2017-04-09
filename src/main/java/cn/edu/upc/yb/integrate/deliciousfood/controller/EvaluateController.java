@@ -36,13 +36,13 @@ public class EvaluateController {
     HttpSession httpSession;
 
     @RequestMapping("/create")
-    public Object create(String name, String region, String kind, String cook, String restaurant, String price, String imsl,String introduce){
+    public Object create(String name, String region, String kind, String restaurant, String price,String introduce){
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         //管理员验证
         if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
-        VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,imsl,introduce);
-        System.out.println(name+region+kind+cook+restaurant+price+imsl+introduce);
+        VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,introduce);
+        System.out.println(name+region+kind+restaurant+price+introduce);
         varietyOfDishesDao.save(varietyOfDishes);
         return new JsonMes(1,"创建成功");
     }
