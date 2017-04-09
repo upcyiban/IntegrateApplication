@@ -1,5 +1,7 @@
 package cn.edu.upc.yb.integrate.deliciousfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "varietyofdishes")
+@JsonIgnoreProperties(value = {"isDelete", "creatAt","updataAt"})
 public class VarietyOfDishes {
 
 
