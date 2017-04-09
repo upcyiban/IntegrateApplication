@@ -64,7 +64,7 @@ public class TeacherController {
         Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         String qrcode;
         if (teacher.getQRcode()==null){
-            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + yibanid;
+            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/?id=" + yibanid;
             teacher.setQRcode(qrcode);
             teacherRepository.save(teacher);
         }
