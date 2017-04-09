@@ -30,7 +30,7 @@ public class ReviewFoodController {
     private AppAdminService appAdminService;
 
     @RequestMapping("/getreview")
-    public Object getReview(@RequestParam(value = "0")int id){
+    public Object getReview(int id){
         return reviewDao.findByDishesIdOrderByUpdateTime(id);
     }
 
@@ -45,12 +45,14 @@ public class ReviewFoodController {
         return new JsonMes(1,"评论成功");
     }
 
+    @RequestMapping("/test")
     public Object test(){
         for(int i =0;i<10;i++){
             YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
             ReviewFood reviewFood = new ReviewFood(i,5830649,"EZ","这道菜还不错","images/face.jpg");
+            reviewDao.save(reviewFood);
         }
 
-        return new JsonMes(1,"测试用例添加完毕");
+        return reviewDao.findAll();
     }
 }
