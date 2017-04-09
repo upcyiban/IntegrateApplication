@@ -1,17 +1,16 @@
 package cn.edu.upc.yb.integrate.deliciousfood.controller;
 
 import cn.edu.upc.yb.integrate.common.dto.ErrorReporter;
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
-import cn.edu.upc.yb.integrate.deliciousfood.model.User;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -38,9 +37,9 @@ public class EvaluateController {
 
     @RequestMapping("/create")
     public Object create(String name, String region, String kind, String cook, String restaurant, String price, String imsl,String introduce){
-        User user = (User)httpSession.getAttribute("user");
+        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,imsl,introduce);
         System.out.println(name+region+kind+cook+restaurant+price+imsl+introduce);
@@ -50,9 +49,9 @@ public class EvaluateController {
 
     @RequestMapping("/recreate")
     public Object recreate(int id,double num){
-        User user = (User)httpSession.getAttribute("user");
+        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
         if (num<0||num>10)
@@ -65,9 +64,9 @@ public class EvaluateController {
 
     @RequestMapping("/update")
     public Object update(int id,String price){
-        User user = (User)httpSession.getAttribute("user");
+        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes =  varietyOfDishesDao.findOne(id);
         varietyOfDishes.setPrice(price);
@@ -76,9 +75,9 @@ public class EvaluateController {
     }
     @RequestMapping("/delete")
     public Object delete(int id){
-        User user = (User)httpSession.getAttribute("user");
+        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",user.getId()))
+        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(id);
         varietyOfDishesDao.delete(varietyOfDishes);
@@ -88,7 +87,7 @@ public class EvaluateController {
     public Object test(){
         int i ;
         for (i=0;i<10;i++){
-            VarietyOfDishes varietyOfDishes = new VarietyOfDishes("宫爆鸡丁","鲁菜","酸辣","荟萃2楼","8.5","/img.jpg","好吃");
+            VarietyOfDishes varietyOfDishes = new VarietyOfDishes("宫爆鸡丁","鲁菜","酸辣","荟萃2楼","8.5","./images/hongshao.jpg","好吃");
             varietyOfDishesDao.save(varietyOfDishes);
         }
         return varietyOfDishesDao.findAll();
