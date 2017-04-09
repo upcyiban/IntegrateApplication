@@ -43,8 +43,7 @@ public class TeacherController {
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int teacherYBId=user.visit_user.userid;
-        Teacher teacher=teacherRepository.findFirstByYibanId(teacherYBId);
-        return messageRepository.findByTeacherId(teacher.getId());
+        return messageRepository.findByTeacherId(teacherYBId);//teacherid存老师易班id
     }
 
     @RequestMapping(value = "/reply",method = RequestMethod.GET)
