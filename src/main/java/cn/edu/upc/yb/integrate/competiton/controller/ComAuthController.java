@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  * Created by wanghaojun on 2017/4/9.
  */
 @RestController
-@RequestMapping("/competiton")
+@RequestMapping("/competition")
 public class ComAuthController {
 
     public class MaterialAuthController {

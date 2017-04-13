@@ -50,4 +50,82 @@ public class CompetionController {
         }
         return new JsonMes(1,"success");
     }
+    @RequestMapping("/finish1")
+    public Object finish1(){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if (medal.isFinish1()){
+            return false;
+        }
+        else {
+            medal.setFinish1(true);
+            medalRepository.save(medal);
+            return new JsonMes(1,"finish");
+        }
+    }
+    @RequestMapping("/finish2")
+    public Object finish2(){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if (medal.isFinish2()){
+            return false;
+        }
+        else {
+            medal.setFinish2(true);
+            medalRepository.save(medal);
+            return new JsonMes(2,"finish");
+        }
+    }
+    @RequestMapping("/finish3")
+    public Object finish3(){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if (medal.isFinish3()){
+            return false;
+        }
+        else {
+            medal.setFinish3(true);
+            medalRepository.save(medal);
+            return new JsonMes(3,"finish");
+        }
+    }
+    @RequestMapping("/finish4")
+    public Object finish4(){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if (medal.isFinish4()){
+            return false;
+        }
+        else {
+            medal.setFinish4(true);
+            medalRepository.save(medal);
+            return new JsonMes(4,"finish");
+        }
+    }
+    @RequestMapping("/finish5")
+    public Object finish5(){
+       if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+       YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if (medal.isFinish5()){
+            return false;
+        }
+        else {
+            medal.setFinish5(true);
+            medalRepository.save(medal);
+            return new JsonMes(5,"finish");
+        }
+    }
+
+
 }
