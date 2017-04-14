@@ -57,7 +57,7 @@ public class CompetionController {
         int yibanid=user.visit_user.userid;
         Medal medal=medalRepository.findFirstByYibanId(yibanid);
         if (medal.isFinish1()){
-            return false;
+            return new JsonMes(0,"defeat");
         }
         else {
             medal.setFinish1(true);
@@ -73,7 +73,7 @@ public class CompetionController {
 
         Medal medal=medalRepository.findFirstByYibanId(yibanid);
         if (medal.isFinish2()){
-            return false;
+            return new JsonMes(0,"defeat");
         }
         else {
             medal.setFinish2(true);
@@ -88,7 +88,7 @@ public class CompetionController {
         int yibanid=user.visit_user.userid;
         Medal medal=medalRepository.findFirstByYibanId(yibanid);
         if (medal.isFinish3()){
-            return false;
+            return new JsonMes(0,"defeat");
         }
         else {
             medal.setFinish3(true);
@@ -103,7 +103,7 @@ public class CompetionController {
         int yibanid=user.visit_user.userid;
         Medal medal=medalRepository.findFirstByYibanId(yibanid);
         if (medal.isFinish4()){
-            return false;
+            return new JsonMes(0,"defeat");
         }
         else {
             medal.setFinish4(true);
@@ -118,7 +118,7 @@ public class CompetionController {
         int yibanid=user.visit_user.userid;
         Medal medal=medalRepository.findFirstByYibanId(yibanid);
         if (medal.isFinish5()){
-            return false;
+            return new JsonMes(0,"defeat");
         }
         else {
             medal.setFinish5(true);
