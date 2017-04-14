@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/competition")
 public class ComAuthController {
 
-    public class MaterialAuthController {
 
         @Autowired
         private HttpSession httpSession;
@@ -62,5 +61,5 @@ public class ComAuthController {
             }
         }
 
-    }
 }
+
