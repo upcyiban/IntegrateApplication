@@ -32,6 +32,22 @@ public class CompetionController {
         return medalRepository.findFirstByYibanId(yibanid);
     }
 
+
+    @RequestMapping("/craetemedal")
+    public Object createMedal(){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Medal medal=medalRepository.findFirstByYibanId(yibanid);
+        if(medal==null){
+            String yibanName=user.visit_user.username;
+            int number=0;
+            medal=new Medal(yibanid,yibanName,number);
+            medalRepository.save(medal);
+            return new JsonMes(1,"success");
+        }
+        else return new JsonMes(0,"已存在");
+    }
     @RequestMapping("/setmedal")
     public Object setMedalNumber(){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
