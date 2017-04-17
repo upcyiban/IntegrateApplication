@@ -22,8 +22,10 @@ import java.io.IOException;
  * Created by 陈子枫 on 2017/2/23.
  */
 @RestController
-@RequestMapping(value = "/upload")
+@RequestMapping(method = RequestMethod.POST,value = "/upload")
 public class UploadController {
+
+    public static final String ROOT = "imgpath";
 
     @Autowired
     CommonAdminService commonAdminService;
@@ -49,11 +51,11 @@ public class UploadController {
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(id);
         if (file != null) {// 判断上传的文件是否为空
             varietyOfDishes.setPath(null);// 文件路径
-            String type = null;// 文件类型
+            String path = null;
             String fileName = file.getOriginalFilename();// 文件原名称
             System.out.println("上传的文件原名称:" + fileName);
-            // 判断文件类型
-            type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+            // 判断文件类型,有就给type赋值，没有就为null
+           String  type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
             if (type != null) {// 判断文件类型是否为空
 
                 if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase())) {
