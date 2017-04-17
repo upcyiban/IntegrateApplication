@@ -1,14 +1,14 @@
-package cn.edu.upc.yb.integrate.homepage.storage;
+package cn.edu.upc.yb.integrate.common.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("storage")
+@ConfigurationProperties("filestorage")
 public class StorageProperties {
 
     /**
      * Folder location for storing files
      */
-    private String location = "Assets/icon";
+    private String location = "file/img";
 
     public String getLocation() {
         return location;

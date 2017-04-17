@@ -2,12 +2,11 @@ package cn.edu.upc.yb.integrate.homepage.controller;
 
 
 import cn.edu.upc.yb.integrate.calendar.dto.JsonMes;
-import cn.edu.upc.yb.integrate.common.model.CommonAdmin;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.homepage.model.App;
 import cn.edu.upc.yb.integrate.homepage.repository.AppRepository;
-import cn.edu.upc.yb.integrate.homepage.storage.StorageFileNotFoundException;
-import cn.edu.upc.yb.integrate.homepage.storage.StorageService;
+import cn.edu.upc.yb.integrate.common.storage.StorageFileNotFoundException;
+import cn.edu.upc.yb.integrate.common.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

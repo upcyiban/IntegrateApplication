@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.homepage.storage;
+package cn.edu.upc.yb.integrate.common.storage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -84,7 +84,7 @@ public class FileSystemStorageService implements StorageService {
         try {
             Files.createDirectory(rootLocation);
         } catch (IOException e) {
-            throw new StorageException("Could not initialize storage", e);
+            throw new StorageException("Could not initialize filestorage", e);
         }
     }
 }
