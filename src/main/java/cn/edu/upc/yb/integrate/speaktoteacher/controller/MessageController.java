@@ -9,6 +9,7 @@ import cn.edu.upc.yb.integrate.speaktoteacher.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,7 @@ public class MessageController {
     private HttpSession httpSession;
 
     @RequestMapping(value = "/getteacher",method = RequestMethod.GET)
-    public Object showTeacher(int yibanId){
+    public Object showTeacher(@RequestParam(value="yibanId",defaultValue = "123")int yibanId){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         return teacherRepository.findFirstByYibanId(yibanId);
     }
