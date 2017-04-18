@@ -64,7 +64,7 @@ public class TeacherController {
         Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         String qrcode;
         if (teacher.getQRcode()==null){
-            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + yibanid;
+            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/?id=" + yibanid;
             teacher.setQRcode(qrcode);
             teacherRepository.save(teacher);
         }
@@ -118,6 +118,22 @@ public class TeacherController {
         teacher.setEmail(email);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改电子邮件成功");
+    }
+
+    @RequestMapping(value = "update")
+    public Object update(String profile,String email,String phonenumber,String motto){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
+        teacher.setEmail(email);
+        teacher.setMotto(motto);
+        teacher.setEmail(email);
+        teacher.setProfile(profile);
+        teacher.setPhonenumber(phonenumber);
+        teacherRepository.save(teacher);
+        return new JsonMes(1,"修改电子邮件成功");
+
     }
 
 
