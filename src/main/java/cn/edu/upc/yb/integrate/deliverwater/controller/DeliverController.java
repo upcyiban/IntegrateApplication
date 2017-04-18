@@ -50,7 +50,7 @@ public class DeliverController {
     *给用户的接口，让用户填信息
     */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Object create(String blockNumber, String dormitory, String name, String phone, @RequestParam(value = "num", defaultValue = "1") int num, @RequestParam(value = "ticket", defaultValue = "0") int ticket) {
+    public Object create(String blockNumber, String dormitory, @RequestParam(value = "num", defaultValue = "1") int num, @RequestParam(value = "ticket", defaultValue = "0") int ticket) {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanid = yibanBasicUserInfo.visit_user.userid;
         String yibanName = yibanBasicUserInfo.visit_user.username;

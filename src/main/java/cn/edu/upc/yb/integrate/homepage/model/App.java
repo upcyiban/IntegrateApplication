@@ -26,6 +26,9 @@ public class App{
     public String getHref(){
         return href;
     }
+    public Integer getTabid(){
+        return tabid;
+    }
 
     @Column(nullable = false,unique = true)
     private String name;

@@ -14,30 +14,45 @@ public class Tab{
 
     @Column(nullable = false,unique = true)
     private String name;
+    @Column(nullable = false)
+    private String url;
 
 
-    public Tab(String name) {
-        this.name = name;
-    }
     public Tab(){}
 
     public Integer getId() {
         return id;
     }
 
-
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
-
-
-
-
-
-    public void update(String name){
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Tab(String name, String url) {
+        this.name = name;
+        this.url = url;
+
+    }
+
+    public void update(String name, String url){
+        this.name = name;
+        this.url = url;
     }
 
 

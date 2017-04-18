@@ -41,6 +41,7 @@ public class DWAuthController {
 
     @RequestMapping("/isauth")
     public int isAuth() {
+        System.out.println(yibanOAuth.isAuth());
         return yibanOAuth.isAuth();
     }
 

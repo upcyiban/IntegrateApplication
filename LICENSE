@@ -212,7 +212,7 @@ produce it from the Program, in the form of source code under the
 terms of section 4, provided that you also meet all of these conditions:
 
     a) The work must carry prominent notices stating that you modified
-    it, and giving a relevant date.
+    it, and giving a relevant time.
 
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
@@ -631,8 +631,8 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    {one line to give the program's name and a brief idea of what it does.}
-    Copyright (C) {year}  {name of author}
+    {one line to give the program's username and a brief idea of what it does.}
+    Copyright (C) {year}  {username of author}
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
