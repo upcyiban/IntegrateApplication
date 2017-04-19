@@ -1,5 +1,6 @@
 package cn.edu.upc.yb.integrate.common.service;
 
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.common.model.YBUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ public class GetYBHead {
     @Autowired
     HttpSession httpSession;
 
-    public String getHead(){
-        YBUser ybUser = (YBUser)httpSession.getAttribute("ybuser");
-        return ybUser.getYbhead();
-    }
 
+    public String getHead() {
+        YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("yibanBasicUserInfo");
+        return yibanBasicUserInfo.visit_user.userhead;
+    }
 }

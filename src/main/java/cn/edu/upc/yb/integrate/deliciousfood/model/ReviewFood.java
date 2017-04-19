@@ -1,5 +1,7 @@
 package cn.edu.upc.yb.integrate.deliciousfood.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "food_review")
+@JsonIgnoreProperties(value = {"updateTime"})
 public class ReviewFood {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,22 +19,22 @@ public class ReviewFood {
 
     private int dishesId;//用于和菜品绑定
     private int userId;//用于和用户绑定
-    private String foodname;
+    private String username;//
     private String detail;
     private String ybphoto;
     private long updateTime;
-    private String date;
+    private String time;
 
     public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto) {
         this.dishesId = dishesid;
         this.userId = userId;
         this.detail = detail;
-        this.foodname = name;
+        this.username = name;
         this.ybphoto = ybphoto;
         this.updateTime = System.currentTimeMillis();
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.date = formatter.format(currentTime);
+        this.time = formatter.format(currentTime);
     }
 
     public ReviewFood() {
@@ -70,10 +73,18 @@ public class ReviewFood {
     }
 
     public String getUsername() {
-        return foodname;
+        return username;
     }
 
     public void setUsername(String username) {
-        this.foodname = username;
+        this.username = username;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

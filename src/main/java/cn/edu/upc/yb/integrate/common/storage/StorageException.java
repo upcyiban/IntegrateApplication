@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.homepage.storage;
+package cn.edu.upc.yb.integrate.common.storage;
 
 public class StorageException extends RuntimeException {
 

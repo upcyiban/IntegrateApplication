@@ -1,4 +1,4 @@
-package cn.edu.upc.yb.integrate.homepage.storage;
+package cn.edu.upc.yb.integrate.common.storage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
