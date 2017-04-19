@@ -37,10 +37,13 @@ public class TeacherController {
     private SttConfig sttConfig;
 
     @RequestMapping(value = "/listmessage",method = RequestMethod.GET)
-    public Object listmessage(int teacherYBId)
+    public Object listmessage()
     {
+
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        return messageRepository.findByTeacherId(teacherYBId);
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int teacherYBId=user.visit_user.userid;
+        return messageRepository.findByTeacherId(teacherYBId);//teacherid存老师易班id
     }
 
     @RequestMapping(value = "/reply",method = RequestMethod.GET)
@@ -58,11 +61,10 @@ public class TeacherController {
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int yibanid=user.visit_user.userid;
-        Teacher teacher = new Teacher();
-        teacher=teacherRepository.findFirstByYibanId(yibanid);
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         String qrcode;
         if (teacher.getQRcode()==null){
-            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/speaktoteacher?id=" + yibanid;
+            qrcode ="http://qr.topscan.com/api.php?text=" + sttConfig.fronturl + "/?id=" + yibanid;
             teacher.setQRcode(qrcode);
             teacherRepository.save(teacher);
         }
@@ -73,10 +75,11 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/updateprofie",method = RequestMethod.GET)
-    public Object updateProfile(int id,String profile){
+    public Object updateProfile(String profile){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        Teacher teacher = new Teacher();
-        teacher=teacherRepository.findOne(id);
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher = teacher=teacherRepository.findFirstByYibanId(yibanid);
         teacher.setProfile(profile);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改个人简介成功");
@@ -84,20 +87,22 @@ public class TeacherController {
 
 
     @RequestMapping(value = "/updatemotto",method = RequestMethod.GET)
-    public Object updateMotto(int id, String motto){
+    public Object updateMotto( String motto){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        Teacher teacher = new Teacher();
-        teacher=teacherRepository.findOne(id);
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         teacher.setMotto(motto);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改座右铭成功");
     }
 
     @RequestMapping(value = "/updatephonenumber",method = RequestMethod.GET)
-    public Object updatePhoneNumber(int id,String phonenumber){
+    public Object updatePhoneNumber(String phonenumber){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        Teacher teacher = new Teacher();
-        teacher=teacherRepository.findOne(id);
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         teacher.setPhonenumber(phonenumber);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改电话号码成功");
@@ -105,13 +110,30 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/updateemail",method = RequestMethod.GET)
-    public Object updateEmail(int id,String email){
+    public Object updateEmail(String email){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        Teacher teacher = new Teacher();
-        teacher=teacherRepository.findOne(id);
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
         teacher.setEmail(email);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改电子邮件成功");
+    }
+
+    @RequestMapping(value = "update")
+    public Object update(String profile,String email,String phonenumber,String motto){
+        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+        int yibanid=user.visit_user.userid;
+        Teacher teacher=teacherRepository.findFirstByYibanId(yibanid);
+        teacher.setEmail(email);
+        teacher.setMotto(motto);
+        teacher.setEmail(email);
+        teacher.setProfile(profile);
+        teacher.setPhonenumber(phonenumber);
+        teacherRepository.save(teacher);
+        return new JsonMes(1,"修改电子邮件成功");
+
     }
 
 

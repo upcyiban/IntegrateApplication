@@ -42,6 +42,6 @@ public class ContactsController {
     }
     @RequestMapping(value = "/findjob",method = RequestMethod.GET)
     public Object findJob(String name){
-        return contactJobRepository.findByName(name);
+        return contactJobRepository.findByNameLike(name);
     }
 }

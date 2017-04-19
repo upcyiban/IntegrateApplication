@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<username>IntegrateApplication</username>
+	<name>IntegrateApplication</name>
 	<description>UPC yiban IntegrateApplication for all light app</description>
 
 	<parent>

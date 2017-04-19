@@ -30,3 +30,5 @@ application-production.yml
 deliverwater/
 Assets/icon/*
 !Assets/icon/default
+
+file/img/*

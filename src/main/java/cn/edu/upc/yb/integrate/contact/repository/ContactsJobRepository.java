@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.contact.repository;
 
 import cn.edu.upc.yb.integrate.contact.model.ContactsJob;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -9,5 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface ContactsJobRepository extends CrudRepository<ContactsJob,Integer>{
 
     public Iterable<ContactsJob> findByContactsUnitId(int id);
-    public Iterable<ContactsJob> findByName(String name);
+
+    @Query("select c from ContactsJob c where c.name like %:name%")
+    public Iterable<ContactsJob> findByNameLike(String name);
 }
