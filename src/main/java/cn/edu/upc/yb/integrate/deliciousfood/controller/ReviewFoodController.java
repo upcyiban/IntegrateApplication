@@ -52,6 +52,8 @@ public class ReviewFoodController {
     @RequestMapping("/score")
     public Object recreate(int id,double num){
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
+        if (yibanBasicUserInfo == null)
+            return new ErrorReporter(-1, "没有登陆");
         VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
         if (num<0||num>10)
             return new JsonMes(-1,"无效评价");
