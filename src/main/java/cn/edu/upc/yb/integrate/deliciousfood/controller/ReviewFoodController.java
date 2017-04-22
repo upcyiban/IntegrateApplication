@@ -62,13 +62,8 @@ public class ReviewFoodController {
         varietyOfDishesDao.save(varietyOfDishes);
         return new JsonMes(1,"创建成功");
     }
-    @RequestMapping("/test")
-    public Object test() {
-        for (int i = 0; i < 10; i++) {
-            YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
-            ReviewFood reviewFood = new ReviewFood(i, 5830649, "EZ", "这道菜还不错", "images/face.jpg",9);
-            reviewDao.save(reviewFood);
-        }
-        return reviewDao.findAll();
+    @RequestMapping("/getuser")
+    public Object getUser(){
+        return (YibanBasicUserInfo) httpSession.getAttribute("user");
     }
 }
