@@ -6,10 +6,13 @@ import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
+import cn.edu.upc.yb.integrate.deliciousfood.service.UploadService;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,15 +38,19 @@ public class EvaluateController {
     @Autowired
     HttpSession httpSession;
 
-    @RequestMapping("/create")
-    public Object create(String name, String region, String kind, String restaurant, String price,String introduce){
+    @Autowired
+    UploadService uploadService;
+
+    @RequestMapping(method = RequestMethod.POST,value = "/create")
+    public Object create(String name, String region, String kind, String restaurant, String price,String introduce,MultipartFile file){
 
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
-
+        int ybid =yibanBasicUserInfo.visit_user.userid;
         //管理员验证
         if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,introduce);
+        uploadService.storePhoto(file,varietyOfDishes.getId(),ybid);
         System.out.println(name+region+kind+restaurant+price+introduce);
         varietyOfDishesDao.save(varietyOfDishes);
         return new JsonMes(1,"创建成功");
