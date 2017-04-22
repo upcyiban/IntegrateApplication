@@ -31,6 +31,8 @@ public class FoodAuthController {
 
     @RequestMapping("/auth")
     public int doAuth(String vq){
+
+        System.out.println("vq:"+vq);
             try {
                 yibanOAuth.dealYibanOauth(vq,deliciousFoodConfig.appid,deliciousFoodConfig.appkey);
                 return 1;
