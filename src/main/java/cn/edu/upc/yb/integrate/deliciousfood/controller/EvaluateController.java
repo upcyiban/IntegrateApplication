@@ -37,7 +37,9 @@ public class EvaluateController {
 
     @RequestMapping("/create")
     public Object create(String name, String region, String kind, String restaurant, String price,String introduce){
+
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
+
         //管理员验证
         if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
@@ -47,20 +49,6 @@ public class EvaluateController {
         return new JsonMes(1,"创建成功");
     }
 
-    @RequestMapping("/recreate")
-    public Object recreate(int id,double num){
-        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
-        //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
-            return new ErrorReporter(-1,"您不是管理员");
-        VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
-        if (num<0||num>10)
-            return new JsonMes(-1,"无效评价");
-        else
-        varietyOfDishes.setNum(num);
-        varietyOfDishesDao.save(varietyOfDishes);
-        return new JsonMes(1,"创建成功");
-    }
 
     @RequestMapping("/update")
     public Object update(int id,String price){
