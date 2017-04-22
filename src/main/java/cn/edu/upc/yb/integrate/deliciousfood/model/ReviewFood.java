@@ -22,15 +22,17 @@ public class ReviewFood {
     private String username;//
     private String detail;
     private String ybphoto;
+    private double score;
     private long updateTime;
     private String time;
 
-    public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto) {
+    public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto,int score) {
         this.dishesId = dishesid;
         this.userId = userId;
         this.detail = detail;
         this.username = name;
         this.ybphoto = ybphoto;
+        this.score = score;
         this.updateTime = System.currentTimeMillis();
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -87,4 +89,17 @@ public class ReviewFood {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }

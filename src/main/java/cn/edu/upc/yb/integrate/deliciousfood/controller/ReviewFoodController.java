@@ -40,12 +40,12 @@ public class ReviewFoodController {
     }
 
     @RequestMapping("/doreview")
-    public Object doReview(int dishesid, String detials) {
+    public Object doReview(int dishesid, String detials,int num) {
             YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
             System.out.println("useid is:" + yibanBasicUserInfo.visit_user.userid);
             if (yibanBasicUserInfo == null)
                 return new ErrorReporter(-1, "没有登陆");
-            ReviewFood review = new ReviewFood(dishesid, yibanBasicUserInfo.visit_user.userid, yibanBasicUserInfo.visit_user.username, detials, yibanBasicUserInfo.visit_user.userhead);
+            ReviewFood review = new ReviewFood(dishesid, yibanBasicUserInfo.visit_user.userid, yibanBasicUserInfo.visit_user.username, detials, yibanBasicUserInfo.visit_user.userhead,num);
             reviewDao.save(review);
             return new JsonMes(1, "评论成功");
     }
@@ -66,7 +66,7 @@ public class ReviewFoodController {
     public Object test() {
         for (int i = 0; i < 10; i++) {
             YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
-            ReviewFood reviewFood = new ReviewFood(i, 5830649, "EZ", "这道菜还不错", "images/face.jpg");
+            ReviewFood reviewFood = new ReviewFood(i, 5830649, "EZ", "这道菜还不错", "images/face.jpg",9);
             reviewDao.save(reviewFood);
         }
         return reviewDao.findAll();
