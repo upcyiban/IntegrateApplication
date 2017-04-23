@@ -39,7 +39,7 @@ public class ReviewFood {
         this.time = formatter.format(currentTime);
     }
 
-    public ReviewFood() {
+    public ReviewFood(int dishesid, String userid, String username, String detials, String userhead, int num) {
     }
 
     public int getDishesId() {
