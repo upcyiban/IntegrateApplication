@@ -53,7 +53,7 @@ public class EvaluateController {
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,introduce);
         varietyOfDishesDao.save(varietyOfDishes);
         uploadService.storePhoto(file,varietyOfDishes.getId(),ybid);
-        System.out.println(name+region+kind+restaurant+price+introduce);
+
 
         return new JsonMes(1,"创建成功");
     }

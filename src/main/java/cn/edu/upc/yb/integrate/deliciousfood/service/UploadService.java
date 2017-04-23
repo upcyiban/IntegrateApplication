@@ -25,16 +25,18 @@ public class UploadService {
     VarietyOfDishesDao varietyOfDishesDao;
 
     @Autowired
-    FileUploadService fileUploadService;
-
-    @Autowired
     HttpSession httpSession;
 
+    @Autowired
+    FileUploadService fileUploadService;
+
     public void storePhoto(MultipartFile file, int dishid,int ybid){
+        System.out.println(file.getName());
         String name = "deliciousfood"+ ybid+System.currentTimeMillis();
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(dishid);
         varietyOfDishes.setPath("file/img/"+name);
+       fileUploadService.store(file,"file/img/"+name);
         varietyOfDishesDao.save(varietyOfDishes);
-        fileUploadService.store(file,name);
+
     }
 }
