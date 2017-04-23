@@ -43,16 +43,18 @@ public class EvaluateController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/create")
     public Object create(String name, String region, String kind, String restaurant, String price,String introduce,MultipartFile file){
-
+        if(httpSession.getAttribute("user")==null)
+            return new cn.edu.upc.yb.integrate.deliciousfood.dto.JsonMes(0,"请先登录");
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
         int ybid =yibanBasicUserInfo.visit_user.userid;
         //管理员验证
         if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,introduce);
+        varietyOfDishesDao.save(varietyOfDishes);
         uploadService.storePhoto(file,varietyOfDishes.getId(),ybid);
         System.out.println(name+region+kind+restaurant+price+introduce);
-        varietyOfDishesDao.save(varietyOfDishes);
+
         return new JsonMes(1,"创建成功");
     }
 
