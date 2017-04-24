@@ -40,7 +40,7 @@ public class UploadService {
         String name = "deliciousfood"+ ybid+System.currentTimeMillis();
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(dishid);
         System.out.println("port:"+deliciousFoodConfig.port);
-        varietyOfDishes.setPath("localhost:"+deliciousFoodConfig.port+"/file/img/"+name);
+        varietyOfDishes.setPath("yb.upc.edu.cn:"+deliciousFoodConfig.port+"/file/img/"+name);
        fileUploadService.store(file,name);
         varietyOfDishesDao.save(varietyOfDishes);
 
