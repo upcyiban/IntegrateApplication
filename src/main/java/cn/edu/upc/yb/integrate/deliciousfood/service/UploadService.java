@@ -35,7 +35,7 @@ public class UploadService {
         String name = "deliciousfood"+ ybid+System.currentTimeMillis();
         VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(dishid);
         varietyOfDishes.setPath("file/img/"+name);
-       fileUploadService.store(file,"file/img/"+name);
+       fileUploadService.store(file,name);
         varietyOfDishesDao.save(varietyOfDishes);
 
     }
