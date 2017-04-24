@@ -20,7 +20,7 @@ public class YBUserService {
 
          String query = String.format("access_token=%s",
                  URLEncoder.encode(access_token, charset));
-         String query1 = String.format("yb_id=%s",
+         String query1 = String.format("yb_userid=%s",
                  URLEncoder.encode(String.valueOf(yb_id), charset));
          URLConnection connection = new URL(url + "?" + query + '&' + query1).openConnection();
          InputStream response = connection.getInputStream();
