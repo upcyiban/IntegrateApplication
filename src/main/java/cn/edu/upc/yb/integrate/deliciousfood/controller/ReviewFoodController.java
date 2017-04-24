@@ -67,19 +67,12 @@ public class ReviewFoodController {
         return new JsonMes(1,"创建成功");
     }
     @RequestMapping("/getuser")
-    public Object getUser() throws IOException {
+    public String getUser() throws IOException {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
         String access_token = yibanBasicUserInfo.visit_oauth.access_token;
         System.out.println(access_token);
         int ybid = yibanBasicUserInfo.visit_user.userid;
         YBUserService ybUserService = new YBUserService();
-        ybUserService.getMessage(access_token,ybid);
-        System.out.println( ybUserService.getMessage(access_token,ybid));
-        String name = yibanBasicUserInfo.visit_user.username;
-        String head = yibanBasicUserInfo.visit_user.userhead;
-        System.out.println("name:"+name);
-        System.out.println("head:"+head);
-        YBUserDto ybUserDto = new YBUserDto(name,head);
-        return ybUserDto;
+        return ybUserService.getMessage(access_token,ybid);
     }
 }

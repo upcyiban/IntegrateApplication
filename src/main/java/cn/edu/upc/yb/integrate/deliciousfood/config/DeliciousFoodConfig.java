@@ -13,4 +13,7 @@ public class DeliciousFoodConfig {
 
     @Value("${yibanoauth.deliciousfood.APPkey}")
     public String appkey;
+
+    @Value("${server.port}")
+    public String port;
 }

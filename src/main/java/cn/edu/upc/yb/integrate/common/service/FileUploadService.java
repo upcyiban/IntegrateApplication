@@ -16,9 +16,10 @@ public class FileUploadService {
     private final StorageService storageService;
 
     @Autowired
-    FileUploadService(StorageService storageService){
+    public FileUploadService(StorageService storageService){
         this.storageService = storageService;
     }
+
 
     public void store(MultipartFile file, String name){
         storageService.store(file,name);
