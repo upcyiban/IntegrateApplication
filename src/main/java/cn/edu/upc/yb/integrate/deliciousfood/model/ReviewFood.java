@@ -26,7 +26,7 @@ public class ReviewFood {
     private long updateTime;
     private String time;
 
-    public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto,int score) {
+    public ReviewFood(int dishesid, int userId,String name, String detail,String ybphoto,double score) {
         this.dishesId = dishesid;
         this.userId = userId;
         this.detail = detail;
@@ -39,7 +39,10 @@ public class ReviewFood {
         this.time = formatter.format(currentTime);
     }
 
-    public ReviewFood(int dishesid, String userid, String username, String detials, String userhead, int num) {
+    public ReviewFood(int dishesid, String userid, String username, String detials, String userhead, double num) {
+    }
+
+    public ReviewFood() {
     }
 
     public int getDishesId() {
