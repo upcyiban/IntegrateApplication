@@ -44,7 +44,7 @@ public class ReviewFoodController {
     }
 
     @RequestMapping("/doreview")
-    public Object doReview(int dishesid, String detials,int num) {
+    public Object doReview(int dishesid, String detials,double num) {
             YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
             System.out.println("useid is:" + yibanBasicUserInfo.visit_user.userid);
             if (yibanBasicUserInfo == null)
