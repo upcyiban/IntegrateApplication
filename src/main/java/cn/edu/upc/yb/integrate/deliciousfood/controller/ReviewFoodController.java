@@ -44,12 +44,12 @@ public class ReviewFoodController {
     }
 
     @RequestMapping("/doreview")
-    public Object doReview(int dishesid, String detials,double num) {
+    public Object doReview(int dishesid, String detials,double num,String ybhead) {
             YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
             System.out.println("useid is:" + yibanBasicUserInfo.visit_user.userid);
             if (yibanBasicUserInfo == null)
                 return new ErrorReporter(-1, "没有登陆");
-            ReviewFood review = new ReviewFood(dishesid, yibanBasicUserInfo.visit_user.userid, yibanBasicUserInfo.visit_user.username, detials, yibanBasicUserInfo.visit_user.userhead,num);
+            ReviewFood review = new ReviewFood(dishesid, yibanBasicUserInfo.visit_user.userid, yibanBasicUserInfo.visit_user.username, detials, ybhead,num);
             reviewDao.save(review);
             return new JsonMes(1, "评论成功");
     }
