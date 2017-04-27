@@ -25,4 +25,9 @@ public class InstructorEvaluateController {
         }
         return instructorService.saveRecord(token, score, instructorId, message);
     }
+
+    @RequestMapping("/showEvaluate")
+    public Object showAllEvaluate() {
+        return instructorService.getAllEvaluate();
+    }
 }
