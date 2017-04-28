@@ -51,21 +51,12 @@ public class ReviewFoodController {
                 return new ErrorReporter(-1, "没有登陆");
             ReviewFood review = new ReviewFood(dishesid, yibanBasicUserInfo.visit_user.userid, yibanBasicUserInfo.visit_user.username, detials, ybhead,num);
             reviewDao.save(review);
+            VarietyOfDishes varietyOfDishes = varietyOfDishesDao.findOne(dishesid);
+            varietyOfDishes.setNum(num);
+            varietyOfDishesDao.save(varietyOfDishes);
             return new JsonMes(1, "评论成功");
     }
-    @RequestMapping("/score")
-    public Object recreate(int id,double num){
-        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
-        if (yibanBasicUserInfo == null)
-            return new ErrorReporter(-1, "没有登陆");
-        VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
-        if (num<0||num>10)
-            return new JsonMes(-1,"无效评价");
-        else
-            varietyOfDishes.setNum(num);
-        varietyOfDishesDao.save(varietyOfDishes);
-        return new JsonMes(1,"创建成功");
-    }
+
     @RequestMapping("/getuser")
     public String getUser() throws IOException {
         YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
