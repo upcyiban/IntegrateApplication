@@ -14,14 +14,12 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lhy95 on 2017/4/26.
@@ -58,8 +56,8 @@ public class InstructorService {
     }
 
     // 存一条评价
-    public Map saveRecord(String token, Integer score, Integer instructorId, String message) {
-        Map rs = new HashMap();
+    public Map<String, java.io.Serializable> saveRecord(String token, Integer score, Integer instructorId, String message) {
+        Map<String, java.io.Serializable> rs = new HashMap<String, java.io.Serializable>();
 
         if (token == null || score == null || instructorId == null) {
             rs.put("status", 1);
@@ -84,8 +82,8 @@ public class InstructorService {
     }
 
     // 获取所有的评价
-    public ArrayList getAllEvaluate() {
-        ArrayList instructorList = new ArrayList();
+    public ArrayList<InstructorItem> getAllEvaluate() {
+        ArrayList<InstructorItem> instructorList = new ArrayList<>();
 
         Iterable<Instructor> instructors = instructorDao.findAll();
         for (Instructor instructor : instructors) {
@@ -113,13 +111,28 @@ public class InstructorService {
     }
 
     // 从excel文件里导入数据到数据库然后删除文件
-    public void importDataFromExcel(String fileName) throws IOException {
+    public Map<String, java.io.Serializable> importDataFromExcel(MultipartFile file, String token) throws IOException {
+        // 用来返回结果
+        HashMap<String, java.io.Serializable> rs = new HashMap<String, java.io.Serializable>();
+
+        // 鉴权
+        if (!isAdmin(token)) {
+            rs.put("status", 0);
+            rs.put("errorMsg", "身份异常");
+            return rs;
+        }
+
+        // 存储excel文件，获取其文件名
+        String fileName = storeExcelFile(file);
+
         // 导入新数据就清除旧数据
         instructorDao.deleteAll();
 
+        // 获取excel文件
         File tempFile = new File("file/img/" + fileName);
         HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(tempFile));
 
+        // 读取excel中的有效信息，以数组返回给instructors并存进数据库
         Iterable<Instructor> instructors = readExcelValue(wb);
         instructorDao.save(instructors);
 
@@ -127,6 +140,9 @@ public class InstructorService {
         if (tempFile.exists()) {
             tempFile.delete();
         }
+
+        rs.put("status", 0);
+        return rs;
     }
 
     // 读取excel文件，返回辅导员集合
@@ -164,5 +180,22 @@ public class InstructorService {
             }
         }
         return "0";
+    }
+
+    // 存储上传的excel表
+    private String storeExcelFile(MultipartFile file) {
+        String fileName = "instructor" + new Date().getTime();
+        storageService.store(file, fileName);
+        return fileName;
+    }
+
+    private Boolean isAdmin(String token) {
+        Claims claims = jsonWebToken.getClaimsFromToken(token);
+        if (claims != null) {
+            if (claims.get("role").equals("admin")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
