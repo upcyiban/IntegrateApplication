@@ -17,9 +17,7 @@ public class InstructorEvaluateController {
 
     @RequestMapping("/submitEvaluate")
     public Object submitEvaluate(String token, Integer score, Integer instructorId, String message) {
-        if (token == null || score == null || instructorId == null) {
-            return "{status: 1}";
-        }
+
         return instructorService.saveRecord(token, score, instructorId, message);
     }
 

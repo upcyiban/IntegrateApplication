@@ -14,7 +14,7 @@ public class Record {
     private int id;
 
     // 做出该条评价的学生学号
-    private int studentNumber;
+    private String studentNumber;
 
     // 评价的辅导员的id
     private int instructorId;
@@ -28,7 +28,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(int studentNumber, int instructorId, int score, String message) {
+    public Record(String studentNumber, int instructorId, int score, String message) {
         this.studentNumber = studentNumber;
         this.instructorId = instructorId;
         this.score = score;
@@ -43,11 +43,11 @@ public class Record {
         this.id = id;
     }
 
-    public int getStudentNumber() {
+    public String getStudentNumber() {
         return studentNumber;
     }
 
-    public void setStudentNumber(int studentNumber) {
+    public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
 

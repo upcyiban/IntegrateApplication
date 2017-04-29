@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lhy95 on 2017/4/26.
@@ -57,19 +58,29 @@ public class InstructorService {
     }
 
     // 存一条评价
-    public Integer saveRecord(String token, int score, int instructorId, String message) {
+    public Map saveRecord(String token, Integer score, Integer instructorId, String message) {
+        Map rs = new HashMap();
 
-        Claims claims = jsonWebToken.getClaimsFromToken(token);
-        HashMap student;
-        if (claims != null) {
-            student = (HashMap) claims.get("user");
-        } else {
-            return 1;
+        if (token == null || score == null || instructorId == null) {
+            rs.put("status", 1);
+            rs.put("errorMsg", "数据不完整");
+            return rs;
         }
 
-        Record record = new Record((Integer) student.get("id"), instructorId, score, message);
+        // 鉴定是否是学生 是则获得学号，否则则获得字符串0
+        String studentNumber = getStudentNumber(token);
+        if (studentNumber.equals("0")) {
+            rs.put("status", 2);
+            rs.put("errorMsg", "身份异常");
+            return rs;
+        }
+
+        // TODO: 学生评价条数限制
+
+        Record record = new Record(studentNumber, instructorId, score, message);
         recordDao.save(record);
-        return 0;
+        rs.put("status", 0);
+        return rs;
     }
 
     // 获取所有的评价
@@ -140,5 +151,18 @@ public class InstructorService {
         }
 
         return instructors;
+    }
+
+    // 鉴定是否是学生，返回学号 不是则返回0
+    private String getStudentNumber(String token) {
+        Claims claims = jsonWebToken.getClaimsFromToken(token);
+        HashMap studentMap;
+        if (claims != null) {
+            if (claims.get("role").equals("student")) {
+                studentMap = (HashMap) claims.get("user");
+                return (String) studentMap.get("studentNumber");
+            }
+        }
+        return "0";
     }
 }
