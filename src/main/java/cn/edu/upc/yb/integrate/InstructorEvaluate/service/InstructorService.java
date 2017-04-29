@@ -176,7 +176,7 @@ public class InstructorService {
         if (claims != null) {
             if (claims.get("role").equals("student")) {
                 studentMap = (HashMap) claims.get("user");
-                return (String) studentMap.get("studentNumber");
+                return (String) studentMap.get("number");
             }
         }
         return "0";
