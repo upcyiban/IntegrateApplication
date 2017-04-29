@@ -59,4 +59,5 @@ yibanoauth:
   competition:
       APPID: "c598689976d02a1d"
       APPkey: "fd1907f7139eea815d5dd63b33a5f64c"
-
+instructor:
+  jwtsecret: "testsecret"
