@@ -2,7 +2,6 @@ package cn.edu.upc.yb.integrate.InstructorEvaluate.controller;
 
 import cn.edu.upc.yb.integrate.InstructorEvaluate.service.InstructorAuthService;
 import cn.edu.upc.yb.integrate.common.util.JsonWebToken;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

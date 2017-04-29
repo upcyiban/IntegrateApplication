@@ -53,7 +53,6 @@ public class InstructorAuthService {
 
     public Map adminLogin(String username, String password) {
         HashMap rs = new HashMap();
-
         Iterable<Admin> admins = instructorAdminDao.findByUsernameAndPassword(username, password);
         Iterator<Admin> adminIterator = admins.iterator();
         Admin admin;
@@ -69,6 +68,7 @@ public class InstructorAuthService {
 
         rs.put("status", 0);
         rs.put("data", jsonWebToken.generateToken(map));
+        rs.put("role", "admin");
 
         return rs;
     }

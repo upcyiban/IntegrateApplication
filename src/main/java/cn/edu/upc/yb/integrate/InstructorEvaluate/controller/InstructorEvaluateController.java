@@ -17,7 +17,6 @@ public class InstructorEvaluateController {
 
     @RequestMapping("/submitEvaluate")
     public Object submitEvaluate(String token, Integer score, Integer instructorId, String message) {
-
         return instructorService.saveRecord(token, score, instructorId, message);
     }
 
