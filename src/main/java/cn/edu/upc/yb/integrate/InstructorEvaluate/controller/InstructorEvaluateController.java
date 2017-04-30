@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * Created by lhy95 on 2017/4/26.
  */
@@ -21,7 +23,7 @@ public class InstructorEvaluateController {
     }
 
     @RequestMapping("/showEvaluate")
-    public Object showAllEvaluate() {
-        return instructorService.getAllEvaluate();
+    public Map showAllEvaluate(String token) {
+        return instructorService.getAllEvaluate(token);
     }
 }
