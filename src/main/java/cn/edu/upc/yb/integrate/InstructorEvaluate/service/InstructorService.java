@@ -82,7 +82,16 @@ public class InstructorService {
     }
 
     // 获取所有的评价
-    public ArrayList<InstructorItem> getAllEvaluate() {
+    public Map getAllEvaluate(String token) {
+        Map rs = new HashMap();
+
+        // 鉴权
+        if (!isAdmin(token)) {
+            rs.put("status", 1);
+            rs.put("errorMsg", "身份异常");
+            return rs;
+        }
+
         ArrayList<InstructorItem> instructorList = new ArrayList<>();
 
         Iterable<Instructor> instructors = instructorDao.findAll();
@@ -91,7 +100,10 @@ public class InstructorService {
             InstructorItem instructorItem = new InstructorItem(instructor, score);
             instructorList.add(instructorItem);
         }
-        return instructorList;
+
+        rs.put("status", 0);
+        rs.put("data", instructorList);
+        return rs;
     }
 
     // 计算某个辅导员的平均分

@@ -30,4 +30,9 @@ public class InstructorAuthController {
     public Map doAdminLogin(String username, String password) {
         return instructorAuthService.adminLogin(username, password);
     }
+
+    @RequestMapping("/loginbyyiban")
+    public Map authByYiban(String verify_request) {
+        return instructorAuthService.authByYiban(verify_request);
+    }
 }
