@@ -77,7 +77,13 @@ public class InstructorService {
             return rs;
         }
 
-        // TODO: 学生评价条数限制
+        // 学生评价条数限制
+        List recordList = (List) recordDao.findByStudentNumber(studentNumber);
+        if (recordList.size() >= 2) {
+            rs.put("status", 3);
+            rs.put("errorMsg", "评价次数过多");
+            return rs;
+        }
 
         Record record = new Record(studentNumber, instructorId, score, message);
         recordDao.save(record);
