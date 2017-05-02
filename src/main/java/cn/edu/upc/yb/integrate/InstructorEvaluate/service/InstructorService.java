@@ -12,6 +12,10 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -142,7 +146,7 @@ public class InstructorService {
 
         // 获取excel文件
         File tempFile = new File("file/img/" + fileName);
-        HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(tempFile));
+        Workbook wb = new HSSFWorkbook(new FileInputStream(tempFile));
 
         // 读取excel中的有效信息，以数组返回给instructors并存进数据库
         Iterable<Instructor> instructors = readExcelValue(wb);
@@ -158,23 +162,24 @@ public class InstructorService {
     }
 
     // 读取excel文件，返回辅导员集合
-    private Iterable<Instructor> readExcelValue(HSSFWorkbook wb) {
+    private Iterable<Instructor> readExcelValue(Workbook wb) {
         ArrayList<Instructor> instructors = new ArrayList<Instructor>();
 
         // 获取默认的表格
-        HSSFSheet sheet = wb.getSheet("Sheet1");
+        Sheet sheet = wb.getSheet("Sheet1");
 
         int rowNumber = sheet.getPhysicalNumberOfRows();
 
+        DataFormatter formatter = new DataFormatter();
+
         for (int i = 1; i < rowNumber; i++) {
             Instructor instructor = new Instructor();
-            HSSFRow tempRow = sheet.getRow(i);
-            HSSFCell academyCell = tempRow.getCell(0);
-            instructor.setAcademy(academyCell.getStringCellValue());
-            HSSFCell numberCell = tempRow.getCell(1);
-            instructor.setNumber(String.valueOf((long) numberCell.getNumericCellValue()));
-            HSSFCell nameCell = tempRow.getCell(2);
-            instructor.setName(nameCell.getStringCellValue());
+            Cell cell = sheet.getRow(i).getCell(0);
+            instructor.setAcademy(formatter.formatCellValue(cell));
+            cell = sheet.getRow(i).getCell(1);
+            instructor.setNumber(formatter.formatCellValue(cell));
+            cell = sheet.getRow(i).getCell(2);
+            instructor.setName(formatter.formatCellValue(cell));
             instructors.add(instructor);
         }
 

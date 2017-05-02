@@ -169,7 +169,7 @@ public class InstructorAuthService {
         Gson gson = new Gson();
         try {
             Map messageMsp = gson.fromJson(rs, Map.class);
-            System.out.println(messageMsp);
+//            System.out.println(messageMsp);
             if (messageMsp.get("status").equals("success")) {
                 return (String) ((Map) messageMsp.get("info")).get("yb_studentid");
             } else {
