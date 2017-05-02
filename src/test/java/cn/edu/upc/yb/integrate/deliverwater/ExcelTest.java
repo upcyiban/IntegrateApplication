@@ -88,13 +88,6 @@ public class ExcelTest {
         cell.setCellStyle(style1);
         cell.setCellValue(new Date());
 
-        // 创建超链接
-        HSSFHyperlink link = new HSSFHyperlink(HSSFHyperlink.LINK_URL);
-        link.setAddress("http://www.baidu.com");
-        cell = row.createCell((short) 1);
-        cell.setCellValue("百度");
-        cell.setHyperlink(link);
-
         File file = new File("d:\\workbook.xls");
         if(!file.exists()){
             file.createNewFile();
