@@ -121,7 +121,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "update")
-    public Object update(String profile,String email,String phonenumber,String motto){
+    public Object update(String profile,String email,String phonenumber,String motto,String recommend){
         if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int yibanid=user.visit_user.userid;
@@ -131,9 +131,15 @@ public class TeacherController {
         teacher.setEmail(email);
         teacher.setProfile(profile);
         teacher.setPhonenumber(phonenumber);
+        teacher.setRecommend(recommend);
         teacherRepository.save(teacher);
         return new JsonMes(1,"修改电子邮件成功");
 
+    }
+
+    @RequestMapping("/listteacher")
+    public Object listTeacher(){
+        return teacherRepository.findAll();
     }
 
 
