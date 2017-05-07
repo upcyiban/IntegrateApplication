@@ -21,19 +21,30 @@ public class Teacher {
     private String motto;//座右铭
     private String QRcode;//二维码链接
     private int yibanId;//老师的易班id
+    private String recommend;//名师推荐
 
     private String phonenumber;//手机号
     private String email;//电子邮件
 
-    public Teacher(String name, String imgurl, String profile, String motto, String QRcode, int yibanId, String phonenumber, String email) {
+    public Teacher(String name, String imgurl, String profile, String motto, String QRcode, int
+            yibanId, String recommend, String phonenumber, String email) {
         this.name = name;
         this.imgurl = imgurl;
         this.profile = profile;
         this.motto = motto;
         this.QRcode = QRcode;
         this.yibanId = yibanId;
+        this.recommend = recommend;
         this.phonenumber = phonenumber;
         this.email = email;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
     }
 
     public int getYibanId() {
