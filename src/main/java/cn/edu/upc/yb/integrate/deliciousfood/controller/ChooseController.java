@@ -19,7 +19,8 @@ import java.util.Iterator;
  */
 @RestController
 @RequestMapping("/choose")
-public class ChooseController {
+public class
+ChooseController {
 
     @Autowired
    private VarietyOfDishesDao varietyOfDishesDao;
@@ -56,6 +57,10 @@ public class ChooseController {
     public Object findall(){
         return varietyOfDishesDao.findAll();
     }
+
+
+
+
 //    @RequestMapping("/find")
 //    public Object findThing(String name, String region, String kind, String cook, String restaurant, String price) {
 //    if(!commonAdminService.isCommonAdmin()) return new ErrorReporter(-1,"您没有权限操作");

@@ -6,10 +6,13 @@ import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.deliciousfood.dao.VarietyOfDishesDao;
 import cn.edu.upc.yb.integrate.deliciousfood.model.VarietyOfDishes;
+import cn.edu.upc.yb.integrate.deliciousfood.service.UploadService;
 import cn.edu.upc.yb.integrate.deliverwater.dto.JsonMes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,32 +38,26 @@ public class EvaluateController {
     @Autowired
     HttpSession httpSession;
 
-    @RequestMapping("/create")
-    public Object create(String name, String region, String kind, String restaurant, String price,String introduce){
+    @Autowired
+    UploadService uploadService;
+
+    @RequestMapping(method = RequestMethod.POST,value = "/create")
+    public Object create(String name, String region, String kind, String restaurant, String price,String introduce,MultipartFile file){
+        if(httpSession.getAttribute("user")==null)
+            return new cn.edu.upc.yb.integrate.deliciousfood.dto.JsonMes(0,"请先登录");
         YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
+        int ybid =yibanBasicUserInfo.visit_user.userid;
         //管理员验证
         if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
             return new ErrorReporter(-1,"您不是管理员");
         VarietyOfDishes varietyOfDishes = new VarietyOfDishes(name,region,kind,restaurant,price,introduce);
-        System.out.println(name+region+kind+restaurant+price+introduce);
         varietyOfDishesDao.save(varietyOfDishes);
+        uploadService.storePhoto(file,varietyOfDishes.getId(),ybid);
+
+
         return new JsonMes(1,"创建成功");
     }
 
-    @RequestMapping("/recreate")
-    public Object recreate(int id,double num){
-        YibanBasicUserInfo yibanBasicUserInfo =(YibanBasicUserInfo) httpSession.getAttribute("user");
-        //管理员验证
-        if(!appAdminService.isAppAdmin("deliciousfood",yibanBasicUserInfo.visit_user.userid))
-            return new ErrorReporter(-1,"您不是管理员");
-        VarietyOfDishes varietyOfDishes =varietyOfDishesDao.findOne(id);
-        if (num<0||num>10)
-            return new JsonMes(-1,"无效评价");
-        else
-        varietyOfDishes.setNum(num);
-        varietyOfDishesDao.save(varietyOfDishes);
-        return new JsonMes(1,"创建成功");
-    }
 
     @RequestMapping("/update")
     public Object update(int id,String price){

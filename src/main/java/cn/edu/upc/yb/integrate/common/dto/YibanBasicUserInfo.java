@@ -1,5 +1,7 @@
 package cn.edu.upc.yb.integrate.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by skyADMIN on 16/7/8.
  */

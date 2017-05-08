@@ -31,16 +31,16 @@ public class MessageController {
     @Autowired
     private HttpSession httpSession;
 
-    @RequestMapping(value = "/getteacher",method = RequestMethod.GET)
-    public Object showTeacher(@RequestParam(value="yibanId",defaultValue = "123")int yibanId){
-        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
+    @RequestMapping(value = "/getteacher", method = RequestMethod.GET)
+    public Object showTeacher(@RequestParam(value = "yibanId", defaultValue = "123") int yibanId) {
+        if (httpSession.getAttribute("user") == null) return new ErrorReporter(-1, "没有登陆");
         return teacherRepository.findFirstByYibanId(yibanId);
     }
 
-    @RequestMapping(value ="/createmessage" ,method = RequestMethod.GET)
-    public Object createMessage(String content, int teacherYBId){
-        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+    @RequestMapping(value = "/createmessage", method = RequestMethod.GET)
+    public Object createMessage(String content, @RequestParam(value = "teacherYBId", defaultValue = "123") int teacherYBId) {
+        if (httpSession.getAttribute("user") == null) return new ErrorReporter(-1, "没有登陆");
+        YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
         Message message =new Message();
         if(content.isEmpty()){
@@ -56,12 +56,12 @@ public class MessageController {
             messageRepository.save(message);
             return new JsonMes(1, "留言成功");
         }
-    }
 
-    @RequestMapping(value = "/showmessage",method = RequestMethod.GET)
-    public Object showMessage(){
-        if(httpSession.getAttribute("user")==null) return new ErrorReporter(-1,"没有登陆");
-        YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
+    }
+    @RequestMapping(value = "/showmessage", method = RequestMethod.GET)
+    public Object showMessage() {
+        if (httpSession.getAttribute("user") == null) return new ErrorReporter(-1, "没有登陆");
+        YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
         return messageRepository.findByYibanId(yibanId);
     }
