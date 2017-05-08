@@ -43,14 +43,19 @@ public class MessageController {
         YibanBasicUserInfo user=(YibanBasicUserInfo)httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
         Message message =new Message();
-        message.setContent(content);
-        message.setTeacherId(teacherYBId);//存老师的易班id
-        message.setYibanId(yibanId);//getybid
-        Date date=new Date();
-        message.setCreateTime(date);
-        message.setReply("未回复");
-        messageRepository.save(message);
-        return new JsonMes(1,"留言成功");
+        if(content.isEmpty()){
+            return new JsonMes(0,"留言为空");
+        }
+        else {
+            message.setContent(content);
+            message.setTeacherId(teacherYBId);//存老师的易班id
+            message.setYibanId(yibanId);//getybid
+            Date date = new Date();
+            message.setCreateTime(date);
+            message.setReply("未回复");
+            messageRepository.save(message);
+            return new JsonMes(1, "留言成功");
+        }
     }
 
     @RequestMapping(value = "/showmessage",method = RequestMethod.GET)
