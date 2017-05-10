@@ -59,7 +59,7 @@ public class MessageController {
 
     }
     @RequestMapping(value = "/showmessage", method = RequestMethod.GET)
-    public Object showMessage(int teacherId) {
+    public Object showMessage(@RequestParam(value = "teacherId", defaultValue = "123") int teacherId) {
         if (httpSession.getAttribute("user") == null) return new ErrorReporter(-1, "没有登陆");
         YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
