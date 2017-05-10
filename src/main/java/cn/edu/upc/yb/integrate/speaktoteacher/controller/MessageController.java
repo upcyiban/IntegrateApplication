@@ -59,11 +59,11 @@ public class MessageController {
 
     }
     @RequestMapping(value = "/showmessage", method = RequestMethod.GET)
-    public Object showMessage() {
+    public Object showMessage(int teacherId) {
         if (httpSession.getAttribute("user") == null) return new ErrorReporter(-1, "没有登陆");
         YibanBasicUserInfo user = (YibanBasicUserInfo) httpSession.getAttribute("user");
         int yibanId = user.visit_user.userid;
-        return messageRepository.findByYibanId(yibanId);
+        return messageRepository.findByYibanIdAndTeacherId(yibanId,teacherId);
     }
 
 }
