@@ -69,6 +69,7 @@ public class InstructorAuthService {
         Instructor instructor;
         if (instructorIterator.hasNext()) {
             instructor = instructorIterator.next();
+            rs.put("instructorName", instructor.getName());
         } else {
             // 如果没找到对应辅导员，返回错误码2
             rs.put("status", 2);
@@ -90,6 +91,7 @@ public class InstructorAuthService {
             secondInstructor = secondInstructorIterator.next();
             map.put("secondInstructorId", secondInstructor.getId());
             rs.put("hasSecond", true);
+            rs.put("secondInstructorName", secondInstructor.getName());
         } else {
             // 如果没找到对应的二号辅导员，异常如何处理
             rs.put("hasSecond", false);
