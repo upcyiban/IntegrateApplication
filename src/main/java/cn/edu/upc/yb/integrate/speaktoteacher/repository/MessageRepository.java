@@ -10,4 +10,5 @@ public interface MessageRepository extends CrudRepository<Message,Integer> {
 
     public Iterable<Message> findByYibanId(int id);
     public Iterable<Message> findByTeacherId(int id);
+    public Iterable<Message> findByYibanIdAndTeacherId(int yibanId,int teacherId);
 }

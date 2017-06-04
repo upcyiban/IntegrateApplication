@@ -15,5 +15,5 @@ public class SttConfig {
     @Value("${yibanoauth.speaktoteacher.APPkey}")
     public String appkey;
 
-    public String fronturl = "http://yb.upc.edu.cn/project/speaktoteacher";
+    public String fronturl = "http://yb.upc.edu.cn/project/speaktoteacher/message.html";
 }
