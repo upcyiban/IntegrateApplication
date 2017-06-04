@@ -2,8 +2,10 @@ package cn.edu.upc.yb.integrate.InstructorEvaluate.service;
 
 import cn.edu.upc.yb.integrate.InstructorEvaluate.config.InstructorConfig;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.InstructorAdminDao;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.InstructorDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.StudentDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Admin;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Instructor;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Student;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.util.JsonWebToken;
@@ -33,31 +35,65 @@ public class InstructorAuthService {
     private final InstructorAdminDao instructorAdminDao;
     private final YibanOAuth yibanOAuth;
     private final InstructorConfig instructorConfig;
+    private final InstructorDao instructorDao;
 
     @Autowired
-    public InstructorAuthService(StudentDao studentDao, JsonWebToken jsonWebToken, InstructorAdminDao instructorAdminDao, YibanOAuth yibanOAuth, InstructorConfig instructorConfig) {
+    public InstructorAuthService(StudentDao studentDao, JsonWebToken jsonWebToken, InstructorAdminDao instructorAdminDao, YibanOAuth yibanOAuth, InstructorConfig instructorConfig, InstructorDao instructorDao) {
         this.studentDao = studentDao;
         this.jsonWebToken = jsonWebToken;
         this.instructorAdminDao = instructorAdminDao;
         this.yibanOAuth = yibanOAuth;
         this.instructorConfig = instructorConfig;
+        this.instructorDao = instructorDao;
     }
 
     public Map studentLogin(String number, String password) {
         HashMap rs = new HashMap();
 
+        // 查对应的学生信息，若没有返回状态码1
         Iterable<Student> students = studentDao.findByNumberAndPassword(number, password);
         Iterator<Student> studentIterator = students.iterator();
         Student student;
         if (studentIterator.hasNext()) {
             student = studentIterator.next();
         } else {
+            // 账户密码错误，返回错误码1
             rs.put("status", 1);
             return rs;
         }
+
+        // 根据学生对象上的辅导员姓名，查找对应的辅导员
+        String instructorName = student.getInstructorName();
+        Iterable<Instructor> instructors = instructorDao.findByName(instructorName);
+        Iterator<Instructor> instructorIterator = instructors.iterator();
+        Instructor instructor;
+        if (instructorIterator.hasNext()) {
+            instructor = instructorIterator.next();
+        } else {
+            // 如果没找到对应辅导员，返回错误码2
+            rs.put("status", 2);
+            return rs;
+        }
+
+        // 构造要加密的map
         HashMap<String, Object> map = new HashMap<>();
         map.put("user", student);
         map.put("role", "student");
+        map.put("instructorId", instructor.getId());
+
+        // 如果第二辅导员不为空
+        String secondInstructorName = student.getSecondInstructor();
+        Iterable<Instructor> secondInstructors = instructorDao.findByName(secondInstructorName);
+        Iterator<Instructor> secondInstructorIterator = secondInstructors.iterator();
+        Instructor secondInstructor;
+        if (instructorIterator.hasNext()) {
+            secondInstructor = secondInstructorIterator.next();
+            map.put("secondInstructorId", secondInstructor.getId());
+            rs.put("hasSecond", true);
+        } else {
+            // 如果没找到对应的二号辅导员，异常如何处理
+            rs.put("hasSecond", false);
+        }
 
         rs.put("status", 0);
         rs.put("data", jsonWebToken.generateToken(map));
