@@ -18,8 +18,8 @@ public class InstructorEvaluateController {
     private InstructorService instructorService;
 
     @RequestMapping("/submitEvaluate")
-    public Object submitEvaluate(String token, Integer score, Integer instructorId, String message) {
-        return instructorService.saveRecord(token, score, instructorId, message);
+    public Object submitEvaluate(String token, Integer score, String message, Integer flag) {
+        return instructorService.saveRecord(token, score, message, flag);
     }
 
     @RequestMapping("/showEvaluate")
