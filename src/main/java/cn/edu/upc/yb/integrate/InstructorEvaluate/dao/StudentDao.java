@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface StudentDao extends CrudRepository<Student, Integer> {
     Iterable<Student> findByNumberAndPassword(String number, String password);
+    Iterable<Student> findByNumber(String number);
 }
