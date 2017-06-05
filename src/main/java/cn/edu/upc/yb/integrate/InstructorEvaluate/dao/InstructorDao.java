@@ -7,6 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by lhy95 on 2017/4/26.
  */
 public interface InstructorDao extends CrudRepository<Instructor, Integer> {
-
-    Iterable<Instructor> findByName(String instructorName);
+    Iterable<Instructor> findByName(String name);
 }

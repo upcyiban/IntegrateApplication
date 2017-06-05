@@ -86,7 +86,7 @@ public class InstructorService {
         }
 
         // 获取辅导员ID
-        Integer instructorId = getInstructorId(token, flag);
+        int instructorId = getInstructorId(token, flag);
         if (instructorId == 0) {
             rs.put("status", 4);
             rs.put("errorMsg", "辅导员ID异常");
@@ -95,7 +95,7 @@ public class InstructorService {
 
         // 学生对某个辅导员只能评价一次
         List studentToOneInstructorRecordList = (List) recordDao.findByStudentNumberAndInstructorId(studentNumber, instructorId);
-        if (studentToOneInstructorRecordList.size() >= 2) {
+        if (studentToOneInstructorRecordList.size() >= 1) {
             rs.put("status", 5);
             rs.put("errorMsg", "已经评价过该辅导员");
             return rs;

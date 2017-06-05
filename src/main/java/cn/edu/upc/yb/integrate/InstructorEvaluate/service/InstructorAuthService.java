@@ -215,7 +215,7 @@ public class InstructorAuthService {
             Iterable<Instructor> secondInstructors = instructorDao.findByName(secondInstructorName);
             Iterator<Instructor> secondInstructorIterator = secondInstructors.iterator();
             Instructor secondInstructor;
-            if (instructorIterator.hasNext()) {
+            if (secondInstructorIterator.hasNext()) {
                 secondInstructor = secondInstructorIterator.next();
                 map.put("secondInstructorId", secondInstructor.getId());
                 rs.put("hasSecond", true);
