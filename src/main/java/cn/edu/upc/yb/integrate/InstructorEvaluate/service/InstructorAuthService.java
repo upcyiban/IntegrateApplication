@@ -2,8 +2,10 @@ package cn.edu.upc.yb.integrate.InstructorEvaluate.service;
 
 import cn.edu.upc.yb.integrate.InstructorEvaluate.config.InstructorConfig;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.InstructorAdminDao;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.InstructorDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.StudentDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Admin;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Instructor;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Student;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.util.JsonWebToken;
@@ -33,35 +35,34 @@ public class InstructorAuthService {
     private final InstructorAdminDao instructorAdminDao;
     private final YibanOAuth yibanOAuth;
     private final InstructorConfig instructorConfig;
+    private final InstructorDao instructorDao;
 
     @Autowired
-    public InstructorAuthService(StudentDao studentDao, JsonWebToken jsonWebToken, InstructorAdminDao instructorAdminDao, YibanOAuth yibanOAuth, InstructorConfig instructorConfig) {
+    public InstructorAuthService(StudentDao studentDao, JsonWebToken jsonWebToken, InstructorAdminDao instructorAdminDao, YibanOAuth yibanOAuth, InstructorConfig instructorConfig, InstructorDao instructorDao) {
         this.studentDao = studentDao;
         this.jsonWebToken = jsonWebToken;
         this.instructorAdminDao = instructorAdminDao;
         this.yibanOAuth = yibanOAuth;
         this.instructorConfig = instructorConfig;
+        this.instructorDao = instructorDao;
     }
 
     public Map studentLogin(String number, String password) {
         HashMap rs = new HashMap();
 
+        // 查对应的学生信息，若没有返回状态码1
         Iterable<Student> students = studentDao.findByNumberAndPassword(number, password);
         Iterator<Student> studentIterator = students.iterator();
         Student student;
         if (studentIterator.hasNext()) {
             student = studentIterator.next();
         } else {
+            // 账户密码错误，返回错误码1
             rs.put("status", 1);
             return rs;
         }
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("user", student);
-        map.put("role", "student");
 
-        rs.put("status", 0);
-        rs.put("data", jsonWebToken.generateToken(map));
-        return rs;
+        return dealLoginProcess(rs, student);
     }
 
     public Map adminLogin(String username, String password) {
@@ -88,7 +89,7 @@ public class InstructorAuthService {
 
     // 使用易班授权获得用户学号，返回本系统的token
     public Map authByYiban(String yibanToken) {
-        Map rs = new HashMap();
+        HashMap rs = new HashMap();
 
         // yibanTokenResult是通用模块解析出来的map对象 status表示解析状态 0是正常
         Map yibanTokenResult = yibanOAuth.dealYibanToken(yibanToken, instructorConfig.appid, instructorConfig.appkey);
@@ -116,14 +117,18 @@ public class InstructorAuthService {
                         }
 
                         // 这里是正常的返回
-                        HashMap<String, Object> map = new HashMap<>();
-                        Map student = new HashMap();
-                        student.put("number", studentNumber);
-                        map.put("user", student);
-                        map.put("role", "student");
-                        rs.put("status", 0);
-                        rs.put("data", jsonWebToken.generateToken(map));
-                        return rs;
+                        Iterable<Student> students = studentDao.findByNumber(studentNumber);
+                        Iterator<Student> studentIterator = students.iterator();
+                        Student student;
+                        if (studentIterator.hasNext()) {
+                            student = studentIterator.next();
+                        } else {
+                            // 找不到该用户，可能上报的excel中数据有问题
+                            rs.put("status", 1);
+                            rs.put("errorMsg", "数据库中查不到该用户，可能上报的excel中没有该同学");
+                            return rs;
+                        }
+                        return dealLoginProcess(rs, student);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -180,5 +185,51 @@ public class InstructorAuthService {
             ex.printStackTrace();
             return "0";
         }
+    }
+
+    // 处理登录细节流程，包括查找该学生对应的辅导员，第二辅导员，存进token中
+    private HashMap dealLoginProcess(HashMap rs, Student student) {
+        // 根据学生对象上的辅导员姓名，查找对应的辅导员
+        String instructorName = student.getInstructorName();
+        Iterable<Instructor> instructors = instructorDao.findByName(instructorName);
+        Iterator<Instructor> instructorIterator = instructors.iterator();
+        Instructor instructor;
+        if (instructorIterator.hasNext()) {
+            instructor = instructorIterator.next();
+            rs.put("instructorName", instructor.getName());
+        } else {
+            // 如果没找到对应辅导员，返回错误码2
+            rs.put("status", 2);
+            return rs;
+        }
+
+        // 构造要加密的map
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user", student);
+        map.put("role", "student");
+        map.put("instructorId", instructor.getId());
+
+        // 如果第二辅导员不为空
+        if (!student.getSecondInstructor().equals("")) {
+            String secondInstructorName = student.getSecondInstructor();
+            Iterable<Instructor> secondInstructors = instructorDao.findByName(secondInstructorName);
+            Iterator<Instructor> secondInstructorIterator = secondInstructors.iterator();
+            Instructor secondInstructor;
+            if (secondInstructorIterator.hasNext()) {
+                secondInstructor = secondInstructorIterator.next();
+                map.put("secondInstructorId", secondInstructor.getId());
+                rs.put("hasSecond", true);
+                rs.put("secondInstructorName", secondInstructor.getName());
+            } else {
+                // 如果没找到对应的二号辅导员，异常如何处理
+                rs.put("hasSecond", false);
+            }
+        } else {
+            rs.put("hasSecond", false);
+        }
+
+        rs.put("status", 0);
+        rs.put("data", jsonWebToken.generateToken(map));
+        return rs;
     }
 }

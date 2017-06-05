@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface RecordDao extends CrudRepository<Record, Integer> {
     Iterable<Record> findByInstructorId(int instructorId);
+    Iterable<Record> findByStudentNumber(String studentNumber);
+    Iterable<Record> findByStudentNumberAndInstructorId(String studentNumber, int instructorId);
 }

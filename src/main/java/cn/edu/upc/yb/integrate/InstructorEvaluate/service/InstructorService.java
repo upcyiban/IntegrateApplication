@@ -60,10 +60,10 @@ public class InstructorService {
     }
 
     // 存一条评价
-    public Map<String, java.io.Serializable> saveRecord(String token, Integer score, Integer instructorId, String message) {
+    public Map<String, java.io.Serializable> saveRecord(String token, Integer score, String message, Integer flag) {
         Map<String, java.io.Serializable> rs = new HashMap<String, java.io.Serializable>();
 
-        if (token == null || score == null || instructorId == null) {
+        if (token == null || score == null || flag == null) {
             rs.put("status", 1);
             rs.put("errorMsg", "数据不完整");
             return rs;
@@ -77,7 +77,29 @@ public class InstructorService {
             return rs;
         }
 
-        // TODO: 学生评价条数限制
+        // 学生评价条数限制
+        List recordList = (List) recordDao.findByStudentNumber(studentNumber);
+        if (recordList.size() >= 2) {
+            rs.put("status", 3);
+            rs.put("errorMsg", "评价次数过多");
+            return rs;
+        }
+
+        // 获取辅导员ID
+        int instructorId = getInstructorId(token, flag);
+        if (instructorId == 0) {
+            rs.put("status", 4);
+            rs.put("errorMsg", "辅导员ID异常");
+            return rs;
+        }
+
+        // 学生对某个辅导员只能评价一次
+        List studentToOneInstructorRecordList = (List) recordDao.findByStudentNumberAndInstructorId(studentNumber, instructorId);
+        if (studentToOneInstructorRecordList.size() >= 1) {
+            rs.put("status", 5);
+            rs.put("errorMsg", "已经评价过该辅导员");
+            return rs;
+        }
 
         Record record = new Record(studentNumber, instructorId, score, message);
         recordDao.save(record);
@@ -197,6 +219,17 @@ public class InstructorService {
             }
         }
         return "0";
+    }
+
+    // 获取辅导员ID，从token中
+    private Integer getInstructorId(String token, Integer flag) {
+        Claims claims = jsonWebToken.getClaimsFromToken(token);
+        if (claims != null && flag == 1) {
+            return (Integer) claims.get("instructorId");
+        } else if (claims != null && flag == 2){
+            return (Integer) claims.get("secondInstructorId");
+        }
+        return 0;
     }
 
     // 存储上传的excel表
