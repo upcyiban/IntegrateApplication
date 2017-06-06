@@ -248,4 +248,30 @@ public class InstructorService {
         }
         return false;
     }
+
+    public Map getEvaluateDetail(String token, String number) {
+        Map rs = new HashMap();
+
+        if (!isAdmin(token)) {
+            rs.put("status", 1);
+            rs.put("errorMsg", "权限异常");
+            return rs;
+        }
+
+        Instructor instructor;
+        Iterable<Instructor> instructors = instructorDao.findByNumber(number);
+        Iterator<Instructor> instructorIterator = instructors.iterator();
+        if (instructorIterator.hasNext()) {
+            instructor = instructorIterator.next();
+        } else {
+            rs.put("status", 2);
+            rs.put("errorMsg", "无该辅导元");
+            return rs;
+        }
+
+        Iterable<Record> records = recordDao.findByInstructorId(instructor.getId());
+        rs.put("status", 0);
+        rs.put("data", records);
+        return rs;
+    }
 }

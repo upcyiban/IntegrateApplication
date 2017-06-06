@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface InstructorDao extends CrudRepository<Instructor, Integer> {
     Iterable<Instructor> findByName(String name);
+    Iterable<Instructor> findByNumber(String number);
 }
