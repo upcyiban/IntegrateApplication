@@ -15,10 +15,12 @@ public class AppAdmin {
 
     private String appName;
     private int ybid;
+    private String adminName;
 
-    public AppAdmin(String appName, int ybid) {
+    public AppAdmin(String appName, int ybid, String adminName) {
         this.appName = appName;
         this.ybid = ybid;
+        this.adminName = adminName;
     }
 
     public AppAdmin(){
@@ -47,5 +49,13 @@ public class AppAdmin {
 
     public void setYbid(int ybid) {
         this.ybid = ybid;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
     }
 }

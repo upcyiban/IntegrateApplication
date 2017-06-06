@@ -1,6 +1,8 @@
 package cn.edu.upc.yb.integrate.material.controller;
 
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
+import cn.edu.upc.yb.integrate.common.service.AppAdminService;
 import cn.edu.upc.yb.integrate.common.service.CommonAdminService;
 import cn.edu.upc.yb.integrate.material.config.MaterialConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class MaterialAuthController {
     private YibanOAuth yibanOAuth;
 
     @Autowired
-    private CommonAdminService commonAdminService;
+    private AppAdminService appAdminService;
 
     @RequestMapping(value = "/auth")
     public int doAuth(String vq){
@@ -53,7 +55,12 @@ public class MaterialAuthController {
 
     @RequestMapping("/isadmin")
     public int isAdmin() {
-        if (commonAdminService.isCommonAdmin()) {
+        if (httpSession.getAttribute("user") == null){
+            return 0;
+        }
+        YibanBasicUserInfo user = (YibanBasicUserInfo)httpSession.getAttribute("user");
+        int Yibanid = user.visit_user.userid;
+        if (appAdminService.isAppAdmin("material",Yibanid)) {
             return 1;
         } else {
             return 0;
