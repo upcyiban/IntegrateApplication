@@ -25,10 +25,11 @@ public class InstructorController {
         this.instructorService = instructorService;
     }
 
-    @RequestMapping("/getInstructor")
-    public Map getInstructor() {
-        return instructorService.getAllInstructor();
-    }
+//    辅导员不再需要选择，不用给前端辅导员列表了
+//    @RequestMapping("/getInstructor")
+//    public Map getInstructor() {
+//        return instructorService.getAllInstructor();
+//    }
 
     @PostMapping("/uploadInstructor")
     public Map handleFileUpload(@RequestParam("file") MultipartFile file, String token) throws IOException {

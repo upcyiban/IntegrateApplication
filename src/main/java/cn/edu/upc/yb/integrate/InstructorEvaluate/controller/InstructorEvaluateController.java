@@ -26,4 +26,9 @@ public class InstructorEvaluateController {
     public Map showAllEvaluate(String token) {
         return instructorService.getAllEvaluate(token);
     }
+
+    @RequestMapping("/showEvaluateDetail")
+    public Map showEvaluateDetail(String token, String number) {
+        return instructorService.getEvaluateDetail(token, number);
+    }
 }

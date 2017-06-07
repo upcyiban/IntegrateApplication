@@ -15,6 +15,8 @@ public class InstructorItem {
     private String number;
     // 分数
     private double score;
+    // 投票率
+    private String voteRate;
 
     public InstructorItem() {
     }
@@ -24,6 +26,22 @@ public class InstructorItem {
         this.academy = instructor.getAcademy();
         this.name = instructor.getName();
         this.number = instructor.getNumber();
+    }
+
+    public InstructorItem(Instructor instructor, double score, String voteRate) {
+        this.score = score;
+        this.academy = instructor.getAcademy();
+        this.name = instructor.getName();
+        this.number = instructor.getNumber();
+        this.voteRate = voteRate;
+    }
+
+    public String getVoteRate() {
+        return voteRate;
+    }
+
+    public void setVoteRate(String voteRate) {
+        this.voteRate = voteRate;
     }
 
     public String getAcademy() {

@@ -2,9 +2,11 @@ package cn.edu.upc.yb.integrate.InstructorEvaluate.service;
 
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.InstructorDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.RecordDao;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.dao.StudentDao;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.dto.InstructorItem;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Instructor;
 import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Record;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Student;
 import cn.edu.upc.yb.integrate.common.storage.StorageService;
 import cn.edu.upc.yb.integrate.common.util.JsonWebToken;
 import io.jsonwebtoken.Claims;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -35,13 +38,15 @@ public class InstructorService {
     private final JsonWebToken jsonWebToken;
     private final RecordDao recordDao;
     private final StorageService storageService;
+    private final StudentDao studentDao;
 
     @Autowired
-    public InstructorService(InstructorDao instructorDao, JsonWebToken jsonWebToken, RecordDao recordDao, StorageService storageService) {
+    public InstructorService(InstructorDao instructorDao, JsonWebToken jsonWebToken, RecordDao recordDao, StorageService storageService, StudentDao studentDao) {
         this.instructorDao = instructorDao;
         this.jsonWebToken = jsonWebToken;
         this.recordDao = recordDao;
         this.storageService = storageService;
+        this.studentDao = studentDao;
     }
 
     // 获取所有的辅导员，因为是二级菜单，需要整理成json格式
@@ -122,14 +127,58 @@ public class InstructorService {
 
         Iterable<Instructor> instructors = instructorDao.findAll();
         for (Instructor instructor : instructors) {
+            // 获取该辅导员的分数
             double score = calculateScore(instructor.getId());
-            InstructorItem instructorItem = new InstructorItem(instructor, score);
+
+            String voteRate = calculateVote(instructor.getName(), instructor.getId());
+
+            InstructorItem instructorItem = new InstructorItem(instructor, score, voteRate);
             instructorList.add(instructorItem);
         }
 
         rs.put("status", 0);
         rs.put("data", instructorList);
         return rs;
+    }
+
+    private String calculateVote(String name, int instructorId) {
+        int total;
+
+        // 查找该辅导员是多少人的第一辅导员
+        List<Student> students = (List<Student>) studentDao.findByInstructorName(name);
+        if (students != null) {
+            total = students.size();
+        } else {
+            total = 0;
+        }
+
+        // 查找该辅导员是多少人的第二辅导员，并与之前的相加
+        students = (List<Student>) studentDao.findBySecondInstructor(name);
+        if (students != null) {
+            total += students.size();
+        } else {
+            total += 0;
+        }
+
+        // 如果被除数是0，直接返回0.00%
+        if (total == 0) {
+            return "0.00%";
+        }
+
+        // 查看该辅导员有多少人已评价
+        List<Record> records = (List<Record>) recordDao.findByInstructorId(instructorId);
+        int voteNumber;
+        if (records != null) {
+            voteNumber = records.size();
+        } else {
+            voteNumber = 0;
+        }
+
+        // 计算投票率，并保留两位小数
+        double rate = (double)voteNumber / total;
+        NumberFormat nt = NumberFormat.getPercentInstance();
+        nt.setMinimumFractionDigits(2);
+        return nt.format(rate);
     }
 
     // 计算某个辅导员的平均分
@@ -247,5 +296,54 @@ public class InstructorService {
             }
         }
         return false;
+    }
+
+    // 获取某个辅导员的评价详单
+    public Map getEvaluateDetail(String token, String number) {
+        Map rs = new HashMap();
+
+        // 先鉴权，要求是管理员才能看
+        if (!isAdmin(token)) {
+            rs.put("status", 1);
+            rs.put("errorMsg", "权限异常");
+            return rs;
+        }
+
+        // 查询该辅导员
+        Instructor instructor;
+        Iterable<Instructor> instructors = instructorDao.findByNumber(number);
+        Iterator<Instructor> instructorIterator = instructors.iterator();
+        if (instructorIterator.hasNext()) {
+            instructor = instructorIterator.next();
+        } else {
+            rs.put("status", 2);
+            rs.put("errorMsg", "无该辅导员");
+            return rs;
+        }
+
+        // 获取该辅导员带的所有学生的学号
+        List noVoteStudentList = new ArrayList();
+        Iterable<Student> students = studentDao.findByInstructorName(instructor.getName());
+        for (Student student : students) {
+            noVoteStudentList.add(student.getNumber());
+        }
+        students = studentDao.findBySecondInstructor(instructor.getName());
+        for (Student student : students) {
+            noVoteStudentList.add(student.getNumber());
+        }
+
+        // 获取该辅导员的评价记录
+        Iterable<Record> records = recordDao.findByInstructorId(instructor.getId());
+
+        for (Record record : records) {
+            if (noVoteStudentList.contains(record.getStudentNumber())) {
+                noVoteStudentList.remove(record.getStudentNumber());
+            }
+        }
+
+        rs.put("status", 0);
+        rs.put("data", records);
+        rs.put("noVoteList", noVoteStudentList);
+        return rs;
     }
 }
