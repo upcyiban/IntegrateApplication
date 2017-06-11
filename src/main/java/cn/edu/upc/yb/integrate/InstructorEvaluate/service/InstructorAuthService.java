@@ -96,7 +96,7 @@ public class InstructorAuthService {
         // 如果解析正常，取出其中的data部分继续操作，否则返回错误信息
         if ((int) yibanTokenResult.get("status") == 0) {
             Map yibanTokenData = (Map) yibanTokenResult.get("data");
-            if (yibanTokenData.get("visit_oauth") instanceof String && (yibanTokenData.get("visit_oauth")).equals("false")) {
+            if (yibanTokenData.get("visit_oauth") instanceof Boolean && (!((Boolean) yibanTokenData.get("visit_oauth")))) {
                 // 未授权，重定向去授权
                 rs.put("status", 1);
                 rs.put("errorMsg", "未授权，请引导用户授权");
