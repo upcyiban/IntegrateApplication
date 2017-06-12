@@ -116,6 +116,13 @@ public class InstructorAuthService {
                             return rs;
                         }
 
+                        // 如果为空，不是学生，没有学号
+                        if (studentNumber.equals("")) {
+                            rs.put("status", 4);
+                            rs.put("errorMsg", "该用户非学生或评价表中无相应同学");
+                            return rs;
+                        }
+
                         // 这里是正常的返回
                         Iterable<Student> students = studentDao.findByNumber(studentNumber);
                         Iterator<Student> studentIterator = students.iterator();
