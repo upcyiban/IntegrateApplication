@@ -49,21 +49,6 @@ public class InstructorService {
         this.studentDao = studentDao;
     }
 
-    // 获取所有的辅导员，因为是二级菜单，需要整理成json格式
-    public HashMap<String, Object> getAllInstructor() {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        // 获取所有辅导员信息
-        Iterable<Instructor> instructors = instructorDao.findAll();
-        // 遍历Iterable
-        for (Instructor instructor : instructors) {
-            // 如果hashmap中没有这个key，则创建key对应空数组
-            map.computeIfAbsent(instructor.getAcademy(), k -> new ArrayList());
-            List temp = (ArrayList) map.get(instructor.getAcademy());
-            temp.add(instructor);
-        }
-        return map;
-    }
-
     // 存一条评价
     public Map<String, java.io.Serializable> saveRecord(String token, Integer score, String message, Integer flag) {
         Map<String, java.io.Serializable> rs = new HashMap<String, java.io.Serializable>();
@@ -197,66 +182,6 @@ public class InstructorService {
         }
     }
 
-    // 从excel文件里导入数据到数据库然后删除文件
-    public Map<String, java.io.Serializable> importDataFromExcel(MultipartFile file, String token) throws IOException {
-        // 用来返回结果
-        HashMap<String, java.io.Serializable> rs = new HashMap<String, java.io.Serializable>();
-
-        // 鉴权
-        if (!isAdmin(token)) {
-            rs.put("status", 0);
-            rs.put("errorMsg", "身份异常");
-            return rs;
-        }
-
-        // 存储excel文件，获取其文件名
-        String fileName = storeExcelFile(file);
-
-        // 导入新数据就清除旧数据
-        instructorDao.deleteAll();
-
-        // 获取excel文件
-        File tempFile = new File("file/img/" + fileName);
-        Workbook wb = new HSSFWorkbook(new FileInputStream(tempFile));
-
-        // 读取excel中的有效信息，以数组返回给instructors并存进数据库
-        Iterable<Instructor> instructors = readExcelValue(wb);
-        instructorDao.save(instructors);
-
-        //删除上传的临时文件
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
-
-        rs.put("status", 0);
-        return rs;
-    }
-
-    // 读取excel文件，返回辅导员集合
-    private Iterable<Instructor> readExcelValue(Workbook wb) {
-        ArrayList<Instructor> instructors = new ArrayList<Instructor>();
-
-        // 获取默认的表格
-        Sheet sheet = wb.getSheet("Sheet1");
-
-        int rowNumber = sheet.getPhysicalNumberOfRows();
-
-        DataFormatter formatter = new DataFormatter();
-
-        for (int i = 1; i < rowNumber; i++) {
-            Instructor instructor = new Instructor();
-            Cell cell = sheet.getRow(i).getCell(0);
-            instructor.setAcademy(formatter.formatCellValue(cell));
-            cell = sheet.getRow(i).getCell(1);
-            instructor.setNumber(formatter.formatCellValue(cell));
-            cell = sheet.getRow(i).getCell(2);
-            instructor.setName(formatter.formatCellValue(cell));
-            instructors.add(instructor);
-        }
-
-        return instructors;
-    }
-
     // 鉴定是否是学生，返回学号 不是则返回0
     private String getStudentNumber(String token) {
         Claims claims = jsonWebToken.getClaimsFromToken(token);
@@ -279,13 +204,6 @@ public class InstructorService {
             return (Integer) claims.get("secondInstructorId");
         }
         return 0;
-    }
-
-    // 存储上传的excel表
-    private String storeExcelFile(MultipartFile file) {
-        String fileName = "instructor" + new Date().getTime();
-        storageService.store(file, fileName);
-        return fileName;
     }
 
     private Boolean isAdmin(String token) {

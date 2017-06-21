@@ -1,6 +1,7 @@
 package cn.edu.upc.yb.integrate.InstructorEvaluate.controller;
 
 import cn.edu.upc.yb.integrate.InstructorEvaluate.service.InstructorService;
+import cn.edu.upc.yb.integrate.InstructorEvaluate.service.InstructorUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,23 +17,22 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/instructor")
-public class InstructorController {
+public class InstructorUploadController {
 
-    private final InstructorService instructorService;
+    private final InstructorUploadService instructorUploadService;
 
     @Autowired
-    public InstructorController(InstructorService instructorService) {
-        this.instructorService = instructorService;
+    public InstructorUploadController(InstructorService instructorService, InstructorUploadService instructorUploadService) {
+        this.instructorUploadService = instructorUploadService;
     }
 
-//    辅导员不再需要选择，不用给前端辅导员列表了
-//    @RequestMapping("/getInstructor")
-//    public Map getInstructor() {
-//        return instructorService.getAllInstructor();
-//    }
+    @PostMapping("/uploadStudent")
+    public Map handleStudentUpload(@RequestParam("file") MultipartFile file, String token) {
+        return instructorUploadService.importStudentDataFromExcel(file, token);
+    }
 
     @PostMapping("/uploadInstructor")
     public Map handleFileUpload(@RequestParam("file") MultipartFile file, String token) throws IOException {
-        return instructorService.importDataFromExcel(file, token);
+        return instructorUploadService.importDataFromExcel(file, token);
     }
 }
