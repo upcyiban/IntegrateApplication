@@ -3,16 +3,15 @@ package cn.edu.upc.yb.integrate.lostandfound.model;
 import javax.persistence.*;
 
 /**
- * Created by wanghaojun on 2016/7/12.
+ * Created by 17797 on 2017/5/30.
  */
 @Entity
-@Table(name = "official")
-public class Official {
+@Table(name = "lostandfoundofficial")
+public class LostAndFoundOfficial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String title;
     private String detail;
     private int status;
@@ -20,14 +19,14 @@ public class Official {
     private String category;
     private boolean isdelet = false;
 
-    public Official(String title, String detail, String date) {
+    public LostAndFoundOfficial(String title, String detail, String date) {
         this.title = title;
         this.detail = detail;
         this.date = date;
         this.setStatus(0);
     }
 
-    public Official() {
+    public LostAndFoundOfficial() {
     }
 
     public int getId() {
