@@ -34,9 +34,6 @@ public class MaterialOfficialController {
     private BorrowMaterialRepository borrowMaterialRepository;
 
     @Autowired
-    private CommonAdminService commonAdminService;
-
-    @Autowired
     private AppAdminService appAdminService;
 
     public Boolean isAdmin(){
