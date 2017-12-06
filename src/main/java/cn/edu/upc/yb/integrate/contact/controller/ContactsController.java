@@ -1,13 +1,18 @@
 package cn.edu.upc.yb.integrate.contact.controller;
 
+import cn.edu.upc.yb.integrate.contact.model.ContactsJob;
+import cn.edu.upc.yb.integrate.contact.model.ContactsUnit;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsJobRepository;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsUnitRepository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
 
 /**
  * Created by lenovo on 2017/3/25.
@@ -35,5 +40,34 @@ public class ContactsController {
     @RequestMapping(value = "/findjob",method = RequestMethod.GET)
     public Object findJob(String name){
         return contactJobRepository.findByName(name);
+    }
+    @GetMapping("/all")
+    public Object findAll(){
+
+        List<Map<String,Object>> maplist = new ArrayList<>();
+
+
+        Iterable<ContactsUnit> contactsUnits = contactsUnitRepository.findAll();
+        Iterator<ContactsUnit> units = contactsUnits.iterator();
+        while(units.hasNext()){
+            Map<String,Object> all = new HashMap<>();
+            ContactsUnit unit = units.next();
+            System.out.println(unit.getId());
+            int unitid = unit.getId();
+            //Map<String,Object> jobsmap = new HashMap<>();
+            List<ContactsJob> lists = new ArrayList<>();
+            Iterator<ContactsJob> jobs = contactJobRepository.findByContactsUnitId(unitid).iterator();
+            while (jobs.hasNext()){
+                ContactsJob j = jobs.next();
+                System.out.println(j.getName());
+                //jobsmap.put(j.getName(),j.getNumber());
+                lists.add(j);
+            }
+            all.put("jobid",unit.getId());
+            all.put("jobname",unit.getName());
+            all.put("joblist",lists);
+            maplist.add(all);
+        }
+        return maplist;
     }
 }
