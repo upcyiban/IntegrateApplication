@@ -2,6 +2,8 @@ package cn.edu.upc.yb.integrate.contact.controller;
 
 import cn.edu.upc.yb.integrate.contact.model.ContactsJob;
 import cn.edu.upc.yb.integrate.contact.model.ContactsUnit;
+=======
+import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsJobRepository;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsUnitRepository;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by lenovo on 2017/3/25.
@@ -27,9 +30,14 @@ public class ContactsController {
     @Autowired
     ContactsUnitRepository contactsUnitRepository;
 
+    @Autowired
+    private HttpSession httpSession;
+
 
     @RequestMapping(value = "/showunit",method = RequestMethod.GET)
     public Object showUnit(){
+        YibanBasicUserInfo yibanBasicUserInfo = (YibanBasicUserInfo) httpSession.getAttribute("user");
+        System.out.println(yibanBasicUserInfo.visit_user.userid + "123");
         return contactsUnitRepository.findAll();
     }
 
@@ -39,7 +47,7 @@ public class ContactsController {
     }
     @RequestMapping(value = "/findjob",method = RequestMethod.GET)
     public Object findJob(String name){
-        return contactJobRepository.findByName(name);
+        return contactJobRepository.findByNameLike(name);
     }
     @GetMapping("/all")
     public Object findAll(){
