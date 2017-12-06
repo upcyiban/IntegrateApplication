@@ -3,16 +3,15 @@ package cn.edu.upc.yb.integrate.lostandfound.model;
 import javax.persistence.*;
 
 /**
- * Created by wanghaojun on 2016/7/12.
+ * Created by 17797 on 2017/5/30.
  */
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "lostandfounduser")
+public class LostAndFoundUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String ybuserid;
     private String ybusername;
     private String ybusernick;
@@ -25,24 +24,10 @@ public class User {
     private boolean isdelet = false;
     private boolean isloser;//是失主或或捡到东西的人
 
-    public User() {
+    public LostAndFoundUser() {
     }
 
-    /**
-     *
-     * @param ybuserid
-     * @param ybusername
-     * @param ybusernick
-     * @param ybsex
-     * @param title
-     * @param detail
-     * @param status
-     * @param date
-     * @param category
-     * @param isdelet
-     * @param isloser
-     */
-    public User(String ybuserid, String ybusername, String ybusernick, String ybsex, String title, String detail, int status, String date, String category, boolean isdelet, boolean isloser) {
+    public LostAndFoundUser(String ybuserid, String ybusername, String ybusernick, String ybsex, String title, String detail, int status, String date, String category, boolean isdelet, boolean isloser) {
         this.ybuserid = ybuserid;
         this.ybusername = ybusername;
         this.ybusernick = ybusernick;
@@ -151,4 +136,5 @@ public class User {
     public void setIsloser(boolean isloser) {
         this.isloser = isloser;
     }
+
 }

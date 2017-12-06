@@ -1,7 +1,7 @@
 package cn.edu.upc.yb.integrate.lostandfound.dto;
 
 /**
- * Created by wanghaojun on 2016/7/12.
+ * Created by 17797 on 2017/5/30.
  */
 public class JsonMes {
 

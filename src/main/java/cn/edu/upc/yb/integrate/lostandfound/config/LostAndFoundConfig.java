@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by wanghaojun on 2016/7/12.
+ * Created by yyljj on 2016/5/21.
  */
+
 @Component
 public class LostAndFoundConfig {
-
     @Value("${yibanoauth.lostandfound.APPID}")
-    public String appid;
+    public  String client_id;
 
     @Value("${yibanoauth.lostandfound.APPkey}")
-    public String appkey;
+    public  String AppSecret;
+
 }
