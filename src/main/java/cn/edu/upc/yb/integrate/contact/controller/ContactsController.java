@@ -2,7 +2,6 @@ package cn.edu.upc.yb.integrate.contact.controller;
 
 import cn.edu.upc.yb.integrate.contact.model.ContactsJob;
 import cn.edu.upc.yb.integrate.contact.model.ContactsUnit;
-=======
 import cn.edu.upc.yb.integrate.common.dto.YibanBasicUserInfo;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsJobRepository;
 import cn.edu.upc.yb.integrate.contact.repository.ContactsUnitRepository;
