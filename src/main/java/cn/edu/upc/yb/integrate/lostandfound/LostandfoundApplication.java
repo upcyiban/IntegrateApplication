@@ -2,7 +2,7 @@ package cn.edu.upc.yb.integrate.lostandfound;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+/*
 @SpringBootApplication
 public class LostandfoundApplication {
 
@@ -10,3 +10,4 @@ public class LostandfoundApplication {
 		SpringApplication.run(LostandfoundApplication.class, args);
 	}
 }
+*/
