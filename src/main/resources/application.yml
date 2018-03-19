@@ -31,8 +31,8 @@ yibanoauth:
      APPID: "2f803dad07f95108"
      APPkey: "f732a9b113713c3e1f85a85b6b1282b8"
   second:
-      APPID: "d3e9e3722272dc94"
-      APPkey: "202f365322d008bab2f76d5eea1bfb15"
+      APPID: "647f5a412e602431"
+      APPkey: "68444cb1c405322571d90737c0c07c24"
       frontend: "http://localhost:4000"
       imgserver: "http://localhost:8080"
   express:
