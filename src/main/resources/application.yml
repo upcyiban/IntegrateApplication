@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://121.251.255.96:3306/yibantest_production
-    username: yibantest
-    password: yibantest
+    url: jdbc:mysql://localhost:3306/yibantest_production
+    username: root
+    password: 123456
     test-while-idle: true
     validation-query: SELECT 1
   thymeleaf:
