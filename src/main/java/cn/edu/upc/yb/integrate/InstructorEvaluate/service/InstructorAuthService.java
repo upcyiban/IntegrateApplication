@@ -210,7 +210,7 @@ public class InstructorAuthService {
         map.put("instructorId", instructor.getId());
 
         // 如果第二辅导员不为空
-        if (!student.getSecondInstructor().equals("")) {
+        if (!"".equals(student.getSecondInstructor())) {
             String secondInstructorName = student.getSecondInstructor();
             Iterable<Instructor> secondInstructors = instructorDao.findByName(secondInstructorName);
             Iterator<Instructor> secondInstructorIterator = secondInstructors.iterator();
