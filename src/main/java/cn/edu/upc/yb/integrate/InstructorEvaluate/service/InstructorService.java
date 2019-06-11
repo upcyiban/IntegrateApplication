@@ -160,6 +160,13 @@ public class InstructorService {
             total += 0;
         }
 
+
+        students = (List<Student>) studentDao.findByThirdInstructor(name);
+        if (students != null) {
+            total += students.size();
+        } else {
+            total += 0;
+        }
         // 如果被除数是0，直接返回0.00%
         if (total == 0) {
             return "0.00%";

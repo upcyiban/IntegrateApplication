@@ -26,6 +26,8 @@ public class Student {
     private String sex;
     private String instructorName;
     private String secondInstructor; // 第二辅导员
+
+    private String thirdInstructor;
     private String nation; // 民族
     private String birthday;
     private String grade; // 年级
@@ -33,6 +35,14 @@ public class Student {
     private String schoolClass; // 班级
     private String college; // 学院
     private String hometown; // 籍贯
+
+    public String getThirdInstructor() {
+        return thirdInstructor;
+    }
+
+    public void setThirdInstructor(String thirdInstructor) {
+        this.thirdInstructor = thirdInstructor;
+    }
 
     public String getSecondInstructor() {
         return secondInstructor;

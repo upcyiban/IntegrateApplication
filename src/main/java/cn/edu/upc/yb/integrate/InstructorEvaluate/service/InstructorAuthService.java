@@ -224,8 +224,26 @@ public class InstructorAuthService {
                 // 如果没找到对应的二号辅导员，异常如何处理
                 rs.put("hasSecond", false);
             }
-        } else {
-            rs.put("hasSecond", false);
+        }
+        /*第三个辅导员*/
+        else if(!"".equals(student.getThirdInstructor())){
+            String thirdInstructor = student.getThirdInstructor();
+            Iterable<Instructor> thirdIns = instructorDao.findByName(thirdInstructor);
+            Iterator<Instructor> thirdInstructorIterator = thirdIns.iterator();
+            Instructor third;
+            if (thirdInstructorIterator.hasNext()) {
+                third = thirdInstructorIterator.next();
+                map.put("thirdInstructorId", third.getId());
+                rs.put("hasThird", true);
+                rs.put("thirdInstructorName", third.getName());
+            } else {
+                // 如果没找到对应的三号辅导员，异常如何处理
+                rs.put("hasThird", false);
+            }
+        }
+
+        else {
+            rs.put("hasThird", false);
         }
 
         rs.put("status", 0);

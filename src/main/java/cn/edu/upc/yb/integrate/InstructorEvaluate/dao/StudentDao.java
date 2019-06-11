@@ -14,4 +14,5 @@ public interface StudentDao extends CrudRepository<Student, Integer> {
     Iterable<Student> findByInstructorName(String name);
 
     Iterable<Student> findBySecondInstructor(String name);
+    Iterable<Student> findByThirdInstructor(String name);
 }
