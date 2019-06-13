@@ -10,11 +10,14 @@ import cn.edu.upc.yb.integrate.InstructorEvaluate.model.Student;
 import cn.edu.upc.yb.integrate.common.auth.YibanOAuth;
 import cn.edu.upc.yb.integrate.common.util.JsonWebToken;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -28,6 +31,7 @@ import java.util.Map;
  * Created by lhy95 on 2017/4/29.
  */
 @Service
+@Slf4j
 public class InstructorAuthService {
 
     private final StudentDao studentDao;
@@ -110,7 +114,9 @@ public class InstructorAuthService {
                     try {
                         String studentNumber = getStudentNumber(yibanAccessToken);
                         // 如果等于0 怕是接口有毛病
-                        if (studentNumber.equals("0")) {
+                        if (studentNumber==null||studentNumber.length()<4) {
+                            // INFO  2019/6/13 18:20 liliangbin  辅导员或是其他教职员工是没有学号的，我们拿不到值。如果我们需要用到教职员工登录的时候可以在这个地方判断有无，换为获取他的工号
+
                             rs.put("status", 2);
                             rs.put("errorMsg", "接口故障");
                             return rs;
@@ -118,10 +124,18 @@ public class InstructorAuthService {
 
                         // 这里是正常的返回
                         Iterable<Student> students = studentDao.findByNumber(studentNumber);
+                        if (students==null){
+                            // 找不到该用户，可能上报的excel中数据有问题
+                            rs.put("status", 3);
+                            rs.put("errorMsg", "数据库中查不到该用户，可能上报的excel中没有该同学");
+                            return rs;
+                        }
                         Iterator<Student> studentIterator = students.iterator();
                         Student student;
                         if (studentIterator.hasNext()) {
                             student = studentIterator.next();
+                            log.info(" a student is going to auth " + student.getNumber());
+
                         } else {
                             // 找不到该用户，可能上报的excel中数据有问题
                             rs.put("status", 3);
@@ -191,6 +205,7 @@ public class InstructorAuthService {
     private HashMap dealLoginProcess(HashMap rs, Student student) {
         // 根据学生对象上的辅导员姓名，查找对应的辅导员
         String instructorName = student.getInstructorName();
+        log.info("structor_name - 00"+instructorName+ "student number "+student.getNumber());
         Iterable<Instructor> instructors = instructorDao.findByName(instructorName);
         Iterator<Instructor> instructorIterator = instructors.iterator();
         Instructor instructor;
@@ -226,7 +241,7 @@ public class InstructorAuthService {
             }
         }
         /*第三个辅导员*/
-        else if(!"".equals(student.getThirdInstructor())){
+        else if (!"".equals(student.getThirdInstructor())) {
             String thirdInstructor = student.getThirdInstructor();
             Iterable<Instructor> thirdIns = instructorDao.findByName(thirdInstructor);
             Iterator<Instructor> thirdInstructorIterator = thirdIns.iterator();
@@ -240,9 +255,7 @@ public class InstructorAuthService {
                 // 如果没找到对应的三号辅导员，异常如何处理
                 rs.put("hasThird", false);
             }
-        }
-
-        else {
+        } else {
             rs.put("hasThird", false);
         }
 
